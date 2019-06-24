@@ -1,0 +1,43 @@
+\chapter{Methodik}
+\section{Forschungsfrage}
+Die Forschungsfrage, welcher mit dieser Arbeit beantwortet wird, lautet wie folgt:\\
+\emph{Können Webpages von Restaurant-Websites mit hoher Erfolgschance klassifiziert werden, ob sie Menüinformationen beinhalten?}\\
+Dabei handelt es sich um eine binäre Klassifikation, also eine Einteilung in zwei Kategorien, nämlich \glqq Menüseite\grqq oder \glqq Keine Menüseite\grqq.
+Folgende Einschränkungen werden vorgegeben, um diese Frage beantworten zu können:
+\begin{itemize}
+	\item Die Webpages sind ausschliesslich von Restaurant-Websites
+	\item Die Sprache der Webpages ist deutsch
+\end{itemize}
+\section{Ergebnisse der Klassifizierung}
+In diesem Abschnitt wird zwischen zwei verschiedenen Ansätzen, namentlich dem regelbasierten und dem Klassifizieren mittels Machine-Learning unterschieden.
+\subsection{Regelbasiertes Klassifizieren}
+Die fünf verschiedenen Methoden des regelbasierten Klassifizierens haben folgende Ergebnisse erzielt:\\
+\begin{tabular}{|l|l|l|l|}
+	\hline
+	Methode & F1-Score & Precision & Recall\\
+	\hline
+	Menü im Titel & 0.17 & 0.43 & 0.11 \\
+	Preisdetektor & 0.46 & 0.45 & 0.47 \\
+	Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
+	Listing & 0.55 & 0.60 & 0.50\\
+	Bag of Words & 0.72 & 0.81 & 0.64\\
+	\hline
+\end{tabular}\\
+Hinweis: Wenn mehrere Parameterkombinationen denselben F1-Score erreicht haben, wurde diejenige mit der höheren Precision gewählt.
+\subsection{Klassifizieren mittels Machine-Learning Algorithmen}
+\section{Interpretation der Ergebnisse}
+\subsection{Regelbasiertes Klassifizieren}
+Die verschiedenen Methoden ergeben stark unterschiedliche Werte.
+Die simpelste Methode, das Überprüfen des Schlagworts \glqq menu\grqq im Titel hat ein komplett unbrauchbares Ergebnis geliefert.
+Dadurch kann gesagt werden, dass diese Art der Klassifizierung unbrauchbar ist.
+Auch durch die Suche nach Preisen innerhalb eines Dokuments ist keine Klassifikation möglich, da es sowohl Menüseiten ohne Preisangaben gibt, aber auch viele weitere Webpages, die Preise beinhalten, aber keine Menüseiten sind.
+Eine Kombination dieser beiden Methoden ergibt ebenfalls keine besseren Werte.
+Das Verwenden einer Blacklist und Whitelist ergibt bessere Werte, jedoch auch nicht in einem Mass, welches für eine Klassifikation geeignet ist.
+Diese würden sich verändern, wenn eine Änderung dieser Listen vorgenommen werden würden.
+Ob dies zu einer Verbesserung oder Verschlechterung führt, lässt sich nicht pauschal sagen.
+Die Klassifikation mit der Methode \glqq Bag of Words\grqq führt zu den besten Ergebnissen.
+Dabei muss jedoch beachtet werden, dass ein Teil der Daten verwendet wird, um die dynamischen Listen zu erstellen.
+Dadurch können die Werte nicht direkt mit denjenigen Methoden verglichen werden, welche die kompletten Daten klassifizieren. 
+Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Texten unter diesen Umständen nicht möglich ist.
+\subsection{Klassifizieren mittels Machine-Learning Algorithmen}
+\section{Beantwortung der Forschungsfrage}

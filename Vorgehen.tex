@@ -1,0 +1,103 @@
+\chapter{Vorgehen}
+\section{Webcrawler}
+\subsection{Erarbeitung des Seeds}
+Als Quelle für das Abrufen von Websites dient das Seed.
+Das Ziel war es, dieses mit möglichst vielen URLs von schweizer Restaurant-Websites zu füllen.
+Dafür wurden zwei Ansätze verfolgt.
+Ein Verein Schweizer Restaurants, namentlich Lunch-Check\footnote{\url{https://www.lunch-check.ch/}} wurde angefragt, ob sie eine Liste ihrer Mitglieder zur Verfügung stellen.
+Zudem wurde der OpenStreetmap-API\footnote{\url{https://www.openstreetmap.ch/}} genutzt, um die darin enthaltenen Restaurant-URLs abzufragen.
+Die Daten aus beiden Quellen wurden zusammengeführt und dienen nun als Seed für die Abfragen des Webcrawlers.
+\subsection{Erarbeitung des Webcrawlers}
+Als erstes fand eine Einarbeitung in die Thematik von Docker statt, um StormCrawler damit zu betreiben.
+Apache Storm ist ebenfalls thematisiert worden, um die Grundlagen zu verstehen.
+Danach folgte die Einarbeitung in StormCrawler, zu Beginn war das Ziel, die Standardtopologie zu verstehen.
+Sobald die Standardtopologie funktionierte, fanden Anpassungen statt, welche zur Erstellung der Rohdaten für den Gold Standard dienten.
+Explizit ist die Erstellung des Bolts zu erwähnen, welcher für das Schreiben der Output-Dateien zuständig ist.
+Dieser wurde zudem mit einer Sprachdetektion erweitert, welche erkennt, ob die Sprache der Webpage deutsch ist.
+\subsection{Verwendete Technologien}
+\subsubsection{StormCrawler}
+Es fand keine Evaluation zur Findung eines geeigneten Webcrawlers statt.
+Stormcrawler wird eingesetzt, da an der Hochschule für Technik und Wirtschaft Chur ein Team bereits mit diesem arbeitet und dadurch Know-how besitzt.
+Dieses Team, speziell ein wissenschaftlicher Mitarbeiter, hat Support angeboten, weshalb die Entscheidung getroffen wurde, Stormcrawler zu verwenden.
+\subsubsection{Docker}
+Stormcrawler wurde nicht direkt installiert, sondern mittels Docker-Container aufgesetzt.
+Dies aus dem Grund, dass dadurch eine Skalierung einfach möglich ist.
+Zudem ist die Installation hinfällig, da auf Docker Hub\footnote{\url{https://hub.docker.com/}} bereits fertige Images von Apache Storm und StormCrawler vorhanden sind.
+\section{Gold Standard}
+\subsection{Crawlen der Rohdaten}
+Das Crawlen der Rohdaten war mit diversen Komplikationen verbunden.
+Die Performance des Webcrawlers war zu Beginn nicht zufriedenstellend, es wurden lediglich ca. 30 Webpages pro Minute gespeichert.
+Trotzdem wurde ein erster Rohdatensatz mit dieser Performance gecrawlt, auf dem das erste manuelle Labeling durchgeführt wurde.
+Bei diesem Rohdatensatz wurden nur die als deutsch detektierten Webpages gespeichert, somit konnte die Abdeckung des Seeds nicht ausgewertet werden.
+Der Crawler wurde nochmals angepasst, sodass alle Webpages gespeichert werden, dies ermöglicht eine genauere Analyse der Rohdaten.
+Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt wurden und die Sprachdetektion nicht für jede Webpage neu gestartet wurde, was eine massive Performancesteigerung zur Folge hatte.
+Diverse weitere Crawldurchläufe wurden gemacht und analysiert.
+Diese Analysen haben ergeben, dass einzelne Websites aus dem Seed enorm viele Webpages beinhalten, zum Teil über 30'000.
+Diese URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
+Für die zweite Durchführung des manuellen Labelings wurden die Rohdaten mit dem angepassten Seed neu gecrawlt.
+- Auführen der Crawl-Analyse
+\subsubsection{Erarbeitung des Entscheidungsrasters}
+Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten.
+Für dieses wurden die folgenden Entscheidungen getroffen:
+\begin{itemize}
+	\item Die Webpage muss auf Deutsch verfasst sein
+	\item Der Anbieter muss entweder ein Restaurant, Take-Away oder Lieferdienst sein
+	\item Der Text muss statisch im HTML vorhanden sein, da dynamisch gerenderte Informationen vom Webcrawler nicht gespeichert werden
+	\item Es muss ein Menü, also eine Kombination aus mehreren Speisen oder eine einzelne Speise vorhanden sein
+	\item Eine genauere Beschreibung oder der Preis muss vorhanden sein
+\end{itemize}
+Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da zu Beginn dieser Arbeit eine optionale Aufgabe bestand, zwischen diesen Kategorien unterscheiden zu können.
+\subsubsection{Manuelles Labeling der Daten}
+In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort "Menu" in der URL enthalten.
+Die mit dieser Heuristik gelabelten Daten entsprechen jedoch nicht einer zufälligen Stichprobe aus den gesamten Rohdaten.
+Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten ausgewählt und manuell gelabelt.
+Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
+\subsection{Verwendete Technologien}
+\subsubsection{Labeling-Tool}
+Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool}} erstellt worden, welches das Labeling vereinfacht.
+Dieses Tool ruft eine Webpage der zufällig extrahierten Webpages aus den Rohdaten auf und zeigt sowohl den Text, als auch den HTML-Inhalt.
+Der Anwender des Tools muss anhand dieser Informationen entscheiden, ob es sich um eine Webpage mit Menüinformationen handelt und ob diese zeitlich begrenzt sind.
+Mittels Shortkeys findet die Klassifizierung statt.
+Das Tool verschiebt die Datei in den entsprechenden Ordner und zeigt die Informationen der nächsten Webpage an.
+\section{Klassifikation}
+\subsection{Preprocessing}
+Die Basisfunktionen des Preprocessings orientieren sich an einem Online-Artikel von Usman Malik\footnote{\url{https://stackabuse.com/text-classification-with-python-and-scikit-learn/}}.
+Teile der darin beschriebenen Funktionen wurden angepasst und übernommen.
+Weiter wurde erkannt, dass Preise mittels Regulären Ausdrücken erkannt werden müssen, damit diese Informationen nicht verloren gehen.
+Darum ist eine Methode entwickelt worden, die diese Aufgabe erledigt.
+Für die Funktion des Stemmings ist nach einer entsprechenden Funktion gesucht worden, welche diese Aufgabe für die deutsche Sprache verrichtet.
+Über die Dokumentation des Toolkits NLTK\footnote{\url{https://www.nltk.org/api/nltk.stem.html}} ist Cistem, ein Stemmer für die deutsche Sprache, gefunden und später als Preprocessing-Methode implementiert worden.
+Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt worden, welche 
+- Stemmer in Deutsch
+- Regex für Preise
+- Stoppwortliste aus mehreren QUellen
+- 
+\subsection{Regelbasierte Klassifikation}
+\subsubsection{Erstellen der Konfigurationen}
+\subsection{Machine-Learning Klassifikation}
+\subsubsection{Einleitung}
+Für die Klassifizierung mit Machine-Learning wurden mehrere Algorithmen jeweils mit den Metriken F1-Score, Recall und Precision ausgewertet.
+Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln zusammengetragen und stetig anhand ihrer Metriken verglichen.
+Alle Algorithmen wurden jeweils mit ihrer Standardkonfiguration trainiert und anschliessend validiert, um einen möglichst unverzerrten Vergleich zu haben.
+Schrittweise wurden folgende Pipelinekomponenten angepasst und versucht, einen optimalen Wert zu ermitteln.
+\begin{enumerate}
+	\item Dimensionsreduktion der Features 
+	\item Angabe von Klassenverteilung
+	\item Anwendung von N-Gramme (N={1,2,3})
+	\item Anwendung von einfachen Preprocessingschritten
+	\item Anwendung von fortgeschrittenen Preprocessingschritten
+	\item Anzahl extrahierter Features
+\end{enumerate}
+Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und zu einem späteren Zeitpunkt noch Bag-of-Words ohne Worthäufigkeit verwendet.
+\subsubsection{Dimensionsreduktion der Features}
+
+\subsubsection{Erstellen der Konfigurationen}
+\section{Produktive Pipeline}
+\section{Webapplikation}
+\subsection{Erarbeitung der Webapplikation}
+\subsection{Verwendete Technologien}
+\subsubsection{Frontend-Komponenten}
+\subsubsection{Backend-Komponenten}
+\subsection{Search Engine}
+\subsubsection{Vorgehen}
+\subsubsection{Verwendete Technologien}
