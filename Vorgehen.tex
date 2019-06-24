@@ -90,6 +90,19 @@ Schrittweise wurden folgende Pipelinekomponenten angepasst und versucht, einen o
 \end{enumerate}
 Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und zu einem späteren Zeitpunkt noch Bag-of-Words ohne Worthäufigkeit verwendet.
 \subsubsection{Dimensionsreduktion der Features}
+Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Analysis)\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}} versucht, aus einer Vielzahl von Features nur die Aussagekräftigsten zu ermitteln.
+Dies wird erreicht, indem SLA Beziehungen von Wörtern mit ähnlicher Bedeutung erkennt.
+Es wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung "TruncatedSVD" die Feature-Reduktion vorgenommen.
+\subsubsection{Klassenverteilung}
+Da die Daten aus dem Goldstandard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
+Die Gewichtung, auf ein positives Sample folgen 10.32 negative Samples, wurde den Algorithmen fürs Trainieren mitgegeben.
+Die Gewichtung konnte nicht allen Algorithmen zugewiesen werden, da manche während dem Training solche Informationen nicht verwerten können.
+\subsubsection{N-Gramme}
+Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
+Aufgrund von verschiedenen Visualisierungen der Textdaten wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
+Die Scikit-Learn Extrahierungsmethoden bieten einfache Schnittstelle für die Extrahierung von N-Grammen.
+\subsubsection{Einfaches Preprocessing}
+\subsubsection{Fortgeschrittenes Preprocessing}
 
 \subsubsection{Erstellen der Konfigurationen}
 \section{Produktive Pipeline}
