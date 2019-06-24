@@ -8,15 +8,22 @@ Bei allen Regelsets sind alle Methoden des Preprocessings aktiv gewesen.
 \subsection{Regelset: Menü im Titel}
 Für dieses Regelset sind keine Parameter verfügbar, daher ist nur eine Konfiguration durchgführt worden.
 Diese hat folgende Metriken ergeben:\\
+\begin{table}
+\caption{Score des Regelsets: Menü im Titel}
+\centering
 \begin{tabular}{|l|l|l|}
 	\hline
 	F1-Score & Precision & Recall\\
 	\hline
 	0.17 & 0.43 & 0.11  \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 \subsection{Regelset: Preisdetektor}
 Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise angegeben werden, die vorhanden sein müssen, um eine Webpage als positiv zu klassifizieren.\\
+\begin{table}
+\caption{Scores des Regelsets: Preisdetektor}
+\centering
 \begin{tabular}{|l|l|l|l|}
 	\hline
 	Schwellwert & F1-Score & Precision & Recall\\
@@ -25,11 +32,15 @@ Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise an
 	2 & 0.46 & 0.45 & 0.47 \\
 	3 & 0.41 & 0.49 & 0.36 \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Das beste Ergebnis hat ein Schwellwert von zwei erzielt, danach ist der F1-Score wieder schlechter geworden.
 Daraus wurde geschlussfolgert, dass für dieses Regelset das Maximum bereits erreicht wurde.
 \subsection{Regelset: Kombination aus Menü im Titel und Preisdetektor}
 Bei dieser Konfiguration ebenfalls kann der Schwellwert für die Anzahl erkannter Preise angegeben werden.\\
+\begin{table}
+	\caption{Scores des Regelsets: Kombination aus Menü im Titel und Preisdetektor}
+	\centering
 \begin{tabular}{|l|l|l|l|}
 	\hline
 	Schwellwert & F1-Score & Precision & Recall\\
@@ -38,11 +49,15 @@ Bei dieser Konfiguration ebenfalls kann der Schwellwert für die Anzahl erkannte
 	2 & 0.47 & 0.43 & 0.52 \\
 	3 & 0.43 & 0.45 & 0.41 \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Auch bei diesem Regelset hat die Konfiguration mit einem Schwellwert von zwei das beste Ergebnis erzielt.
 \subsection{Regelset: Listing}
 Beim Listing können zwei Schwellwerte angeben werden, einen für die Anzahl übereinstimmender Wörter aus der Whitelist und einen für die Blacklist.
 In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erhöht:\\
+\begin{table}
+	\caption{Scores der ersten Iteration des Regelsets: Listing}
+	\centering
 \begin{tabular}{|l|l|l|l|l|}
 	\hline
 	Schwellwert Whitelist & Schwellwert Blacklist & F1-Score & Precision & Recall\\
@@ -53,9 +68,13 @@ In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erh�
 	20 & 20 & 0.33 & 0.85 & 0.21 \\
 	30 & 30 & 0.27 & 0.91 & 0.16 \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Dieser Versuch hat gezeigt, dass ein maximaler F1-Score bei gleichen Werten zwischen 5 und 20 zu erreichen ist.\\
 Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden in zweiten Versuch wurden unterschiedliche Verhältnisse getestet:\\
+\begin{table}
+	\caption{Scores der zweiten Iteration des Regelsets: Listing}
+	\centering
 \begin{tabular}{|l|l|l|l|l|}
 	\hline
 	Schwellwert Whitelist & Schwellwert Blacklist & F1-Score & Precision & Recall\\
@@ -63,9 +82,13 @@ Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden 
 	5 & 1 & 0.12 & 0.82 & 0.07 \\
 	1 & 5 & 0.31 & 0.24 & 0.45 \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Aus diesem Versuch entstand die Schlussfolgerung, dass ein höherer Schwellwert der Blacklist als der Whitelist erforderlich ist, um einen möglichst hohen Score zu erreichen.
 Diese Erkenntnis wurde in einem weiteren Versuch in mehreren Iterationen getestet:\\
+\begin{table}
+	\caption{Scores der dritten Iteration des Regelsets: Listing}
+	\centering
 \begin{tabular}{|l|l|l|l|l|}
 	\hline
 	Schwellwert Whitelist & Schwellwert Blacklist & F1-Score & Precision & Recall\\
@@ -81,7 +104,8 @@ Diese Erkenntnis wurde in einem weiteren Versuch in mehreren Iterationen geteste
 	7 & 20 & 0.55 & 0.60 & 0.50 \\
 	8 & 20 & 0.53 & 0.64 & 0.46 \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Die Schwellwerte wurden stetig erhöht.
 Verschiedene Schwellwerte in unterschiedlichen Verhältnissen wurden dabei getestet.
 Sobald einer dieser Schwellwerte zu einem schlechteren Ergebnis geführt hat, wurde er wieder reduziert oder ein neuer Verhältnis wurde getestet.
@@ -91,6 +115,9 @@ Da diese Werte nicht im Bereich einer brauchbaren Klassifikation sind, wurde auf
 Bei diesem Regelset kann die Grösse der Black- und Whitelist (Features), das Verhältnis zwischen Test- und Trainingsdaten (Split) sowie ein Schwellwert angegeben werden.
 Für das Verhältnis zwischen Test- und Trainingsdaten wurden die Werte 0.3, 0.5 und 0.7 getestet.
 In einer ersten Iteration wurde die Anzahl von 200 Features und ein Split von 0.3 verwendet, um herauszufinden, ob ein positiver oder negativer Schwellwert bessere Werte erzielt.\\
+\begin{table}
+	\caption{Scores der ersten Iteration des Regelsets: Bag of Words}
+	\centering
 \begin{tabular}{|l|l|l|l|}
 	\hline
 	Schwellwert & F1-Score & Precision & Recall\\
@@ -99,9 +126,13 @@ In einer ersten Iteration wurde die Anzahl von 200 Features und ein Split von 0.
 	2 & 0.51 & 0.38 & 0.75 \\
 	-2 & 0.68 & 0.74 & 0.63 \\
 	\hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Dabei wurde erkannt, dass sich ein negativer Schwellwert positiv auf den F1-Score auswirkt.\\
 In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
+\begin{table}
+	\caption{Scores der zweiten Iteration des Regelsets: Bag of Words}
+	\centering
 \begin{tabular}{|l|l|l|l|}
 	\hline
 	Schwellwert & F1-Score & Precision & Recall\\
@@ -110,9 +141,13 @@ In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
 	-4 & 0.66 & 0.86 & 0.54 \\
 	-5 & 0.66 & 0.89 & 0.52 \\
 	\hline
-\end{tabular}\\ 
+\end{tabular}
+\end{table}\\ 
 Da diese Werte sich fast nicht unterscheiden, wurden alle weiterverwendet, um einen maximalen Score zu evaluieren.
 In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 - 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die folgende Tabelle zeigt diese Tests, sortiert nach bestem F1-Score:\\
+\begin{table}
+	\caption{Scores der dritten Iteration des Regelsets: Bag of Words}
+	\centering
 \begin{tabular}{ | l | l | l | l | l | l | }
 	\hline
 	Split & Features & Limit & F1 & Pre & Rec \\ \hline
@@ -152,7 +187,8 @@ In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 - 
 	0.3 & 300 & -5 & 0.65 & 0.85 & 0.52 \\ 
 	0.5 & 200 & -5 & 0.65 & 0.87 & 0.52 \\
 	0.5 & 300 & -2 & 0.46 & 0.62 & 0.36 \\ \hline
-\end{tabular}\\
+\end{tabular}
+\end{table}\\
 Daraus lässt sich schliessen, dass eine hohe Anzahl Features zu einem besseren Ergebnis führt.
 Das Verhältnis zwischen Test- und Trainingsdaten ist nicht so relevant, da sowohl das Verhältnis 0.3 als auch 0.7 zu hohen Scores führt.
 Der Schwellwert ist im Bereich -2 bis -5 ebenfalls nicht aussagekräftig, da auch dieser bei den besten Scores vertreten ist.
