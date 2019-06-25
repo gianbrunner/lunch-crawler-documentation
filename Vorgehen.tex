@@ -105,9 +105,33 @@ Aufgrund von verschiedenen Visualisierungen der Textdaten wurde erkannt, dass es
 Die Scikit-Learn Feature-Extraction Methoden bieten einfache Schnittstellen für die Extrahierung von N-Grammen.
 Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die 14 Algorithmen mit den neuen Features trainiert und wieder validiert.
 \subsubsection{Einfaches Preprocessing}
+Um die Textdaten auf eine vereinheitlichte Form zu bringen, wurden einfache Preprocessingschritte durchgeführt.
+Als einfache Preprocessingschritte gelten im Kontext vom Machine-Learning Teil der Bachelorarbeit folgende Funktionen:
+\begin{itemize}
+\item Den gesamten Text auf Kleinbuchstaben umwandeln
+\item Die Umlaute ersetzen
+\item Sonderzeichen entfernen
+\item Alleinstehende Zeichen entfernen
+\item Multiple Leerzeichen entfernen
+\end{itemize}
+Diese Funktionen können im Unterkapitel \ref{preprocessing} nachgeschlagen werden.
 \subsubsection{Fortgeschrittenes Preprocessing}
+Fortschrittliche Preprocessingschritte haben die Aufgabe den Text weiter zu modifizieren und die Extrahierung von zusätzlichen Informationen zu vereinfachen.
+Im Kontext vom Machine-Learning Teil zählen folgende Preprocessingschritte zu den fortschrittlichen Funktionen:
+\begin{itemize}
+	\item Das Markieren von Preisen mit entsprechenden Tags
+	\item Die Stammformreduktion
+	\item Das Entfernen von Stopwörtern
+	\item Das Markieren von Information, die sich auf Getränke beziehen
+\end{itemize}
+Diese fortschrittlichen Funktionen können ebenfalls im Unterkapitel \ref{preprocessing} nachgelesen werden.
 \subsubsection{Anzahl extrahierter Features}
-
+Jeder Algorithmus verhaltet sich mit der Änderung der Anzahl Features unterschiedlich.
+Um eine optimale Anzahl an Features zu ermitteln, musste schrittweise die Anzahl Features erhöht werden, die Algorithmen mit der neuen Anzahl trainiert und schlussendlich validiert werden.
+Dies ist ein recht rechenintensives Unterfangen, führt in der Regel jedoch zu spürbaren Verbesserungen der Scores bei allen Algorithmen, sofern ein lokales Maximum der jeweiligen Algorithmen gefunden werden kann.
+Die Messungen wurden mit einer Anzahl Features von 10 gestartet und schrittweise um 25 Features erhöht, bis schlussendlich eine maximale Anzahl von 400 Features erreicht wurde.
+Da die Rechenzeit stetig mit der Erhöhung von Features steigt, wurde die Grenze bei 400 Features gesetzt.
+Grundsätzlich macht eine Begrenzung der Features Sinn, da ab einer gewissen Anzahl Features die Algorithmen mit der Handhabung der Features überfordert sind und dies sich dementsprechend auf schlechteren Scores widerspiegelt.
 \subsubsection{Erstellen der Konfigurationen}
 \section{Produktive Pipeline}
 \section{Webapplikation}

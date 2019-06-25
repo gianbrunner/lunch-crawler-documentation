@@ -178,7 +178,7 @@ Die daraus folgende Pipeline beinhaltet folgende Tasks:
 	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
 \end{itemize}
 \subsubsection{Scikit Learn}
-\subsection{Preprocessing}
+\subsection{Preprocessing}\label{preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
 Diese werden sequenziell in der unten aufgeführten Reihenfolge angewandt und können mittels Konfiguration sowohl für den Text als auch Titel eines Dokuments ein- oder ausgeschaltet werden.
@@ -253,7 +253,7 @@ Zum Schluss findet eine sequenzielle Klassifizierung statt, das heisst:
 Wenn der Zähler der Blacklist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als negativ klassifiziert. 
 Wenn der Zähler der Whitelist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als Menüseite klassifiziert.
 Falls keiner der beiden Zähler den Schwellwert überschreitet, wird die Webpage ebenfalls als negativ klassifiziert. 
-\subsubsection{Bag of Words}
+\subsubsection{Bag of Words}\label{sec:bow}
 Dieser Algorithmus basiert auf dem statistischen Ansatz namens \glqq Bag of Words\grqq.
 Bag of Words zählt für jede Webpage, wie oft ein Wort darin vorkommt.
 In dieser Anwendung wird jedoch nur erkannt, ob ein Wort vorkommt, oder nicht, die Anzahl spielt keine Rolle.
@@ -264,8 +264,19 @@ Die Anzahl der Wörter dieser Listen ist konfigurierbar.
 Die Klassifikation findet wieder mittels Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
-\subsection{Feature-Extraction für Machine-Learning}
-\subsection{Klassifizierung mittels Machine Learning}
+\subsection{Feature-relevante Methoden für Machine-Learning}
+\subsubsection{Bag of Words mit Worthäufigkeit}
+\subsubsection{Bag of Words ohne Worthäufigkeit}
+Die Funktionsweise von Bag of Words ohne Worthäufigkeit kann im Unterkapitel \ref{sec:bow} nachgelesen werden.
+\subsubsection{TF-IDF}
+\subsubsection{Latent Semantic Analysis}
+\subsection{Machine Learning Algorithmen}
+\subsubsection{Übersicht}
+Wegen des "No free lunch"-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
+Folgend werden jedoch nur die besten Klassifizierer in ihrer jeweiligen Kategorie aufgelistet und näher umschrieben.
+Im Anhang können alle Performer mit ihren entsprechenden Scores eingesehen werden.
+Für die Kategorie "Bag of Words mit Worthäufigkeit"
+\subsection{Klassifizierung mittels Machine-Learning}
 \subsubsection{Konfiguration}
 \subsubsection{}
 \subsection{Evaluierung}
