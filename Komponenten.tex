@@ -189,7 +189,7 @@ Die daraus folgende Pipeline beinhaltet folgende Tasks:
 	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
 \end{itemize}
 \subsubsection{Scikit Learn}
-\subsection{Preprocessing}
+\subsection{Preprocessing}\label{preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
 Diese werden sequenziell in der unten aufgeführten Reihenfolge angewandt und können mittels Konfiguration sowohl für den Text als auch Titel eines Dokuments ein- oder ausgeschaltet werden.
@@ -275,8 +275,62 @@ Die Anzahl der Wörter dieser Listen ist konfigurierbar.
 Die Klassifikation findet mittels einem Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
-\subsection{Klassifizierung mittels Machine Learning}
+\subsection{Feature-relevante Methoden für Machine-Learning}
+\subsubsection{Bag of Words mit Worthäufigkeit}
+\subsubsection{Bag of Words ohne Worthäufigkeit}
+Die Funktionsweise von Bag of Words ohne Worthäufigkeit kann im Unterkapitel \ref{sec:bow} nachgelesen werden.
+\subsubsection{TF-IDF}
+
+\subsubsection{Latent Semantic Analysis}
+
+\subsection{Machine Learning Algorithmen}
+\subsubsection{Übersicht}
+Wegen des "No free lunch"-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
+Nun erfolgt eine Auflistung aller Algorithmen die verwendet wurden.
+\begin{itemize}
+	\item Lineare Modelle
+	\begin{itemize}
+		\item Ridge Classifier
+		\item Perceptron
+		\item PassiveAgressiveClassifier
+		\item SGDClassifier (Stochastic Gradient Descent)
+	\end{itemize}
+	\item Naive Bayes Modelle
+	\begin{itemize}
+		\item Bernoulli-Naive-Bayes
+		\item Complement-Naive-Bayes
+		\item Multinomial-Naive-Bayes
+		\item Gaussian-Naive-Bayes
+	\end{itemize}
+	\item Tree Modelle
+	\begin{itemize}
+		\item DecisionTreeClassifier
+	\end{itemize}
+	\item Ensemble Modelle
+	\begin{itemize}
+		\item RandomForestClassifier
+		\item AdaBoostClassifier
+	\end{itemize}
+	\item Nearest Neighbor Modelle
+	\begin{itemize}
+		\item KNeighborClassifier
+		\item Nearest Centroid
+	\end{itemize}
+	\item Support Vector Machines Modelle
+	\begin{itemize}
+		\item LinearSVC (Support Vector Classification)
+	\end{itemize}
+\end{itemize}
+Jedoch nur die Algorithmen, welche nach der die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher umschrieben.
+Im Anhang können alle Performer mit ihren entsprechenden Scores eingesehen werden.
+\subsubsection{SGDClassifier}
+Der SGDClassifier konnte 
+\subsubsection{AdaBoostClassifier}
+\subsubsection{Perceptron}
+\subsubsection{RandomForestClassifier}
+\subsection{Klassifizierung mittels Machine-Learning}
 \subsubsection{Konfiguration}
+\subsubsection{}
 \subsection{Evaluierung}
 Da es sich in diesem Experiment um eine binäre Klassifizierung handelt, werden Metriken wie F1-Score, Precision und Recall verwendet.
 Dazu müssen zuerst die folgenden Klassifizierungskategorien erläutert werden:
