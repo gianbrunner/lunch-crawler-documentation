@@ -2,15 +2,16 @@
 \section{Webcrawler}
 \subsection{Erarbeitung des Seeds}
 Als Quelle für das Abrufen von Websites dient das Seed.
-Das Ziel war es, dieses mit möglichst vielen URLs von schweizer Restaurant-Websites zu füllen.
+Das Ziel war es, dieses mit möglichst vielen URLs von Schweizer Restaurant-Websites zu füllen.
 Dafür wurden zwei Ansätze verfolgt.
 Ein Verein Schweizer Restaurants, namentlich Lunch-Check\footnote{\url{https://www.lunch-check.ch/}} wurde angefragt, ob sie eine Liste ihrer Mitglieder zur Verfügung stellen.
 Zudem wurde der OpenStreetmap-API\footnote{\url{https://www.openstreetmap.ch/}} genutzt, um die darin enthaltenen Restaurant-URLs abzufragen.
 Die Daten aus beiden Quellen wurden zusammengeführt und dienen nun als Seed für die Abfragen des Webcrawlers.
 \subsection{Erarbeitung des Webcrawlers}
 Als erstes fand eine Einarbeitung in die Thematik von Docker statt, um StormCrawler damit zu betreiben.
-Apache Storm ist ebenfalls thematisiert worden, um die Grundlagen zu verstehen.
-Danach folgte die Einarbeitung in StormCrawler, zu Beginn war das Ziel, die Standardtopologie zu verstehen.
+Apache Storm ist ebenfalls thematisiert worden, da StormCrawler darauf basiert.
+Danach folgte die Einarbeitung in StormCrawler.
+Zu Beginn war das Ziel, die Standardtopologie zu verstehen.
 Sobald die Standardtopologie funktionierte, fanden Anpassungen statt, welche zur Erstellung der Rohdaten für den Gold Standard dienten.
 Explizit ist die Erstellung des Bolts zu erwähnen, welcher für das Schreiben der Output-Dateien zuständig ist.
 Dieser wurde zudem mit einer Sprachdetektion erweitert, welche erkennt, ob die Sprache der Webpage deutsch ist.
@@ -31,11 +32,11 @@ Trotzdem wurde ein erster Rohdatensatz mit dieser Performance gecrawlt, auf dem 
 Bei diesem Rohdatensatz wurden nur die als deutsch detektierten Webpages gespeichert, somit konnte die Abdeckung des Seeds nicht ausgewertet werden.
 Der Crawler wurde nochmals angepasst, sodass alle Webpages gespeichert werden, dies ermöglicht eine genauere Analyse der Rohdaten.
 Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt wurden und die Sprachdetektion nicht für jede Webpage neu gestartet wurde, was eine massive Performancesteigerung zur Folge hatte.
-Diverse weitere Crawldurchläufe wurden gemacht und analysiert.
+Diverse weitere Crawldurchläufe wurden gemacht und die gecrawlten Daten analysiert.
 Diese Analysen haben ergeben, dass einzelne Websites aus dem Seed enorm viele Webpages beinhalten, zum Teil über 30'000.
 Diese URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
 Für die zweite Durchführung des manuellen Labelings wurden die Rohdaten mit dem angepassten Seed neu gecrawlt.
-- Auführen der Crawl-Analyse
+%- Auführen der Crawl-Analyse
 \subsubsection{Erarbeitung des Entscheidungsrasters}
 Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten.
 Für dieses wurden die folgenden Entscheidungen getroffen:
@@ -45,11 +46,12 @@ Für dieses wurden die folgenden Entscheidungen getroffen:
 	\item Der Text muss statisch im HTML vorhanden sein, da dynamisch gerenderte Informationen vom Webcrawler nicht gespeichert werden
 	\item Es muss ein Menü, also eine Kombination aus mehreren Speisen oder eine einzelne Speise vorhanden sein
 	\item Eine genauere Beschreibung oder der Preis muss vorhanden sein
+	\item Getränkekarten werden explizit als negativ gelabelt
 \end{itemize}
-Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da zu Beginn dieser Arbeit eine optionale Aufgabe bestand, zwischen diesen Kategorien unterscheiden zu können.
+Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da diese Angebote zu einem späteren Zeitpunkt eventuell zusätzlich erkannt werden möchten.
 \subsubsection{Manuelles Labeling der Daten}
-In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort "Menu" in der URL enthalten.
-Die mit dieser Heuristik gelabelten Daten entsprechen jedoch nicht einer zufälligen Stichprobe aus den gesamten Rohdaten.
+In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort \glqq Menu\grqq{} in der URL enthalten.
+Die mit dieser Heuristik gefilterten Daten entsprechen jedoch nicht einer repräsentativen Teilmenge der gesamten Rohdaten.
 Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten ausgewählt und manuell gelabelt.
 Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
 \subsection{Verwendete Technologien}
@@ -65,15 +67,21 @@ Die Basisfunktionen des Preprocessings orientieren sich an einem Online-Artikel 
 Teile der darin beschriebenen Funktionen wurden angepasst und übernommen.
 Weiter wurde erkannt, dass Preise mittels Regulären Ausdrücken erkannt werden müssen, damit diese Informationen nicht verloren gehen.
 Darum ist eine Methode entwickelt worden, die diese Aufgabe erledigt.
-Für die Funktion des Stemmings ist nach einer entsprechenden Funktion gesucht worden, welche diese Aufgabe für die deutsche Sprache verrichtet.
+Für die Funktion der Stammformreduktion ist nach einer entsprechenden Funktion gesucht worden, welche diese Aufgabe für die deutsche Sprache verrichtet.
 Über die Dokumentation des Toolkits NLTK\footnote{\url{https://www.nltk.org/api/nltk.stem.html}} ist Cistem, ein Stemmer für die deutsche Sprache, gefunden und später als Preprocessing-Methode implementiert worden.
-Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt worden, welche 
-- Stemmer in Deutsch
-- Regex für Preise
-- Stoppwortliste aus mehreren QUellen
-- 
+Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt worden.
 \subsection{Regelbasierte Klassifikation}
+Die erstellten Regeln sind grösstenteils anhand Beobachtungen beim manuellen Labeln entstanden.
+Dabei wurde erkannt, dass Preise sowie Speisenamen und Zutaten ein markantes Merkmal von Menüseiten sind.
+Diese Informationen eignen sich für eine Whitelist.
+Im Gegensatz gibt es viele Websites mit Webpages wie \glqq Imperessum\grqq{}, \glqq Anfahrt\grqq{} etc. welche typische Schlagwörter beinhalten, die in einer Blacklist aufgeführt werden können.
+Durch die Regel \glqq Bag of Words\grqq{} wurde derselbe Ansatz wie beim Listing verfolgt, jedoch mit dem Ziel, durch die gleichnamige statistische Methode diese Listen dynamisch zu erzeugen.
+Lediglich die Regel zur Erkennung des Schlagworts \glqq menü\grqq{} ist unter der Annahme entstanden, dass Webpages eine korrekte Angabe von Informationen im Metatag \glqq Title\grqq{} verwenden.
 \subsubsection{Erstellen der Konfigurationen}
+Die Konfiguration wurde erstellt, um einzelne Methoden des Preprocessings sowie die Art der Klassifizierung angeben zu können.
+Wo möglich wurden Schwellwerte eingebaut, um die Klassifizierung eines Dokuments regulieren zu können.
+Diese Schwellwerte wurden über mehrere Iterationen verändert, um möglichst hohe Scores zu erreichen.
+Die Parameter dazu sind in \cref{cap:exp_class} ersichtlich.
 \subsection{Machine-Learning Klassifikation}
 \subsubsection{Einleitung}
 Für die Klassifizierung mit Machine-Learning wurden mehrere Algorithmen jeweils mit den Metriken F1-Score, Recall und Precision ausgewertet.
