@@ -1,17 +1,52 @@
 \chapter{Gold Standard}
 \section{Beschreibung des Gold Standards}
-Der erarbeitete Gold Standard besteht insgesamt aus 6350 Dateien des Formats JSON, welche jeweils eine Webpage einer Restaurant-Website repräsentieren.
-Zudem beinhaltet er einen Testdatensatz.
+Der erarbeitete Gold Standard besteht insgesamt aus 6963 Dateien des Formats JSON, welche jeweils eine Webpage einer Restaurant-Website repräsentieren.
+Diese Daten sind in einen Test- und einen Trainings- und Validierungsdatensatz.
 Der Gold Standard ist in die folgenden drei Kategorien unterteilt:\\
-\begin{tabular}{|l|l|l|l|}
-	\hline
-	Kategorie & Ordnername & Anzahl Dateien & Anzahl Dateien im Testsatz\\
-	\hline
-	Menü & pos\textunderscore menu & 497 & 40 \\
-	Tagesmenü & pos\textunderscore daily\textunderscore menu & 78 & 10 \\
-	Kein Menü & neg & 5775 & 50\\
-	\hline
-\end{tabular}\\
+
+\begin{forest}
+	for tree={
+		font=\ttfamily,
+		grow'=0,
+		child anchor=west,
+		parent anchor=south,
+		anchor=west,
+		calign=first,
+		edge path={
+			\noexpand\path [draw, \forestoption{edge}]
+			(!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+		},
+		before typesetting nodes={
+			if n=1
+			{insert before={[,phantom]}}
+			{}
+		},
+		fit=band,
+		before computing xy={l=15pt},
+	}
+	[Gold Standard (6963 Dateien)
+	[test (100 Dateien)
+	[neg (50 Dateien)]
+	[pos\textunderscore daily\textunderscore menu (10 Dateien)]
+	[pos\textunderscore menu (40 Dateien)]
+	]
+	[train-validation (6863 Dateien)
+	[neg (6257 Dateien)]
+	[pos\textunderscore daily\textunderscore menu (87 Dateien)]
+	[pos\textunderscore menu (519 Dateien)]
+	]
+	]
+\end{forest}\\
+
+%\begin{tabular}{|l|l|l|l|}
+%	\hline
+%	Kategorie & Ordnername & Anzahl Dateien & Anzahl Dateien im Testsatz\\
+%	\hline
+%	Menü & pos\textunderscore menu & 519 & 40 \\
+%	Tagesmenü & pos\textunderscore daily\textunderscore menu & 87 & 10 \\
+%	Kein Menü & neg & 6257 & 50\\
+%	\hline
+%\end{tabular}\\
 Jeder Eintrag dieses Gold Standards beinhaltet die folgenden Informationen:
 \begin{itemize}
 	\item \glqq date \grqq  - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
@@ -23,9 +58,10 @@ Jeder Eintrag dieses Gold Standards beinhaltet die folgenden Informationen:
 \end{itemize}
 \section{Entscheidungsraster}
 Der Gold Standard wurde anhand des Entscheidungsrasters erstellt, welches in der Abbildung \cref{fig:classificationtree} dargestellt wird.
-\begin{figure}
-	\label{fig:classificationtree}
+\begin{figure}[H]	
 	\includegraphics[width=1\columnwidth,keepaspectratio]{img/man-classification-tree.jpg}
+	\caption{Entscheidungsraster}
+	\label{fig:classificationtree}
 \end{figure}
 Obwohl bereits beim Webcrawler eine Spracherkennung eingesetzt wurde, damit nur als deutsch erkannte Webpages gespeichert werden, wurde bei der manuellen Klassifikation nochmals darauf geachtet, dass die Webpage in deutsch verfasst wurde.
 Dabei ist anzumerken, dass gewisse Begriffe, vor allem für Speisebezeichnungen, auch fremdsprachig sein dürfen, da Speisebezeichnungen je nach Küche international ausgelegt sind.
