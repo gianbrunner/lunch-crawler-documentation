@@ -78,8 +78,11 @@ Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt word
 \subsubsection{Einleitung}
 Für die Klassifizierung mit Machine-Learning wurden mehrere Algorithmen jeweils mit den Metriken F1-Score, Recall und Precision ausgewertet.
 Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html}}\footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538}} zusammengetragen und stetig anhand ihrer Metriken verglichen.
+Alle Algorithmen wurden aus Online-Artikeln entnommen, die ebenfalls eine textliche Klassifizierung verfolgten und diese Artikel dienten als Leitfaden für den Aufbau der ganzen Machine-Learning Pipelines.
 Alle Algorithmen wurden jeweils mit ihrer Standardkonfiguration trainiert und anschliessend mit einem vorbehaltenen Validierungsset validiert, um einen möglichst unverzerrten Vergleich zu erzielen.
 Schrittweise wurden für alle 14 Algorithmen folgende Pipelinekomponenten angepasst und versucht, einen optimalen Wert zu ermitteln.
+Dabei wurde die Reihenfolge der Auflistung bei der schrittweisen Optimierung beibehalten.
+Die Erkenntnisse aus den Optimierungen flossen immer beim nächsten Optimierungsschritt mit ein.
 \begin{enumerate}
 	\item Dimensionsreduktion der Features 
 	\item Angabe von Klassenverteilung
@@ -93,12 +96,17 @@ Die Ermittlung der optimalen Pipelinekomponenten erfolgte somit unabhängig für
 \subsubsection{Dimensionsreduktion der Features}
 Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Analysis)\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}} versucht, aus einer Vielzahl von Features nur die Aussagekräftigsten zu ermitteln.
 Dies wird erreicht, indem SLA Beziehungen von Wörtern mit ähnlicher Bedeutung erkennt.
-Es wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung "TruncatedSVD" die Feature-Reduktion vorgenommen. Alle drei Feature-Extraction Methoden wurden mit LSA auf 100 Features reduziert, trainiert und schlussendlich mit ihren Metriken verglichen.
+Zuerst wurde über die API der drei Feature-Extraction Methoden die Anzahl Features direkt auf 100 Stück reduziert und ohne Verwendung von LSA an die Algorithmen weitergegeben.
+Diese wurden dann trainiert, validiert und die Werte aufgenommen.
+Anschliessend wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung "TruncatedSVD" die Feature-Reduktion auf 100 Stück durchgeführt.
+Danach wurden die Algorithmen mit den Features trainiert und validiert.
+Die aus beiden Aushebungen ermittelten Werte wurde dann miteinander verglichen.
 \subsubsection{Klassenverteilung}
 Da die Daten aus dem Goldstandard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
 Die Gewichtung, auf ein positives Sample folgen 10.32 negative Samples, wurde den Algorithmen fürs Trainieren mitgegeben.
-Die Gewichtung konnte nicht allen Algorithmen zugewiesen werden, da manche während dem Training solche Informationen nicht verwerten können.
 Mittels der Klassenverteilung können die Algorithmen die unterrepräsentierten Klassen, in unserem Falle die positive Klasse, stärker gewichten und den Fokus darauf setzen.
+Einerseits wurden die Algorithmen ohne Klassengewichtung trainiert und validiert und andererseits mit der Angabe der Klassengewichtung.
+Zu erwähnen ist, dass die Gewichtung nicht allen Algorithmen zugewiesen werden konnte, da manche Algorithmen während dem Training solche Informationen nicht verwerten können.
 \subsubsection{N-Gramme}
 Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
 Aufgrund von verschiedenen Visualisierungen der Textdaten wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
@@ -115,6 +123,7 @@ Als einfache Preprocessingschritte gelten im Kontext vom Machine-Learning Teil d
 \item Multiple Leerzeichen entfernen
 \end{itemize}
 Diese Funktionen können im Unterkapitel \ref{preprocessing} nachgeschlagen werden.
+Es wurde lediglich analysiert, was für Auswirkungen gar kein Preprocessing im Vergleich zu einfachem Preprocessing besitzt.
 \subsubsection{Fortgeschrittenes Preprocessing}
 Fortschrittliche Preprocessingschritte haben die Aufgabe den Text weiter zu modifizieren und die Extrahierung von zusätzlichen Informationen zu vereinfachen.
 Im Kontext vom Machine-Learning Teil zählen folgende Preprocessingschritte zu den fortschrittlichen Funktionen:
@@ -125,6 +134,8 @@ Im Kontext vom Machine-Learning Teil zählen folgende Preprocessingschritte zu d
 	\item Das Markieren von Information, die sich auf Getränke beziehen
 \end{itemize}
 Diese fortschrittlichen Funktionen können ebenfalls im Unterkapitel \ref{preprocessing} nachgelesen werden.
+Es wurden die Auswirkungen von jeglichen Kombinationen der fortgeschrittenen Preprocessingschritten getestet.
+Bei vier verschiedenen Arten ergeben sich 16 verschiedene Kombinationen.
 \subsubsection{Anzahl extrahierter Features}
 Jeder Algorithmus verhaltet sich mit der Änderung der Anzahl Features unterschiedlich.
 Um eine optimale Anzahl an Features zu ermitteln, musste schrittweise die Anzahl Features erhöht werden, die Algorithmen mit der neuen Anzahl trainiert und schlussendlich validiert werden.
