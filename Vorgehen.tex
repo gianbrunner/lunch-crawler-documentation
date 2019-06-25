@@ -70,16 +70,16 @@ Für die Funktion des Stemmings ist nach einer entsprechenden Funktion gesucht w
 Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt worden, welche 
 - Stemmer in Deutsch
 - Regex für Preise
-- Stoppwortliste aus mehreren QUellen
+- Stoppwortliste aus mehreren Quellen
 - 
 \subsection{Regelbasierte Klassifikation}
 \subsubsection{Erstellen der Konfigurationen}
 \subsection{Machine-Learning Klassifikation}
 \subsubsection{Einleitung}
 Für die Klassifizierung mit Machine-Learning wurden mehrere Algorithmen jeweils mit den Metriken F1-Score, Recall und Precision ausgewertet.
-Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln zusammengetragen und stetig anhand ihrer Metriken verglichen.
-Alle Algorithmen wurden jeweils mit ihrer Standardkonfiguration trainiert und anschliessend validiert, um einen möglichst unverzerrten Vergleich zu haben.
-Schrittweise wurden folgende Pipelinekomponenten angepasst und versucht, einen optimalen Wert zu ermitteln.
+Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html}}\footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538}} zusammengetragen und stetig anhand ihrer Metriken verglichen.
+Alle Algorithmen wurden jeweils mit ihrer Standardkonfiguration trainiert und anschliessend mit einem vorbehaltenen Validierungsset validiert, um einen möglichst unverzerrten Vergleich zu erzielen.
+Schrittweise wurden für alle 14 Algorithmen folgende Pipelinekomponenten angepasst und versucht, einen optimalen Wert zu ermitteln.
 \begin{enumerate}
 	\item Dimensionsreduktion der Features 
 	\item Angabe von Klassenverteilung
@@ -88,21 +88,25 @@ Schrittweise wurden folgende Pipelinekomponenten angepasst und versucht, einen o
 	\item Anwendung von fortgeschrittenen Preprocessingschritten
 	\item Anzahl extrahierter Features
 \end{enumerate}
-Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und zu einem späteren Zeitpunkt noch Bag-of-Words ohne Worthäufigkeit verwendet.
+Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und Bag-of-Words ohne Worthäufigkeit verwendet.
+Die Ermittlung der optimalen Pipelinekomponenten erfolgte somit unabhängig für drei unterschiedliche Feature-Extraction Methoden und jeweils für 14 Algorithmen mit deren Standardkonfigurationen.
 \subsubsection{Dimensionsreduktion der Features}
 Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Analysis)\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}} versucht, aus einer Vielzahl von Features nur die Aussagekräftigsten zu ermitteln.
 Dies wird erreicht, indem SLA Beziehungen von Wörtern mit ähnlicher Bedeutung erkennt.
-Es wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung "TruncatedSVD" die Feature-Reduktion vorgenommen.
+Es wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung "TruncatedSVD" die Feature-Reduktion vorgenommen. Alle drei Feature-Extraction Methoden wurden mit LSA auf 100 Features reduziert, trainiert und schlussendlich mit ihren Metriken verglichen.
 \subsubsection{Klassenverteilung}
 Da die Daten aus dem Goldstandard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
 Die Gewichtung, auf ein positives Sample folgen 10.32 negative Samples, wurde den Algorithmen fürs Trainieren mitgegeben.
 Die Gewichtung konnte nicht allen Algorithmen zugewiesen werden, da manche während dem Training solche Informationen nicht verwerten können.
+Mittels der Klassenverteilung können die Algorithmen die unterrepräsentierten Klassen, in unserem Falle die positive Klasse, stärker gewichten und den Fokus darauf setzen.
 \subsubsection{N-Gramme}
 Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
 Aufgrund von verschiedenen Visualisierungen der Textdaten wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
-Die Scikit-Learn Extrahierungsmethoden bieten einfache Schnittstelle für die Extrahierung von N-Grammen.
+Die Scikit-Learn Feature-Extraction Methoden bieten einfache Schnittstellen für die Extrahierung von N-Grammen.
+Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die 14 Algorithmen mit den neuen Features trainiert und wieder validiert.
 \subsubsection{Einfaches Preprocessing}
 \subsubsection{Fortgeschrittenes Preprocessing}
+\subsubsection{Anzahl extrahierter Features}
 
 \subsubsection{Erstellen der Konfigurationen}
 \section{Produktive Pipeline}
