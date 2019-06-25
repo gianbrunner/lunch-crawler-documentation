@@ -269,11 +269,42 @@ Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert
 \subsubsection{Bag of Words ohne Worthäufigkeit}
 Die Funktionsweise von Bag of Words ohne Worthäufigkeit kann im Unterkapitel \ref{sec:bow} nachgelesen werden.
 \subsubsection{TF-IDF}
+
 \subsubsection{Latent Semantic Analysis}
+
 \subsection{Machine Learning Algorithmen}
 \subsubsection{Übersicht}
 Wegen des "No free lunch"-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
-Folgend werden jedoch nur die besten Klassifizierer in ihrer jeweiligen Kategorie aufgelistet und näher umschrieben.
+Nun erfolgt eine Auflistung aller Algorithmen die verwendet wurden.
+\begin{itemize}
+	\item Lineare Modelle
+	\begin{itemize}
+		\item Ridge Classifier
+		\item Perceptron
+		\item PassiveAgressiveClassifier
+		\item SGDClassifier (Stochastic Gradient Descent)
+	\end{itemize}
+	\item Naive Bayes Modelle
+	\begin{itemize}
+		\item Bernoulli-Naive-Bayes
+		\item Complement-Naive-Bayes
+		\item Multinomial-Naive-Bayes
+		\item Gaussian-Naive-Bayes
+	\end{itemize}
+	\item Tree Modelle
+	\begin{itemize}
+		\item DecisionTreeClassifier
+	\end{itemize}
+	\item Ensemble Modelle
+	\begin{itemize}
+		\item RandomForestClassifier
+		\item AdaBoostClassifier
+	\end{itemize}
+\end{itemize}
+
+Jedoch nur der Algorithmus mit dem besten F1-Score und der besten Precision in ihrer jeweiligen Kategorie aufgelistet und näher umschrieben.
+
+
 Im Anhang können alle Performer mit ihren entsprechenden Scores eingesehen werden.
 Für die Kategorie "Bag of Words mit Worthäufigkeit"
 \subsection{Klassifizierung mittels Machine-Learning}
