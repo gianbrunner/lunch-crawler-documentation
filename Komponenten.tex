@@ -17,6 +17,7 @@ StormCrawler ist ein opensource Software Development Kit, welches auf Apache Sto
 Er dient als Baukasten, um einen Webcrawler aufzubauen, der skalierbar, stabil und sehr effizient ist.
 Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden.
 Zudem berücksichtigt er die Regeln des Webcrawling, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
+Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden.
 StromCrawler ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsubsection{Docker}
 \paragraph{Docker Einführung}
@@ -121,11 +122,21 @@ Die Containerinhalte existieren nur so lange, wie auch die Container existieren.
 Mit dem Docker-Compose-Befehl "docker-compose up" wird das im gleichen Pfad existierende Composefile gestartet und alle Container erstellt.
 Docker-Compose erstellt für alle Container in einer Gruppierung einzigartige ID-Namen, damit alle Container innerhalb der Gruppierung miteinander kommunizieren können.
 \footnote{\url{https://github.com/DigitalPebble/storm-crawler/}}
-\subsection{Konfiguration}
+\subsection{Konfiguration des StormCrawlers}
 Die Grundlage der Konfiguration ist die Standardtopologie des Stromcrawlers auf Github.
 \footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/}}
-Es wurde ein neuer Bolt erstellt, welcher für das Schreiben des Outputs zuständig ist.
-Dieser schreibt für jede Webpage eine JSON Datei mit den folgenden Informationen:
+Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
+\begin{enumerate}
+	\item MemorySpout - Einlesen einer URL aus einem Array
+	\item URLPartitionerBolt - Geneneriert einen eindeutigen Partition Key
+	\item FetcherBolt - Ruft die Webpage ab
+	\item SiteMapParserBolt - Erkennt die Sitemap-Datei und fügt weitere URLs zum MemorySpout hinzu
+	\item FeedParserBolt - Extrahiert URLs aus Feeds
+	\item JSoupParserBolt - Extrahiert Informationen wie Metatags oder den Text aus der Webpage
+	\item SdtOutIndexer - Gibt die Informationen einer Webpage über die Konsole aus
+\end{enumerate}
+Ein selbst erstellter Bolt, welcher für das Schreiben des Outputs zuständig ist hat in dieser Konfiguration den StdOutIndexer ersetzt.
+Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, eine JSON Datei mit den folgenden Informationen:
 \begin{itemize}
 	\item \glqq date \grqq  - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
 	\item \glqq text \grqq  - Vom Webcrawler extrahierter Text, welcher die Webpage beinhaltet
@@ -134,9 +145,9 @@ Dieser schreibt für jede Webpage eine JSON Datei mit den folgenden Informatione
 	\item \glqq url \grqq  - URL der Webpage
 	\item \glqq content \grqq  - Der statische HTML-Inhalt der Webpage	
 \end{itemize}
-Der Dateiname wird aus der URL der Webpage generiert. 
-Sonderzeichen, die in Dateinamen nicht erlaubt sind, werden entfernt und falls die URL länger ist, als die erlaubte Dateinamenslänge, wird dieser abgeschnitten und mit einem zufälligen vierstelligen Suffix erweitert.
-Zudem kommt darin eine Spracherkennung zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
+Der Dateiname dieser JSON Dateien wird aus der URL der Webpage generiert. 
+Sonderzeichen, die in Dateinamen nicht erlaubt sind, werden entfernt. Falls die URL länger ist, als die erlaubte Dateinamenslänge, wird diese abgeschnitten und mit einem zufälligen vierstelligen Suffix erweitert.
+Zudem kommt darin eine Spracherkennung \glqq Lingua\footnote{\url{https://github.com/pemistahl/lingua}}\grqq{} zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
 Als deutsch detektierte Webpages werden in einen separaten Output-Ordner gespeichert, damit diese nachfolgend von Hand gelabelt werden können.
 Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, damit im Anschluss des Crawlens eine Aussage gemacht werden kann, wie viele Einträge des Seeds effektiv gecrawlt wurden.
 
@@ -144,9 +155,9 @@ Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, dam
 \subsection{Verwendete Technologien}
 \subsubsection{Luigi}
 Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist.
-Pipelining dient dazu da, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
+Pipelining dient dazu, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
 Pipelining wird meist im Kontext von Big Data oder Machine-Learning angewendet, wo sich viele einzelne Tasks mit grossen Datenmenge beschäftigen.
-Luigi wird selbst von Spotify in der Produktion verwendet und bietet unteranderem folgende Features:
+Luigi wird selbst von Spotify in der Produktion verwendet und bietet unter anderem folgende Features:
 \begin{itemize}
 	\item Einzelne Tasks idempotent ausführen
 	\item Teilschritte oder gesamte Pipeline kann über Konsolenausgabe oder Webinterface überwacht werden
@@ -183,7 +194,7 @@ Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standar
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
 Diese werden sequenziell in der unten aufgeführten Reihenfolge angewandt und können mittels Konfiguration sowohl für den Text als auch Titel eines Dokuments ein- oder ausgeschaltet werden.
 \subsubsection{Gross-/Kleinschreibung}
-Alle Buchstaben, welche grossgeschrieben sind, werden durch Kleinbuchstaben ersetzt.
+Alle Buchstaben, welche grossgeschrieben sind, werden durch die entsprechenden Kleinbuchstaben ersetzt.
 \subsubsection{Umlaute ersetzen}
 Umlaute werden durch ihre verwandten Selbstlaute ersetzt, genauer:
 \begin{itemize}
@@ -208,7 +219,7 @@ Die nun aufgeführte Liste zeigt die verschiedenen Schlüsselwörter:
 	\item Zweistellig $\rightarrow$ twodigitprice
 	\item Dreistellig $\rightarrow$ threedigitprice
 \end{itemize} 
-Um Zeitangaben nicht als Preise zu erkennen, werden nur Rappenbeträge, welche 60 oder höher sind, erkannt.
+Um Zeitangaben nicht als Preise zu erkennen, werden bei Preisangaben ohne Währungsangabe nur Beträge mit Rappenbeträgen, welche 60 oder höher sind, erkannt.
 \subsubsection{Sonderzeichen entfernen}
 Alle Sonderzeichen, die nicht in der folgenden Auflistung vorkommen, werden durch einen Leerschlag ersetzt:
 %Eventuell noch anpassen, da Grossbuchstaben nicht mehr relevant sind (EVTL. é usw auch noch ersetzen?)
@@ -221,11 +232,11 @@ Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen L
 Da durch die vorhergehenden Schritte oft multiple Leerschläge anfallen, werden diese auf einen Leerschlag reduziert.
 \subsubsection{Stammformreduktion}
 Dieses Verfahren führt verschiedene morphologische Varianten eines Wortes auf ihren gemeinsamen Stamm zurück.
-Dafür wird der Stemmer \glqq Cistem\footnote{\url{https://github.com/LeonieWeissweiler/CISTEM}} \grqq verwendet, da für die deutsche Sprache nur wenig Alternativen vorhanden sind. 
+Dafür wird der Stemmer \glqq Cistem\footnote{\url{https://github.com/LeonieWeissweiler/CISTEM}}\grqq{} verwendet, da für die deutsche Sprache nur wenig Alternativen vorhanden sind. 
 \subsubsection{Getränkedetektor}
 % Referenz Cistem
-Eine Liste mit Einträgen verschiedenster Getränke bildet die Grundlage dieser Methode.
-Wenn im Text ein Getränk dieser Liste vorhanden ist, wird es durch das Schlüsselwort \glqq beverageentity\grqq ersetzt.
+Eine Liste mit Einträgen diverser Getränke bildet die Grundlage dieser Methode.
+Wenn im Text ein Getränk dieser Liste vorhanden ist, wird es durch das Schlüsselwort \glqq beverageentity\grqq{} ersetzt.
 Damit soll erreicht werden, dass ein einheitliches Merkmal geschaffen wird.
 \subsubsection{Stoppwörter entfernen}
 Bei Stoppwörter handelt es sich um Wörter, welche keine Relevanz für den Inhalt eines Texts haben, aber oft vorkommen.
@@ -235,33 +246,33 @@ Wenn eines dieser Wörter im Text vorkommt, wird es entfernt.
 \subsection{Regelbasierte Klassifizierung}
 Verschiedene Algorithmen kommen beim regelbasierten Klassifizieren zum Einsatz, welche nun genauer erläutert werden.
 \subsubsection{Menü im Titel}
-Dieser simple Algorithmus kontrolliert, ob das Wort "menu" im Metatag \glqq Title \grqq vorkommt.
-Falls ja, wird die Webpage als Menüseite klassiert.
+Dieser simple Algorithmus kontrolliert, ob das Wort \glqq menu\grqq{} im Metatag \glqq Title\grqq{} vorkommt.
+Falls ja, wird das Dokument als Menüseite klassiert.
 \subsubsection{Preisdetektor}
 Dieser Algorithmus funktioniert dankt der Preprocessing-Methode, welche den Preis erkennt.
-Sofern ein zweistelliger Preis erkannt wurde, wird die Webpage als Menüseite klassifiziert, dies unter der Annahme, dass Menüpreise oft zweistellig sind, im Gegensatz zu Getränkepreisen welche häufig einstellig sind und Hotelpreisen, die meist dreistellig sind.
+Sofern ein zweistelliger Preis im Text erkannt wurde, wird das Dokument als Menüseite klassifiziert. Dies unter der Annahme, dass Menüpreise oft zweistellig sind, im Gegensatz zu Getränkepreisen welche häufig einstellig sind und Hotelpreisen, die meist dreistellig sind.
 Die Anzahl vorhandener Preise kann über die Konfiguration angegeben werden.
 \subsubsection{Kombination aus Menü im Titel und Preisdetektor}
 Diese Kombination führt eine sequenzielle Klassifikation aus.
-Im ersten Schritt wird der Mechanismus des Algorithmus \glqq Menü im Titel \grqq verwendet.
+Im ersten Schritt wird der Mechanismus des Algorithmus \glqq Menü im Titel\grqq{} verwendet.
 Falls durch diesen keine positive Klassifikation zustande kommt, wird durch den Preisdetektor nochmals neu klassifiziert.
 \subsubsection{Listing}
 Dieser Algorithmus basiert sowohl auf dem Black- als auch auf dem Whitelisting Ansatz.
-Dazu wird eine Blacklist und eine Whitelist verwendet, welche von Hand erstellt wurden und Einträge enthalten, welche für die jeweiligen Kategorien typisch sind.
+Dazu wird eine Blacklist und eine Whitelist verwendet, die von Hand erstellt wurden und Einträge enthalten, welche für die jeweiligen Kategorien typisch sind.
 Falls ein Wort einer Liste im Text einer Webpage vorkommt, wird ein Zähler hochgezählt.
 Zum Schluss findet eine sequenzielle Klassifizierung statt, das heisst: 
 Wenn der Zähler der Blacklist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als negativ klassifiziert. 
 Wenn der Zähler der Whitelist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als Menüseite klassifiziert.
 Falls keiner der beiden Zähler den Schwellwert überschreitet, wird die Webpage ebenfalls als negativ klassifiziert. 
-\subsubsection{Bag of Words}\label{sec:bow}
-Dieser Algorithmus basiert auf dem statistischen Ansatz namens \glqq Bag of Words\grqq.
-Bag of Words zählt für jede Webpage, wie oft ein Wort darin vorkommt.
+\subsubsection{Bag of Words}
+Dieser Algorithmus basiert auf dem statistischen Ansatz namens \glqq Bag of Words\grqq{}.
+Dafür wird der komplette Datensatz in einen Trainings- und Testsatz in einem konfigurierbaren Verhältnis aufgeteilt.
+Bag of Words zählt für jedes Dokument der Trainingsdaten, wie oft ein Wort darin vorkommt.
 In dieser Anwendung wird jedoch nur erkannt, ob ein Wort vorkommt, oder nicht, die Anzahl spielt keine Rolle.
 Anhand dieser Wörter wird eine dynamische Black- und Whitelist erstellt, Wörter die in beiden Listen vorkommen, werden entfernt.
-Um diese Listen erstellen zu können, werden die Daten in ein Trainings- und Testset unterteilt.
-Anhand des Trainingssets werden die Listen erstellt, welche danach zur Klassifikation des Testsets dienen.
+Anhand dieser Listen wird der Testdatensatz klassifiziert.
 Die Anzahl der Wörter dieser Listen ist konfigurierbar.
-Die Klassifikation findet wieder mittels Zähler statt.
+Die Klassifikation findet mittels einem Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
 \subsection{Feature-relevante Methoden für Machine-Learning}
@@ -339,11 +350,11 @@ Dazu müssen zuerst die folgenden Klassifizierungskategorien erläutert werden:
 Jede klassifizierte Webpage lässt sich in eine dieser Kategorie einordnen.
 Anhand dieser Kategorien lässt sich für den gesamten Datensatz die oben genannten Metriken berechnen:\\
 \[Precision=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Positiv}}\]\\
-Die Precision definiert das Verhältnis der korrekt positiv klassifizierten Menüseiten zu allen als positiv gelabelten Menüseiten.\\
+Die Precision definiert das Verhältnis der korrekt positiv klassifizierten Menüseiten zu allen durch den Algorithmus als positiv klassifizierten Menüseiten.\\
 \[Recall=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Negativ}}\]\\
 Der Recall definiert das Verhältnis der korrekt positiv klassifizierten Proben zu allen tatsächlichen Menüseiten.\\
 \[F_{1}=\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
-Anhand F1-Score wir die Genauigkeit der Klassifizierung gemessen.
+Anhand des F1-Scores wird die Genauigkeit der Klassifizierung gemessen.
 Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.
 \section{Webapplikation}
 \subsection{Beschreibung der Technologie}
