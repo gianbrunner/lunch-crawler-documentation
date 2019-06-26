@@ -98,7 +98,7 @@ Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Ana
 Dies wird erreicht, indem SLA Beziehungen von Wörtern mit ähnlicher Bedeutung erkennt.
 Zuerst wurde über die API der drei Feature-Extraction Methoden die Anzahl Features direkt auf 100 Stück reduziert und ohne Verwendung von LSA an die Algorithmen weitergegeben.
 Diese wurden dann trainiert, validiert und die Werte aufgenommen.
-Anschliessend wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung "TruncatedSVD" die Feature-Reduktion auf 100 Stück durchgeführt.
+Anschliessend wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung \glqqTruncatedSVD\grqq{} die Feature-Reduktion auf 100 Stück durchgeführt.
 Danach wurden die Algorithmen mit den Features trainiert und validiert.
 Die aus beiden Aushebungen ermittelten Werte wurde dann miteinander verglichen.
 \subsubsection{Klassenverteilung}

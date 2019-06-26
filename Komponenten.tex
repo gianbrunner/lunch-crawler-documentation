@@ -265,11 +265,18 @@ Die Klassifikation findet wieder mittels Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
 \subsection{Feature-relevante Methoden für Machine-Learning}
-\subsubsection{Bag of Words mit Worthäufigkeit}
-\subsubsection{Bag of Words ohne Worthäufigkeit}
-Die Funktionsweise von Bag of Words ohne Worthäufigkeit kann im Unterkapitel \ref{sec:bow} nachgelesen werden.
+\subsubsection{Bag of Words}
+Der statistische Ansatz namens \glqq Bag of Words\grqq wandelt einen Text in eine Anhäufung von Wörtern um.
+Danach wird für jedes Wort die Häufigkeit des Vorkommens in dieser Anhäufung gezählt und hinterlegt.
+Bag of Words erstellt im Grunde ein Histogramm aller Wörter eines Textes.
+Ebenfalls kann die boolsche Häufigkeit (Term vorhanden/nicht vorhanden) verwendet werden, damit man nur ein Set von allen im Text vorkommenden Wörtern erhält.
 \subsubsection{TF-IDF}
-
+TF-IDF (TermFrequency-InversDocumentFrequency) ist eine Methodik zur Bestimmung der Relevanz eines Terms in einer Sammlung von Dokumenten (Dokumentkorpus).
+TF-IDF stammt aus der Disziplin "Information Retrieval" und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang.
+Die Berechnung der Relevanz eines Terms erfolgt mit folgender Gleichung:
+\[\text{TF-IDF}=\text{TF}*\text{IDF}\]\\
+Wobei
+\[\text{TF}(t,D) = \frac{\#(t, D)}{\max_{t'\in D}\#(t', D)}\]\\
 \subsubsection{Latent Semantic Analysis}
 
 \subsection{Machine Learning Algorithmen}
