@@ -36,7 +36,18 @@ Diverse weitere Crawldurchläufe wurden gemacht und die gecrawlten Daten analysi
 Diese Analysen haben ergeben, dass einzelne Websites aus dem Seed enorm viele Webpages beinhalten, zum Teil über 30'000.
 Diese URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
 Für die zweite Durchführung des manuellen Labelings wurden die Rohdaten mit dem angepassten Seed neu gecrawlt.
-%- Auführen der Crawl-Analyse
+Bei diesen Rohdaten wurde analysiert, wieviele Einträge des Seeds gecrawlt wurden.
+Von 5870 Seedeinträgen konnten 1362 Einträge nicht gecrawlt werden, das entspricht etwa 20\% der Einträge.
+Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist eine Stichprobe von 100 Einträgen genommen worden und genauer untersucht worden, dabei sind folgende Erkenntnisse gewonnen worden:
+\begin{itemize}
+	\item 34\% der Websites sind offline
+	\item 25\% der Websites verlinken zu einer neuen Website
+	\item 8\% der Websites haben lange Wartezeiten
+\end{itemize}
+Somit können mindestens 67\% der Websites aus plausiblen Gründen nicht gecrawlt werden.
+Es wurde nicht erfasst, wieviele Websites über Mechanismen wie Robots.txt-File oder Metatags zur Verhinderung von Crawlern verfügen, darum könnte diese Zahl noch höher sein.
+Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwohl sie crawlbar wären, ergibt dies hochgerechnet 450 Seedeinträge oder 7\%, die nicht gecrawlt wurden.
+Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Klassifizierung verwendet.
 \subsubsection{Erarbeitung des Entscheidungsrasters}
 Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten.
 Für dieses wurden die folgenden Entscheidungen getroffen:
