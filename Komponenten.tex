@@ -130,6 +130,12 @@ Die daraus folgende Pipeline beinhaltet folgende Tasks:
 	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
 \end{itemize}
 \subsubsection{Scikit Learn}
+Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man effizient Projekte für Data-Mining, Datenvisualisierung und Machine-Learning erarbeiten kann.
+Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
+Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn}}.\\
+Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
+Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.
+Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
 \subsection{Preprocessing}\label{preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
@@ -217,13 +223,38 @@ Die Klassifikation findet mittels einem Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
 \subsection{Feature-relevante Methoden für Machine-Learning}
-\subsubsection{Bag of Words mit Worthäufigkeit}
-\subsubsection{Bag of Words ohne Worthäufigkeit}
-Die Funktionsweise von Bag of Words ohne Worthäufigkeit kann im Unterkapitel \ref{sec:bow} nachgelesen werden.
+\subsubsection{Bag of Words}
+Der statistische Ansatz namens \glqq Bag of Words\grqq wandelt einen Text in eine Anhäufung von Wörtern um.
+Danach wird für jedes Wort die Häufigkeit des Vorkommens in dieser Anhäufung gezählt und hinterlegt.
+Bag of Words erstellt im Grunde ein Histogramm aller Wörter eines Textes.
+Ebenfalls kann die boolsche Häufigkeit (Term vorhanden/nicht vorhanden) verwendet werden, damit man nur ein Set von allen im Text vorkommenden Wörtern erhält.
 \subsubsection{TF-IDF}
-
+TF-IDF (TermFrequency-InversDocumentFrequency) ist eine Methodik zur Bestimmung der Relevanz eines Terms in einer Sammlung von Dokumenten (Dokumentkorpus).\\
+TF-IDF wird aus den zwei folgenden Metriken zusammengesetzt.
+\begin{itemize}
+	\item TF
+	\begin{itemize}
+		\item Termfrequenz berechnet das Vorkommnis eines Termes in einem Dokument. Anschliessend wird das Vorkommnis mit der gesamten Anzahl von Termen im Dokument dividert. Dies erreicht eine Normalisierung der Termfrequenz, da bei langen Texten der Term potentiell öfters vorkommen kann.\\
+		TF verfolgt einen ähnlichen Ansatz wie Bag of Words.
+	\end{itemize}
+	\item IDF
+	\begin{itemize}
+		\item TF ermittelt nur die Häufigkeit der Terme. Terme wie \glqq die\grqq{} oder ähnliche kommen oft vor, sind aber nicht relevant.\\
+		IDF ermittelt nun die Relevanz der Terme indem berechnet wird, wie viele Dokumente den Term T in sich enthalten. Die gesamte Anzahl an Dokumenten wird durch die ermittelte Anzahl von Dokumenten mit Term T dividiert und mit dem natürlichen Logarithmus logarithmiert.\\
+		Somit ist ein Term, welcher in vielen Dokumenten vorkommt, weniger relevant als ein rarer Term.
+	\end{itemize}
+	\item TF-IDF
+	\begin{itemize}
+		\item TF-IDF ist nun die Multiplikation von TF und IDF.
+	\end{itemize}
+\end{itemize}
+TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang.\footnote{\url{http://www.tfidf.com/}}
 \subsubsection{Latent Semantic Analysis}
-
+LSA basiert auf der Scikit-Implementation\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}} von \glqq Single Value Decomposition SVD\grqq{}oder auf deutsch \glqq Singulärwertzerlegung\grqq{}.
+SVD zerlegt die Termdokumentmatrizen, welche von den Scikit-Learn Bag of Words oder TF-IDF Algorithmen erstellt werden, in ihre K wichtigsten Werte. Wobei K frei gewählt werden kann, jedoch kleiner als die maximale Anzahl von Features aus Bag of Words oder TF-IDF sein muss.
+Wenn SVD explizit auf Termdokumentmatrizen angewendet wird, wird der Vorgang \glqq Latent Semantic Analysis\grqq{} oder auch \glqq Latent Semantic Indexing\grqq{} genannt.
+Dies hat der Grund, da die Matrizen in semantische Matrizen kleinerer Dimension umgewandelt werden.\\
+Ein Vorteil von LSA ist, es kann Synonyme, mehrere Wörter mit gleicher Bedeutung, erkennen und somit die Termdokumentmatrizen dementsprechend reduzieren, jedoch ohne grosse Verluste in der Aussagekraft zu erleiden.
 \subsection{Machine Learning Algorithmen}
 \subsubsection{Übersicht}
 Wegen des "No free lunch"-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
@@ -262,13 +293,50 @@ Nun erfolgt eine Auflistung aller Algorithmen die verwendet wurden.
 		\item LinearSVC (Support Vector Classification)
 	\end{itemize}
 \end{itemize}
-Jedoch nur die Algorithmen, welche nach der die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher umschrieben.
-Im Anhang können alle Performer mit ihren entsprechenden Scores eingesehen werden.
+Jedoch nur die Algorithmen, welche nach der vollständigen Ausführung aller Optimierungsschritte die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher umschrieben.
+Im Anhang können alle Klassifizierer mit ihren entsprechenden Scores eingesehen werden.
 \subsubsection{SGDClassifier}
-Der SGDClassifier konnte 
-\subsubsection{AdaBoostClassifier}
+SGDClassifier gehört zur Familie der lineare Modelle.
+Lineare Modelle sind in der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariabeln und Ausgangsvariabeln besteht.
+Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdeckt.
+Das optimale Abdecken wird mit einer Loss-Funktion ermittelt.
+Die Loss-Funktion berechnet den Unterschied zwischen vorhergesagtem Wert zu tatsächlichem Wert des Trainingsdatenpunktes.
+Lineare Modelle verwenden Optimierungsverfahren, welche iterativ Parameter verändern, um die Werte der Loss-Funktion zu minimieren und somit die bestmögliche Parameterzusammensetzung zu ermitteln.\\
+Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierungsvefahren das \glqq Stochastic Gradient Descent\grqq{} Verfahren.
+Bei diesem Verfahren kommt der mathematische Gradient zum Einsatz.
+Der Gradient zeigt bei Anpassungen der Parameter, immer in die Richtung mit der grössten Änderung des Outputs.
+Der Output wäre in diesem Falle die Aufzeichnung des Loss-Funktion.\\
+Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Optimierung jeweils nur ein Parameter zufällig ausgesucht und angepasst wird und seine Auswirkung anschliessend ermittelt wird.
+Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und trotzdem gute Werte erzielt werden können.\\
+In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
+\begin{figure}[H]	
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/sgd.png}
+	\caption{Visualisierung des Gradienten und der Loss-Funktion (J(w) = Loss; w = Parameteränderung)}
+	\label{fig:sgd}
+\end{figure}
 \subsubsection{Perceptron}
+Der Perceptron-Algorithmus basiert auf dem SGDClassifier.
+Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spezieller Konfiguration.\\
+Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate.
+\subsubsection{AdaBoostClassifier}
+AdaBoost gehört zu der Familie der Ensemble-Learner.
+Ensemble-Learning ist ein Zusammenschluss von mehreren unterschiedlichen Klassifizieren, welche mit einem Voting-Verfahren eine schlussendliche Klassifizierung durchführen.
+Ensemble-Learning verfolgt die Annahme, dass mehrere Algorithmen im Plenum eine bessere Aussage abliefern können, als einen Algorithmus alleine.
+Bei vielen Ensemble-Verfahren werden alle Klassifizierer parallel trainiert und geben ihr Votum gleichzeitig ab.\\
+Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlichkeit mit der Theorie der genetischen Algorithmen hat.
+Bei Adaboost wird ein Algorithmus trainiert, validiert und als Ursprung verwendet. Alle zusätzlichen Algorithmen, welche das finale Voting durchführen, werden vom Ursprungsalgorithmus abgeleitet.
+Es werden jedoch bei den Abkömmlingen die internen Parameter schrittweise verbessert und versucht die Fehler des \glqq Vater-Algorithmus\grqq{} zu vermeiden.
+AdaBoost kann verbessert werden, indem die Anzahl von Vererbungsschritten angepasst wird.
 \subsubsection{RandomForestClassifier}
+RandomForest gehört ebenfalls zur Familie der Ensemble-Learner.
+RandomForest, wie der Name schon sagt, ist eine Zusammensetzung von einer Vielzahl von unterschiedlichen DecisionTrees.\\
+DecisionTree ist ebenfalls ein Algorithmus, der für die Klassifizierung verwendet werden kann.
+Der DecisionTree-Algorithmus baut schrittweise eine Baumstruktur von Entscheidungszweige auf, um eine Klassifizierungsaufgabe zu meistern. 
+DecisionTrees können verbessert werden, indem die Tiefe der Äste oder die Anzahl der Äste angepasst werden kann.
+Bei stetiger Erhöhung der Tiefe oder der Anzahl der Äste, steigt auch die Zeitkomplexität der DecisionTrees.\\
+RandomForest verwendet nun eine Vielzahl von DecisionTrees, die alle unterschiedliche Tiefen oder Anzahl Äste besitzen.
+Dadurch können Entscheidungsausreisser aufgefangen und durch den Mehrheitsentscheid gedämpft werden.\\
+RandomForests können oft eine sehr hohen Score bei der Precision erzielen.
 \subsection{Klassifizierung mittels Machine-Learning}
 \subsubsection{Konfiguration}
 \subsubsection{}
