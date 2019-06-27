@@ -12,8 +12,11 @@ Die Architektur von Apache Storm basiert auf den folgenden Komponenten:
 \end{itemize}
 Jede Komponente ist als eigene Java-Klasse definiert und beinhaltet zwingend die folgenden Methoden:
 \begin{itemize}
-	\item execute() - Ausführen des Tasks der Komponente
 	\item declareOutputFields() - Definition des Ausgabeschemas des Tupels
+\end{itemize}
+Jeder Bolt enthält zudem eine weitere Methode:
+\begin{itemize}
+	\item execute() - Ausführen des Tasks der Komponente
 \end{itemize}
 In einer Topologie werden verschiedene Spouts und Bolts miteinander verknüpft, um einen Prozess durchzuführen, wie in \cref{fig:topology} gezeigt wird.
 \begin{figure}[H]	
@@ -29,110 +32,35 @@ Zudem ist eine Webapplikation verfügbar, die eine Übersicht über die Informat
 StormCrawler ist ein Opensource Software Development Kit, welches auf Apache Storm aufbaut und in Java entwickelt wurde.
 Er dient als Baukasten, um einen Webcrawler aufzubauen, der skalierbar, stabil und sehr effizient ist.
 Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden.
-Zudem berücksichtigt er die Regeln des Webcrawling, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
+Zudem berücksichtigt er die Regeln des Webcrawlings, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
 Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden.
 StromCrawler ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsubsection{Docker}
-\paragraph{Docker Einführung}
-Docker besitzt verschiedene Bedeutungen. Docker kann sich auf den Namen der Firma Docker Inc."fussnote" beziehen oder auf die eigentliche Software.
+Docker besitzt verschiedene Bedeutungen. 
+Docker kann sich auf den Namen der Firma Docker Inc."fussnote" beziehen oder auf die eigentliche Software.
 In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
 Mithilfe von Docker können ressourcenarme, modulare virtuelle Maschinen erstellt werden, welche auch Container genannt werden.
 Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden.
 \footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker}}
-
-\paragraph{Unterschiede zu Virtual Machines}
-Im Gegensatz zu kompletten Virtual Machines (VM) besitzen Container einen deutlich kleineren Speicherfootprint.
-VMs abstrahieren physische Hardware zu virtuellen Hardwarekomponenten. Auf diesen virtuellen Hardwarekomponenten können dann Betriebssysteme
-und Software betrieben werden ähnlich wie auf der physischen Hardware.
-Container abstrahieren jedoch auf Betriebssystemebene.
-Dadurch bekommt man eine virtuelle Variante des physischen Host-Systems, auf dem man anschliessend Software und Abhängigkeiten betreiben kann.
-Für die Containerisierung ist es notwendig, dass das Host-System eine Linux-Distribution ist.
-\footnote{\url{https://wirtschaftslexikon.gabler.de/definition/hardware-virtualisierung-53364}}
-
-\paragraph{Linux-Container}
-Linux-Container verwenden den Linux-Kernel und seine Funktionen um Isolation der einzelnen Prozesse zu realisieren.
-Durch die Isolation der Prozesse können diese unabhängig voneinander ausgeführt werden,
-was die Auslastung des Host-Systems verbessert und ebenfalls die Sicherheit des Gesamtsystems erhöht.
-Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede
-Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
-Dadurch wird die Software auf jeder Umgebung identisch ausgeführt.
-Docker selbst baut auf der LXC-Technologie, eine Technologie zur Virtualisierung von Linux-Container auf Betriebssystemebene, auf,
-erweiterte diese Technologie jedoch für das einfachere Erstellen, Warten und Versionieren von den erstellten Docker Containern.
-\footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker}}
-
-\paragraph{Docker}
-Wie bereits erwähnt, wird für die Verwendung von Docker als Containerisierungs-Software eine Linux-Distribution als Hostsystem benötigt.
-Für Windows- oder MAC-Systeme wird Software bereitgestellt, welche reduzierte Linux-VMs als Basis für die Verwendung von Docker installieren.
-%\footnote{\url{https://docs.docker.com/docker-for-mac/docker-toolbox/#the-docker-for-mac-environment}}
-%\footnote{\url{https://docs.docker.com/docker-for-windows/install/#what-to-know-before-you-install}}
-
-\paragraph{Docker vorteile}
-Die Vorteile von Docker wurden oben bereits kurz erwähnt, werden hier aber nochmals aufgelistet.
-\begin{itemize}
-	\item Docker zum Ausführen von containerisierter Software ist ressourcenärmer als die standardmässigen VMs
-	\item Containerisierte Software wird auf jeder Umgebung identisch ausgeführt, dadurch kann das Ausliefern von Software immens vereinfacht werden
-	\item Container können wahlweise dazugeschaltet werden, falls der Service überdurchschnittlich stark ausgelastet wird
-	\item Mehrere Container können mit passender Software zentral orchestriert werden, wodurch das Warten von Micro-Services Architekturen vereinfacht wird
-	\item Die Isolation der Container erhöht die Systemsicherheit, da die einzelnen Prozesse gekapselt werden
-\end{itemize}
-\paragraph{Dockerfiles}
+Linux-Container verwenden den Linux-Kernel und seine Funktionen, einzelne Prozesse isolieren zu können.
+Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
 Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
 Dieses Konfigurationsfile, das sogenannte Dockerfile, definiert alle Notwendigkeiten, um den Docker Container zu realisieren.
 Im Dockerfile werden Instruktionen für das Erstellen des Images definiert.
-Der prinzipielle Aufbau eines Dockerfiles ist meist nach dem folgenden Schema aufgebaut.
-\begin{lstlisting}
-FROM ubuntu:15.04
-COPY . /app
-RUN make /app
-CMD python /app/app.py
-\end{lstlisting}
-\begin{itemize}
-	\item FROM  verwendet ein bereits erstelltes Docker Image als Basis für diese Image.
-	\item COPY  kopiert Dateien, generell die geschriebene Software, vom Hostsystem in das Docker Image.
-	\item RUN   erstellt die Software mit dem passenden Befehl, in diesem Fall wäre das der Befehl "make".
-	\item CMD   definiert, welcher Befehl nachher im eigentlichen Container ausgeführt werden soll, generell wird damit Software gestartet.
-\end{itemize}
 Da Dockerfiles einfache Textdateien sind, können sie, wie jeder andere Sourcecode, mit Git, SVN oder anderen Versionsverwaltungen verwaltet werden.
-Ausserdem bietet die Firma Docker Inc. eine Webseite namens "hub.docker.com" an, welche ähnlich wie "Github.com" die Versionierung von Dockerfiles vereinfacht.
-Docker Images
-Mit dem Dockerbefehl "docker build" wird aus dem Dockerfile ein Docker Image erstellt.
-Das Docker Image wird wiederum verwendet, um einen ausführbaren Docker Container zu erstellen.
-Mit dem Dockerbefehl "docker run" und der Angabe des gewünschten Images kann nun der Docker Container erstellt und gestartet werden.
+Aus Dockerfiles werden Docker Images erstellt.
+Durch Dockerfiles können Docker Images erstellt werden, welche wiederum den dadurch definierten Container erstellen und starten.
 Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden und der Docker Container wäre eine laufende Instanz der entsprechenden Klasse. 
-\footnote{\url{https://stackoverflow.com/questions/3175105/inserting-code-in-this-latex-document-with-indentation}}
-\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/}}
+%\footnote{\url{https://stackoverflow.com/questions/3175105/inserting-code-in-this-latex-document-with-indentation}}
 
-\paragraph{Docker-Compose}
+\subsubsection{Docker-Compose}
 Mit Docker Containern können auch Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
-Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen wird die Software "Docker-Compose" ebenfalls von Docker Inc. bereitgestellt.
+Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software "Docker-Compose" diese Aufgabe.
 Mithilfe von Docker-Compose können mehrere Docker Container verknüpft und gleichzeitig gestartet werden.
 Die Abhängigkeiten zwischen den Containern wird ebenfalls mit einem Konfigurationsfile, dem Composefile, definiert.
-\begin{lstlisting}
-version: '3'
-services:
-web:
-build: .
-ports:
-- "8080:5000"
-redis:
-image: "redis:alpine"
-\end{lstlisting}
-\begin{itemize}
-	\item version definiert, welche Version von docker-compose verwendet werden soll.
-	\item web ist der erste Container, welcher erstellt werden soll.
-	\begin{itemize}
-		\item build definiert, wo sich das Dockerfile befindet, mit welchem ein Image erzeugt werden soll.
-		\item ports definieren, welche Ports für den Service verwendet werden sollen. (Host hat Port 8080, Container intern hat Port 5000) 
-	\end{itemize}
-	\item redis ist der zweite Container, welcher erstellt werden soll.
-	\begin{itemize}
-		\item image definiert, welches bereits existierende Image für den Container verwendet werden soll.
-	\end{itemize}
-\end{itemize}
-Wahlweise können noch Dateiordner vom Hostsystem in einzelne Container angehängt werden, damit die Container Daten dort abspeichern oder abrufen können.
+Wahlweise können Dateiordner vom Hostsystem in einzelne Container angehängt werden, damit die Container Daten dort abspeichern oder abrufen können.
 Dies ist insofern wichtig, da sobald die Container gestoppt werden, all ihre internen Daten verloren gehen.
 Die Containerinhalte existieren nur so lange, wie auch die Container existieren.
-Mit dem Docker-Compose-Befehl "docker-compose up" wird das im gleichen Pfad existierende Composefile gestartet und alle Container erstellt.
 Docker-Compose erstellt für alle Container in einer Gruppierung einzigartige ID-Namen, damit alle Container innerhalb der Gruppierung miteinander kommunizieren können.
 \footnote{\url{https://github.com/DigitalPebble/storm-crawler/}}
 \subsection{Konfiguration des StormCrawlers}
