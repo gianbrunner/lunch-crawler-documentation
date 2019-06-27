@@ -2,18 +2,31 @@
 \section{Webcrawler}
 \subsection{Beschreibung der Technologie}
 \subsubsection{Apache Storm}
-StormCrawler basiert auf Apache Storm, einem opensource Framework zur verteilten Stream-Verarbeitung.
+StormCrawler basiert auf Apache Storm, einem Opensource Framework zur verteilten Stream-Verarbeitung.
 Die Architektur von Apache Storm basiert auf den folgenden Komponenten:
 \begin{itemize}
-	\item Spout: Komponente zum Einlesen von Daten-Streams
-	\item Bolt: Komponente zum Verarbeiten von Daten-Streams
-	\item Tupel: Datensatz, welcher von Bolt zu Bolt weitergegeben wird
-	\item Topologie: Ein Netz bestehend aus Spouts und Bolts
+	\item Spout - Komponente zum Einlesen von Daten-Streams
+	\item Bolt - Komponente zum Verarbeiten von Daten-Streams
+	\item Tupel - Datensatz, welcher zwischen den Komponenten weitergegeben wird
+	\item Topologie - Ein Netz bestehend aus Spouts und Bolts
 \end{itemize}
-Daten können durch einen Spout aus verschiedenen Quellen (z.B. Datei, Datenbank, Array) eingelesen werden.
-Diese Daten werden einem Tupel mitgegeben und an den nächsten Bolt in der Topologie weitergegeben.
+Jede Komponente ist als eigene Java-Klasse definiert und beinhaltet zwingend die folgenden Methoden:
+\begin{itemize}
+	\item execute() - Ausführen des Tasks der Komponente
+	\item declareOutputFields() - Definition des Ausgabeschemas des Tupels
+\end{itemize}
+In einer Topologie werden verschiedene Spouts und Bolts miteinander verknüpft, um einen Prozess durchzuführen, wie in \cref{fig:topology} gezeigt wird.
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/storm-topology.png}
+	\caption{Beispieltopologie\\ Quelle: https://dzone.com/articles/apache-storm-architecture}
+	\label{fig:topology}
+\end{figure}
+Dabei hat der Spout die Aufgabe, Daten aus einer Quelle (z.B. Datei, Datenbank, Array) einzulesen und daraus ein Tupel zu bilden.
+Dieses Tupel wird an die weiteren Bolts der Topologie weitergegeben und von diesen verarbeitet.
+Diese Verarbeitung muss nicht seriell stattfinden, die Topologie kann auch Gabelungen beinhalten, die dementsprechend Bolts benötigen, welche entscheiden, an welchen Folge-Bolt das Tupel weitergegeben werden soll.
+Zudem ist eine Webapplikation verfügbar, die eine Übersicht über die Informationen wie eine Topologieübersicht, der Status der jeweiligen Komponenten sowie Fehlermeldungen anzeigt.
 \subsubsection{StormCrawler SDK}
-StormCrawler ist ein opensource Software Development Kit, welches auf Apache Storm aufbaut und in Java entwickelt wurde.
+StormCrawler ist ein Opensource Software Development Kit, welches auf Apache Storm aufbaut und in Java entwickelt wurde.
 Er dient als Baukasten, um einen Webcrawler aufzubauen, der skalierbar, stabil und sehr effizient ist.
 Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden.
 Zudem berücksichtigt er die Regeln des Webcrawling, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
