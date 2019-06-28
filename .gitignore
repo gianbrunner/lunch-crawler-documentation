@@ -2,6 +2,7 @@
 *
 # but .tex files
 !*.tex
+!*.bib
 !.gitignore
 !/img/
 !/img/*
