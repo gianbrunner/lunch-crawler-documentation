@@ -119,6 +119,61 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 \end{table}
 
 \subsection{Klassifizieren mittels Machine-Learning Algorithmen}
+Beim Machine-Learning Ansatz wurden für die drei Feature-Extraction Methoden \glqq Bag of Words mit Worthäufigkeit\grqq{}, \glqq Bag of Words ohne Worthäufigkeit (binär)\grqq{} und \glqq TF-IDF\grqq{}
+jeweils 14 Algorithmen ausgetestet und stetig verbessert.
+Danach wurde für jede Feature-Extraction Methode der Algorithmus mit dem besten F1-Score, sowie der besten Precision, kreuzvalidiert und nach den passendsten Hyperparametern gesucht.
+Schlussendlich wurde der Algorithmus mit dem besten F1-Score und derjenige mit der besten Precision mit dem separaten Testset getestet und die finalen Scores, sowie die Konfusionsmatrix erstellt.
+\\\\
+Hinweis: Bei manchen Algorithmen wurden bei der Hyperparametersuche keine besseren Parameter gefunden.
+In diesem Falle wurden die Standardparameter weiter verwendet.
+
+\begin{table}
+	\caption{Beste Scores der Machine-Learning Klassifikation}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Perceptron mit binärem Bag of Words & 0.78 & 0.92 & 0.68 \\
+		RandomForest mit binärem Bag of Words & 0.51 & 1.00 & 0.34 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 34   & 3   \\[1.5ex]
+		& Negativ  & 16   & 47 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
+
+\begin{table}
+	\caption{Konfusionsmatrix der Methode: RandomForest mit binärem Bag of Words}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 17   & 0   \\[1.5ex]
+		& Negativ  & 33   & 50 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
+
 \section{Interpretation der Ergebnisse}
 \subsection{Regelbasiertes Klassifizieren}
 Die verschiedenen Methoden ergeben stark unterschiedliche Werte.
@@ -146,6 +201,23 @@ In allen Fällen wurde eine grosse Anzahl Webpages fälschlicherweise positiv kl
 Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele irrelevante Seiten angezeigt.
 Andererseits werden in Ausnahme der Methode \glqq Bag of Words\grqq{} höchstens die Hälfte der Menüseiten gefunden.
 \subsection{Klassifizieren mittels Machine-Learning Algorithmen}
+Beim Vergleich beider Klassifizierer ist ein grosser Unterschied beim Recall ersichtlich.
+Interessant ist, dass beide Algorithmen ziemlich zuverlässige Precision-Werte erzielen konnten.\\
+RandomForest erreicht mit seiner Precision von 1.00 den Maximalwert, hat aber extreme Einbussen beim Recall, was sich auf den F1-Score niederschlägt.\\
+Perceptron erzielte beim Recall ein leichtes Defizit, aber die wichtigere Kategorie Precision erreichte mit 0.92 einen durchaus anwendbaren Score.
+\\\\
+Schlussendlich ist ersichtlich, dass die Variante mit dem Perceptron-Algorithmus eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.
+Der F1-Score liegt zwar leicht unter dem selbst definierten Schwellwert von 0.8, jedoch ist die Precision mit 0.92 weit darüber.\\
+Der RandomForest-Algorithmus kann als Klassifizierer zwar qualitative, aber keineswegs quantitative Einschätzungen erzielen.
+Mit einer Precision von 1.00 könnte der RandomForest-Algorithmus theoretisch weiter verwendet werden, um weitere Daten zu labeln und die Traininsmenge zu erhöhen.
+Mit der grösseren Trainingsmenge könnten die Algorithmen ausführlicher trainiert werden und schlussendlich bessere Einschätzungen abgeben.
+\\
+
+Für den \glqq Use-Case\grqq{} einer Suchmaschine, ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
+Dennoch dürfen nicht nur eine Hand voll von Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
+Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und Recall und wird deshalb für die Suchmaschine verwendet.
+Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
+Somit wäre in der Suchmaschine jeder 13te Vorschlag falsch, was vertretbar ist.
 \section{Beantwortung der Forschungsfrage}
 Die Antwort auf die Forschungsfrage lautet: Ja, Webpages von Restaurant-Websites können mit einer hohen Erfolgschance klassifiziert werden, ob diese Menüinformationen beinhalten.\\
 Jedoch kann die gewünschte Anforderung betreffend Qualität und Quantität dieser Klassifikation mit dem regelbasierten Ansatz nicht bewerkstelligt werden.
