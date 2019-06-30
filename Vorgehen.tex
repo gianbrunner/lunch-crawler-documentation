@@ -109,6 +109,7 @@ Die Erkenntnisse aus den Optimierungen flossen immer beim nächsten Optimierungs
 	\item Anwendung von einfachen Preprocessingschritten
 	\item Anwendung von fortgeschrittenen Preprocessingschritten
 	\item Anzahl extrahierter Features
+	\item Hyperparametertuning
 \end{enumerate}
 Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und Bag-of-Words ohne Worthäufigkeit verwendet.
 Die Ermittlung der optimalen Pipelinekomponenten erfolgte somit unabhängig für drei unterschiedliche Feature-Extraction Methoden und jeweils für 14 Algorithmen mit deren Standardkonfigurationen.
@@ -162,6 +163,15 @@ Dies ist ein recht rechenintensives Unterfangen, führt in der Regel jedoch zu s
 Die Messungen wurden mit einer Anzahl Features von 10 gestartet und schrittweise um 25 Features erhöht, bis schlussendlich eine maximale Anzahl von 400 Features erreicht wurde.
 Da die Rechenzeit stetig mit der Erhöhung von Features steigt, wurde die Grenze bei 400 Features gesetzt.
 Grundsätzlich macht eine Begrenzung der Features Sinn, da ab einer gewissen Anzahl Features die Algorithmen mit der Handhabung der Features überfordert sind und dies sich dementsprechend auf schlechteren Scores widerspiegelt.
+\subsubsection{Hyperparametertuning}
+Als letzter Schritt der Algorithmenoptimierung wurde eine ausführliche Hyperparametersuche mit Kreuzvalidierung durchgeführt.
+Es wurde eine Kreuzvalidierung von fünf ausgewählt, um Overfitting gegenzuwirken.
+Es wurden jeweils die Modelle mit den drei besten F1-Scores und den besten Precisions kreuzvalidiert.
+Für jedes Modell wurde eine Liste von anpassbaren Parametern zusammengestellt.
+Für jeden Parameter wurde ein Bereich von möglichen Werten angegeben.
+Mittels der Funktion \glqq GridSearchCV\grqq{}\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}} von Scikit-Learn wurde die Hyperparametersuche durchgeführt.\\
+Je nach Algorithmus und Grösse der Parameterliste kann die Hyperparametersuche extrem lange dauern.
+Ebenfalls ist es möglich, dass die Standardparameter bereits ein Optimum darstellen und keine besseren Parameter gefunden werden.
 \subsubsection{Erstellen der Konfigurationen}
 \section{Produktive Pipeline}
 \section{Webapplikation}

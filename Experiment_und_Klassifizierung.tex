@@ -206,10 +206,101 @@ Die Methode \glqq Bag of Words\grqq{} profitiert davon ebenfalls, da das Prinzip
 Es können keine genauen Zahlen angegeben werden, welche Scores diese Methoden ohne Preprocessing-Schritte erreichen würden, da diese Schritte zwingend benötigt werden, um den Text in eine klassifizierbare Form zu bringen.
 \subsection{Klassifizieren mittels Machine-Learning}
 \subsubsection{Einfache Preprocessingschritte}
+Das
 \subsubsection{Fortschrittliche Preprocessingschritte}
 \section{Klassifizieren mittels Machine-Learning}
 \subsection{Dimensionsreduktion der Features}
 \subsection{Klassenverteilung}
 \subsection{N-Gramme}
 \subsection{Anzahl extrahierter Features}
-
+\subsection{Hyperparametertuning}
+Die sechs Modelle, welche aus dem vorherigen Experiment, als die besten entnommen wurden, werden mittels Kreuzvalidierung auf optimale Hyperparameter durchsucht.
+\subsubsection{Modelle mit bestem F1-Score}
+Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Scores erzielen.\\
+\begin{table}
+	\caption{Auwertung Hyperparametertuning für AdaBoost mit binärem Bag of Words}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		 & F1-Score & Precision & Recall\\
+		\hline
+		Vor Hyperparametertuning & 0.778 & 0.837 & 0.727 \\
+		Nach Hyperparametertuning & 0.788 & 0.817 & 0.761 \\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}
+	\caption{Auwertung Hyperparametertuning für Perceptron mit Bag of Words}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		& F1-Score & Precision & Recall\\
+		\hline
+		Vor Hyperparametertuning & 0.8 & 0.872 & 0.739 \\
+		Nach Hyperparametertuning & 0.579 & 0.426 & 0.903 \\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}
+	\caption{Auwertung Hyperparametertuning für SGDClassifier mit TF-IDF}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		& F1-Score & Precision & Recall\\
+		\hline
+		Vor Hyperparametertuning & 0.805 & 0.768 & 0.847 \\
+		Nach Hyperparametertuning & 0.762 & 0.682 & 0.864 \\
+		\hline
+	\end{tabular}
+\end{table}
+Auffällig ist, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.
+AdaBoost konnte seinen Recall verbessern und gleichzeitig seine Precision verschlechtern.
+Da die Recallsteigerung grösser als der Precisionabfall ist, wurde der F1-Score nach oben korrigiert.\\
+Die anderen beiden Modelle erzielten mit den neuen Parametern schlechtere Werte.
+Beide konnten den Recall verbessern, jedoch mussten sie massive Gefälle bei der Precision einbüssen.
+Da die Precision viel stärker abgenommen, als der Recall zugenommen hat, wurde der F1-Score schlechter.\\
+Perceptron hat im Vergleich zum SGDClassifier einen leicht tieferen F1-Score, jedoch ist seine Precision deutlich höher.
+Da für den schlussendlichen \glqq Use-Case\grqq{} Precision wichtig ist, wird das Perceptron-Modell für weitere Auswertungen verwendet.
+\subsubsection{Modelle mit bester Precision}
+Das Modell RandomForest konnte für alle drei Feature-Extraction Methoden jeweils den besten Precision-Score erzielen.\\
+\begin{table}
+	\caption{Auwertung Hyperparametertuning für RandomForest mit binärem Bag of Words}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		& F1-Score & Precision & Recall\\
+		\hline
+		Vor Hyperparametertuning & 0.636 & 1.0 & 0.466 \\
+		Nach Hyperparametertuning & 0.736 & 0.8 & 0.682 \\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}
+	\caption{Auwertung Hyperparametertuning für RandomForest mit Bag of Words}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		& F1-Score & Precision & Recall\\
+		\hline
+		Vor Hyperparametertuning & 0.636 & 1.0 & 0.466 \\
+		Nach Hyperparametertuning & 0.768 & 0.829 & 0.716 \\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}
+	\caption{Auwertung Hyperparametertuning für RandomForest mit TF-IDF}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		& F1-Score & Precision & Recall\\
+		\hline
+		Vor Hyperparametertuning & 0.747 & 0.956 & 0.614 \\
+		Nach Hyperparametertuning & 0.794 & 0.823 & 0.767 \\
+		\hline
+	\end{tabular}
+\end{table}
+Alle drei Varianten konnten ihren F1-Score verbessern.
+Die Verbesserung erfolgte nur im Bereich Recall, welcher initial bei allen drei Modellen relativ tief war.
+Zusätzlich sanken bei allen drei Modellen die Precision-Scores.
+Bei beiden Varianten mit Bag of Words, waren alle drei initialen Scores identisch und die Precision maximal.\\
+Da in diesem Abschnitt auf die beste Precision geachtet wird, ist das Modell mit binärem Bag of Words und mit den Standardparametern die beste Variante.
