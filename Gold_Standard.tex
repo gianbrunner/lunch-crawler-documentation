@@ -38,35 +38,27 @@ Der Gold Standard ist in die folgenden drei Kategorien unterteilt:\\
 	]
 \end{forest}\\
 
-%\begin{tabular}{|l|l|l|l|}
-%	\hline
-%	Kategorie & Ordnername & Anzahl Dateien & Anzahl Dateien im Testsatz\\
-%	\hline
-%	Menü & pos\textunderscore menu & 519 & 40 \\
-%	Tagesmenü & pos\textunderscore daily\textunderscore menu & 87 & 10 \\
-%	Kein Menü & neg & 6257 & 50\\
-%	\hline
-%\end{tabular}\\
+
 Jeder Eintrag dieses Gold Standards beinhaltet die folgenden Informationen:
 \begin{itemize}
-	\item \glqq date \grqq  - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
-	\item \glqq text \grqq  - Vom Webcrawler extrahierter Text, welcher die Webpage beinhaltet
-	\item \glqq encoding \grqq  - Das von der Webpage verwendete Encoding
-	\item \glqq title \grqq  - Inhalt des gleichnamigen HTML-Metatags
-	\item \glqq url \grqq  - URL der Webpage
-	\item \glqq content \grqq  - Der statische HTML-Inhalt der Webpage	
+	\item \glqq date\grqq{} - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
+	\item \glqq text\grqq{} - Vom Webcrawler extrahierter Text, welcher die Webpage beinhaltet
+	\item \glqq encoding\grqq{} - Das von der Webpage verwendete Encoding
+	\item \glqq title\grqq{} - Inhalt des gleichnamigen HTML-Metatags
+	\item \glqq url\grqq{} - URL der Webpage
+	\item \glqq content\grqq{} - Der statische HTML-Inhalt der Webpage	
 \end{itemize}
 \section{Entscheidungsraster}
 Der Gold Standard wurde anhand des Entscheidungsrasters erstellt, welches in der Abbildung \cref{fig:classificationtree} dargestellt wird.
 \begin{figure}[H]	
-	\includegraphics[width=1\columnwidth,keepaspectratio]{img/man-classification-tree.jpg}
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/man-classification-tree.png}
 	\caption{Entscheidungsraster}
 	\label{fig:classificationtree}
 \end{figure}
 Obwohl bereits beim Webcrawler eine Spracherkennung eingesetzt wurde, damit nur als deutsch erkannte Webpages gespeichert werden, wurde bei der manuellen Klassifikation nochmals darauf geachtet, dass die Webpage in deutsch verfasst wurde.
 Dabei ist anzumerken, dass gewisse Begriffe, vor allem für Speisebezeichnungen, auch fremdsprachig sein dürfen, da Speisebezeichnungen je nach Küche international ausgelegt sind.
 Der Anbieter muss zwingend ein Restaurant, Take-Away oder Lieferdienst sein.
-Der Inhalt muss als statisch verfügbar sein, da der Webcrawler nicht mit dynamisch gerenderten Websites umgehen kann.
+Der Inhalt muss statisch in der HTTP-Antwort verfügbar sein, da der Webcrawler nur diesen speichert und nicht mit dynamisch gerenderten Websites umgehen kann.
 Der Name der Speise und eine genauere Beschreibung oder der Preis muss vorhanden sein.
 Danach folgt die Unterscheidung zwischen zeitlich begrenzten und unbegrenzten Angeboten, welche zur Kategorisierung führt.
 Getränkekarten wurden explizit negativ klassifiziert.
@@ -74,9 +66,9 @@ Getränkekarten wurden explizit negativ klassifiziert.
 Das Seed wurde aus den folgenden zwei Quellen zusammengestellt:
 \begin{itemize}
 	\item OpenStreetMap - 3557 URLs
-	\item Lunch-Check - 3803 URls
+	\item Lunch-Check - 3803 URLs
 \end{itemize}
-Diese URLs wurden zusammengeführt, zudem sind Duplikate entfernt worden.
+Diese URLs wurden zusammengeführt und Duplikate sind entfernt worden.
 Daraus ist ein Seed entstanden, welches 5870 Einträge von Restaurant-URLs enthält.
 Dabei wurden aus den nun aufgeführten Gründen mehrere Einträge entfernt:
 \begin{itemize}

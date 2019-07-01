@@ -1,7 +1,7 @@
 \chapter{Experiment und Klassifizierung}
 \label{cap:exp_class}
-Sämtliche Klassifikation findet anhand der Informationen der Attribute \glqq text \grqq und \glqq title \grqq des Gold Standards statt.
-Zudem werden alle Webpages der Kategorie \glqq Tagesmenü \grqq der Kategorie \glqq Menü \grqq hinzugefügt, da bei dieser Klassifikation nur zwischen \glqq Menü \grqq oder \glqq Kein Menü \grqq unterschieden wird.
+Sämtliche Klassifikation findet anhand der Informationen der Attribute \glqq text\grqq{} und \glqq title\grqq{} des Gold Standards statt.
+Zudem werden alle Webpages der Kategorie \glqq Tagesmenü\grqq{} der Kategorie \glqq Menü\grqq{} hinzugefügt, da bei dieser Klassifikation nur zwischen \glqq Menü\grqq{} oder \glqq Kein Menü\grqq{} unterschieden wird.
 \section{Regelbasiertes Klassifizieren}
 Jedes Regelset wurde anhand des Goldstandards getestet und evaluiert.
 Verschiedene Parameterwerte und Kombinationen wurden getestet, um möglichst hohe Werte der gemessenen Metriken zu erreichen.
@@ -111,7 +111,7 @@ Die Schwellwerte wurden stetig erhöht.
 Verschiedene Schwellwerte in unterschiedlichen Verhältnissen wurden dabei getestet.
 Sobald einer dieser Schwellwerte zu einem schlechteren Ergebnis geführt hat, wurde er wieder reduziert oder ein neuer Verhältnis wurde getestet.
 Beim Verhältnis 6/20 bzw. 7/20 wurde das Maximum des F1-Scores erreicht.
-Da diese Werte nicht im Bereich einer brauchbaren Klassifikation sind, wurde auf das Ermitteln aller möglichen Kombinationen verzichtet.
+Da diese Werte nicht im Bereich einer zufriedenstellenden Klassifikation sind, wurde auf das Ermitteln aller möglichen Kombinationen verzichtet.
 \subsection{Regelset: Bag of Words}
 Bei diesem Regelset kann die Grösse der Black- und Whitelist (Features), das Verhältnis zwischen Test- und Trainingsdaten (Split) sowie ein Schwellwert angegeben werden.
 Für das Verhältnis zwischen Test- und Trainingsdaten wurden die Werte 0.3, 0.5 und 0.7 getestet.
@@ -145,13 +145,15 @@ In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
 \end{tabular}
 \end{table}\
 Da diese Werte sich fast nicht unterscheiden, wurden alle weiterverwendet, um einen maximalen Score zu evaluieren.
-In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 - 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die folgende Tabelle zeigt diese Tests, sortiert nach bestem F1-Score:\\
-\begin{table}[H]
+In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 - 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die Tabelle \cref{tab:bow3} zeigt diese Tests, sortiert nach bestem F1-Score:\\
+\FloatBarrier
+\begin{table}
 	\caption{Scores der dritten Iteration des Regelsets: Bag of Words}
 	\centering
+	\label{tab:bow3}
 \begin{tabular}{ | l | l | l | l | l | l | }
 	\hline
-	Split & Features & Limit & F1 & Pre & Rec \\ \hline
+	Split & Features & Limit & F1-Score & Precision & Recall \\ \hline
 	0.3 & 400 & -3 & 0.72 & 0.74 & 0.7 \\ 
 	0.3 & 400 & -4 & 0.72 & 0.79 & 0.66 \\
 	0.3 & 400 & -5 & 0.72 & 0.81 & 0.64 \\
@@ -194,6 +196,7 @@ Daraus lässt sich schliessen, dass eine hohe Anzahl Features zu einem besseren 
 Das Verhältnis zwischen Test- und Trainingsdaten ist nicht so relevant, da sowohl das Verhältnis 0.3 als auch 0.7 zu hohen Scores führt.
 Der Schwellwert ist im Bereich -2 bis -5 ebenfalls nicht aussagekräftig, da auch dieser bei den besten Scores vertreten ist.
 Es muss zudem berücksichtigt werden, dass der Split zufällig gewählt wird und keine Kreuzvalidierung stattfindet, dadurch können diese Ergebnisse variieren.
+\FloatBarrier
 \section{Auswirkungen des Preprocessings}
 \subsection{Regelbasiertes Klassifizieren}
 Bei den Methoden des regelbasierten Klassifizierens trägt das Preprocessing einen erheblichen Teil zum Erfolg bei.

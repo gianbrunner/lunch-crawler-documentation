@@ -15,7 +15,7 @@ Folgende Einschränkungen werden vorgegeben, um diese Frage beantworten zu könn
 In diesem Abschnitt wird zwischen zwei verschiedenen Ansätzen, namentlich dem regelbasierten und dem Klassifizieren mittels Machine-Learning unterschieden.
 \subsection{Regelbasiertes Klassifizieren}
 Die fünf verschiedenen Methoden des regelbasierten Klassifizierens haben folgende Ergebnisse erzielt:\\
-\begin{table}
+\begin{table}[H]
 \caption{Beste Scores der regelbasierten Klassifikation}
 \centering
 \begin{tabular}{|l|l|l|l|}
@@ -33,7 +33,7 @@ Die fünf verschiedenen Methoden des regelbasierten Klassifizierens haben folgen
 
 Hinweis: Wenn mehrere Parameterkombinationen denselben F1-Score erreicht haben, ist diejenige mit der höheren Precision bevorzugt worden.
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix des Regelsets: Menü im Titel}
 	\centering
 \begin{tabular}{@{}cc|cc@{}}
@@ -50,7 +50,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 \end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix des Regelsets: Preisdetektor}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -67,7 +67,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix des Regelsets: Kombination aus Menü im Titel und Preisdetektor}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -84,7 +84,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix des Regelsets: Listing}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -101,7 +101,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix des Regelsets: Bag of Words}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -127,7 +127,7 @@ Schlussendlich wurde der Algorithmus mit dem besten F1-Score und derjenige mit d
 Hinweis: Bei manchen Algorithmen wurden bei der Hyperparametersuche keine besseren Parameter gefunden.
 In diesem Falle wurden die Standardparameter weiter verwendet.
 
-\begin{table}
+\begin{table}[H]
 	\caption{Beste Scores der Machine-Learning Klassifikation}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -140,7 +140,7 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -157,7 +157,7 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix der Methode: RandomForest mit binärem Bag of Words}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -199,7 +199,7 @@ Dadurch können die Werte nicht direkt mit denjenigen Methoden verglichen werden
 Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Texten unter diesen Umständen nicht möglich ist.
 In allen Fällen wurde eine grosse Anzahl Webpages fälschlicherweise positiv klassifiziert.
 Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele irrelevante Seiten angezeigt.
-Andererseits werden in Ausnahme der Methode \glqq Bag of Words\grqq{} höchstens die Hälfte der Menüseiten gefunden.
+Andererseits werden in Ausnahme der Methode \glqq Bag of Words\grqq{} höchstens die Hälfte der tatsächlichen Menüseiten gefunden.
 \subsection{Klassifizieren mittels Machine-Learning Algorithmen}
 Beim Vergleich beider Klassifizierer ist ein grosser Unterschied beim Recall ersichtlich.
 Interessant ist, dass beide Algorithmen ziemlich zuverlässige Precision-Werte erzielen konnten.\\
