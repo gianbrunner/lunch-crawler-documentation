@@ -127,7 +127,7 @@ Schlussendlich wurde der Algorithmus mit dem besten F1-Score und derjenige mit d
 Hinweis: Bei manchen Algorithmen wurden bei der Hyperparametersuche keine besseren Parameter gefunden.
 In diesem Falle wurden die Standardparameter weiter verwendet.
 
-\begin{table}
+\begin{table}[H]
 	\caption{Beste Scores der Machine-Learning Klassifikation}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -140,7 +140,7 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -151,13 +151,13 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 		\multicolumn{1}{c}{Negativ} \\ 
 		\cline{2-4}
 		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-		& Positiv  & 34   & 3   \\[1.5ex]
-		& Negativ  & 16   & 47 \\ 
+		& Positiv  & 34   & 16   \\[1.5ex]
+		& Negativ  & 3   & 47 \\ 
 		\cline{2-4}
 	\end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[H]
 	\caption{Konfusionsmatrix der Methode: RandomForest mit binärem Bag of Words}
 	\centering
 	\begin{tabular}{@{}cc|cc@{}}
@@ -168,8 +168,8 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 		\multicolumn{1}{c}{Negativ} \\ 
 		\cline{2-4}
 		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-		& Positiv  & 17   & 0   \\[1.5ex]
-		& Negativ  & 33   & 50 \\ 
+		& Positiv  & 17   & 33   \\[1.5ex]
+		& Negativ  & 0   & 50 \\ 
 		\cline{2-4}
 	\end{tabular}
 \end{table}
@@ -186,7 +186,7 @@ Jedoch sind auch 344 Webpages fälschlicherweise als Menüseiten klassifiziert w
 Eine Kombination dieser beiden Methoden ergibt ebenfalls keine markant besseren Werte.
 316 oder ca. 52\% der Menüseiten wurden als solche erkannt, aber 426 Webpages wurden fälschlicherweise positiv klassifiziert.
 
-Das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 305, also ca. 50\% der erkannten Webseiten wurden 301  Webpages als Menüseiten klassifiziert, welche keine sind.
+Beim Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 305, also ca. 50\% der erkannten Webseiten wurden 301  Webpages als Menüseiten klassifiziert, welche keine sind.
 %Diese Zahlen würden sich verändern, wenn eine Änderung dieser Listen vorgenommen werden würden.
 %Ob dies zu einer Verbesserung oder Verschlechterung führt, lässt sich nicht pauschal sagen.
 

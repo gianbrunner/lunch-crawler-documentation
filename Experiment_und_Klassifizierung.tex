@@ -7,7 +7,7 @@ Jedes Regelset wurde anhand des Goldstandards getestet und evaluiert.
 Verschiedene Parameterwerte und Kombinationen wurden getestet, um möglichst hohe Werte der gemessenen Metriken zu erreichen.
 Bei allen Regelsets sind alle Methoden des Preprocessings aktiv gewesen. 
 \subsection{Regelset: Menü im Titel}
-Für dieses Regelset sind keine Parameter verfügbar, daher ist nur eine Konfiguration durchgführt worden.
+Für dieses Regelset sind keine Parameter verfügbar, daher ist nur eine Konfiguration durchgeführt worden.
 Diese hat folgende Metriken ergeben:\\
 \begin{table}[H]
 \caption{Score des Regelsets: Menü im Titel}
@@ -38,7 +38,7 @@ Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise an
 Das beste Ergebnis hat ein Schwellwert von zwei erzielt, danach ist der F1-Score wieder schlechter geworden.
 Daraus wurde geschlussfolgert, dass für dieses Regelset das Maximum bereits erreicht wurde.
 \subsection{Regelset: Kombination aus Menü im Titel und Preisdetektor}
-Bei dieser Konfiguration ebenfalls kann der Schwellwert für die Anzahl erkannter Preise angegeben werden.\\
+Bei dieser Konfiguration kann der Schwellwert ebenfalls für die Anzahl erkannter Preise angegeben werden.\\
 \begin{table}[H]
 	\caption{Scores des Regelsets: Kombination aus Menü im Titel und Preisdetektor}
 	\centering
@@ -72,7 +72,7 @@ In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erh�
 \end{tabular}
 \end{table}
 Dieser Versuch hat gezeigt, dass ein maximaler F1-Score bei gleichen Werten zwischen 5 und 20 zu erreichen ist.\\
-Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden in zweiten Versuch wurden unterschiedliche Verhältnisse getestet:\\
+Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden im zweiten Versuch unterschiedliche Verhältnisse getestet:\\
 \begin{table}[H]
 	\caption{Scores der zweiten Iteration des Regelsets: Listing}
 	\centering
@@ -109,7 +109,7 @@ Diese Erkenntnis wurde in einem weiteren Versuch in mehreren Iterationen geteste
 \end{table}
 Die Schwellwerte wurden stetig erhöht.
 Verschiedene Schwellwerte in unterschiedlichen Verhältnissen wurden dabei getestet.
-Sobald einer dieser Schwellwerte zu einem schlechteren Ergebnis geführt hat, wurde er wieder reduziert oder ein neuer Verhältnis wurde getestet.
+Sobald einer dieser Schwellwerte zu einem schlechteren Ergebnis geführt hat, wurde er wieder reduziert oder ein neues Verhältnis wurde getestet.
 Beim Verhältnis 6/20 bzw. 7/20 wurde das Maximum des F1-Scores erreicht.
 Da diese Werte nicht im Bereich einer brauchbaren Klassifikation sind, wurde auf das Ermitteln aller möglichen Kombinationen verzichtet.
 \subsection{Regelset: Bag of Words}
@@ -145,7 +145,7 @@ In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
 \end{tabular}
 \end{table}\
 Da diese Werte sich fast nicht unterscheiden, wurden alle weiterverwendet, um einen maximalen Score zu evaluieren.
-In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 - 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die folgende Tabelle zeigt diese Tests, sortiert nach bestem F1-Score:\\
+In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 bis 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die folgende Tabelle zeigt diese Tests, sortiert nach bestem F1-Score:\\
 \begin{table}[H]
 	\caption{Scores der dritten Iteration des Regelsets: Bag of Words}
 	\centering
@@ -198,12 +198,12 @@ Es muss zudem berücksichtigt werden, dass der Split zufällig gewählt wird und
 \subsection{Regelbasiertes Klassifizieren}
 Bei den Methoden des regelbasierten Klassifizierens trägt das Preprocessing einen erheblichen Teil zum Erfolg bei.
 Die Methode \glqq Menü im Titel\grqq{} profitiert davon, dass Umlaute mit den entsprechenden Selbstlauten ersetzt werden.
-Der Preisdetektor funktioniert ohne den gleichnamigen Preprocessing-Schritt gar nicht, da nach dem Ersatzwort gesucht wird.
+Der Preisdetektor funktioniert ohne den gleichnamigen Preprocessingschritt gar nicht, da nach dem Ersatzwort gesucht wird.
 Beide Punkte gelten auch für die Kombination dieser Methoden.\\
-Das Listing profitiert von mehreren Preprocessing-Schritten.
+Das Listing profitiert von mehreren Preprocessingschritten.
 Das Ersetzen der Grossbuchstaben durch Kleinbuchstaben, der Preis- und Getränkedetektor sowie die Stammformreduktion führen dazu, dass im Text vorkommende Worte den Worten der jeweiligen Listen besser zugeordnet werden können.
 Die Methode \glqq Bag of Words\grqq{} profitiert davon ebenfalls, da das Prinzip dasselbe ist.\\
-Es können keine genauen Zahlen angegeben werden, welche Scores diese Methoden ohne Preprocessing-Schritte erreichen würden, da diese Schritte zwingend benötigt werden, um den Text in eine klassifizierbare Form zu bringen.
+Es können keine genauen Zahlen angegeben werden, welche Scores diese Methoden ohne Preprocessingschritte erreichen würden, da diese Schritte zwingend benötigt werden, um den Text in eine klassifizierbare Form zu bringen.
 \subsection{Klassifizieren mittels Machine-Learning}
 \subsubsection{Einfache Preprocessingschritte}
 Das Anwenden von einfachen Preprocessingschritten hat bei allen drei Feature-Extraction Methoden Verbesserungen bewirkt.\\
@@ -218,10 +218,10 @@ Das einfache Preprocessing hatte auf alle drei Varianten positive Einwirkungen u
 Das fortschrittliche Preprocessing erzielt bei allen drei Feature-Extraction Methoden keine eindeutigen Resultate.\\
 Bei der \glqq Bag of Words\grqq{} Methode erreicht die Konfiguration \glqq config8\grqq{} mit dem Preisdetektor, der Stoppwörterentfernung und der Stammformreduktion die grössten positiven Einwirkungen.
 Sieben Algorithmen können mit dieser Konfiguration ihre F1-Scores verbessern.
-Somit wird für \glqq Bag of Words\grqq{} die Konfiguration \glqq config8\grqq{} weiter benutzt.\\\\
+Somit wird für \glqq Bag of Words\grqq{} die Konfiguration \glqq config8\grqq{} weiter benutzt.\\
 Bei der binären \glqq Bag of Words\grqq{} Methode gibt es bei keiner Konfiguration irgendwelche flächendeckenden Verbesserungen.
 Es gibt jeweils nur vereinzelte Algorithmen, welche ihre Scores verbessern können.
-Da keine Konfiguration eindeutig als Verbesserung angesehen werden kann, wird bei dieser Variante keine fortschrittlichen Preprocessingschritte angewendet.\\\\
+Da keine Konfiguration eindeutig als Verbesserung angesehen werden kann, wird bei dieser Variante keine fortschrittlichen Preprocessingschritte angewendet.\\
 Bei der TF-IDF-Methode gibt es ebenfalls keine eindeutigen Verbesserungen bei irgendeiner Konfiguration.
 Es können vereinzelte Algorithmen ihre Scores verbessern, aber es findet nie flächendeckend eine Verbesserung statt.
 Bei der Konfiguration \glqq config5\grqq{} erzielt AdaBoost den höchsten Wert über alle Konfigurationen gesehen, aber die anderen Algorithmen werden nur leicht beeinflusst.
@@ -245,7 +245,7 @@ Die Angabe der Klassenverteilung konnte nicht bei allen Algorithmen als Paramete
 Somit werden alle Bayes-Algorithmen, KNearestNeighbor und Nearest-Centroid in dieser Auswertung nicht beachtet.\\
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Angabe der Klassenverteilung eine durchschnittliche Verbesserung der F1-Scores.
 Einzelne Algorithmen reagieren negativ auf die Angabe, aber die positiven Auswirkungen übertreffen die negativen Auswirkungen.
-Somit wird bei beiden \glqq Bag of Words\grqq{} Methoden die Angabe der Klassenverteilung miteinbezogen.\\\\
+Somit wird bei beiden \glqq Bag of Words\grqq{} Methoden die Angabe der Klassenverteilung miteinbezogen.\\
 Bei der TF-IDF-Methode werden drei Algorithmen negativ und vier Algorithmen positiv beeinflusst.
 Lediglich beim PassiveAgressiveClassifier gibt es eine markante Verschlechterung des F1-Scores.
 Bei den anderen Algorithmen halten sich die negativen Auswirkungen im Rahmen.
@@ -261,7 +261,7 @@ Für dieses Experiment wurden Unigramme, Bigramme und Trigramme ausgetestet.\\
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Verwendung von Unigrammen die besten Ergebnisse.
 Bi- und Trigramme können bei einzelnen Algorithmen ebenfalls eine Verbesserunge verzeichnen, aber im Vergleich zu Unigrammen fallen diese flächendeckend kleiner aus.
 Somit werden bei beiden \glqq Bag of Words\grqq{} Varianten nur Unigramme verwendet.
-Ebenfalls benötigt die Extrahierung der Features bei Bi- und Trigrammen circa doppelt so lange, was eine enorme Performanceeinbusse ist.\\\\
+Ebenfalls benötigt die Extrahierung der Features bei Bi- und Trigrammen circa doppelt so lange, was eine enorme Performanceeinbusse ist.\\
 Bei der TF-IDF-Methode erzielen Bi- und Trigramme die exakt gleichen Werte.
 Uni- und Bigramme erzielen im Durchschnitt ungefähr den gleichen Wert.
 Bei der Verwendung von Unigrammen erzielt der Algorithmus Bernoulli-Bayes einen F1-Score von null.

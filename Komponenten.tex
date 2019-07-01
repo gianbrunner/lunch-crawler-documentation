@@ -37,11 +37,10 @@ Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitver
 StromCrawler ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsubsection{Docker}
 Docker besitzt verschiedene Bedeutungen. 
-Docker kann sich auf den Namen der Firma Docker Inc."fussnote" beziehen oder auf die eigentliche Software.
+Docker kann sich auf den Namen der Firma Docker Inc. beziehen oder auf die eigentliche Software.
 In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
 Mithilfe von Docker können ressourcenarme, modulare virtuelle Maschinen erstellt werden, welche auch Container genannt werden.
-Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden.
-\footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker}}
+Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden \footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker}}.
 Linux-Container verwenden den Linux-Kernel und seine Funktionen, einzelne Prozesse isolieren zu können.
 Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
 Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
@@ -55,7 +54,7 @@ Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Pro
 
 \subsubsection{Docker-Compose}
 Mit Docker Containern können auch Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
-Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software "Docker-Compose" diese Aufgabe.
+Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software \glqq Docker-Compose\grqq{} diese Aufgabe.
 Mithilfe von Docker-Compose können mehrere Docker Container verknüpft und gleichzeitig gestartet werden.
 Die Abhängigkeiten zwischen den Containern wird ebenfalls mit einem Konfigurationsfile, dem Composefile, definiert.
 Wahlweise können Dateiordner vom Hostsystem in einzelne Container angehängt werden, damit die Container Daten dort abspeichern oder abrufen können.
@@ -95,7 +94,7 @@ Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, dam
 \section{Klassifizierung}
 \subsection{Verwendete Technologien}
 \subsubsection{Luigi}
-Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist.
+Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist.\footnote{\url{https://github.com/spotify/luigi}}
 Pipelining dient dazu, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
 Pipelining wird meist im Kontext von Big Data oder Machine-Learning angewendet, wo sich viele einzelne Tasks mit grossen Datenmenge beschäftigen.
 Luigi wird selbst von Spotify in der Produktion verwendet und bietet unter anderem folgende Features:
@@ -109,7 +108,7 @@ Luigi wird selbst von Spotify in der Produktion verwendet und bietet unter ander
 Die einzelnen Tasks werden mit Python-Klassen realisiert.
 Luigi ist so aufgebaut, dass jeder Task ein Input-File liest, von dem die Ausgabe des vorherigen Tasks eingelesen wird und ein Output-File schreibt, welches als Input-File des anschliessenden Tasks benutzt wird.
 Dadurch kann Luigi die Zustände der einzelnen Tasks überwachen und bei einem Fehlerfall die Pipeline dort wieder starten, wo sie sich aufgehängt hat.
-Damit Luigi die Abhängigkeiten und das Überwachen bewerkstelligen kann, benötigt jede Klasse in der Pipeline folgende 3 Funktionen:
+Damit Luigi die Abhängigkeiten und das Überwachen bewerkstelligen kann, benötigt jede Klasse in der Pipeline folgende drei Funktionen:
 \begin{itemize}
 	\item Funktion requires(), Angabe auf welche Tasks Abhängigkeiten bestehen
 	\item Funktion run(), Bereich, wo die eigentliche Logik des Tasks ist
@@ -132,7 +131,7 @@ Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man e
 Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
 Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn}}.\\
 Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
-Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.
+Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/}}
 Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
 \subsection{Preprocessing}\label{preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
@@ -157,7 +156,7 @@ Die folgenden Varianten von Preisen wird erkannt:
 	\item preisangabe
 	\item chf/fr/sfr + preisangabe
 \end{itemize} 
-Zudem wird zwischen unterschieden, wie viele Stellen der Preis hat.
+Zudem wird unterschieden, wie viele Stellen der Preis hat.
 Die nun aufgeführte Liste zeigt die verschiedenen Schlüsselwörter:
 \begin{itemize}
 	\item Einstellig $\rightarrow$ onedigitprice
@@ -294,18 +293,18 @@ Nun erfolgt eine Auflistung aller Algorithmen die verwendet wurden.
 Jedoch nur die Algorithmen, welche nach der vollständigen Ausführung aller Optimierungsschritte die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher umschrieben.
 Im Anhang können alle Klassifizierer mit ihren entsprechenden Scores eingesehen werden.
 \subsubsection{SGDClassifier}
-SGDClassifier gehört zur Familie der lineare Modelle.
+SGDClassifier gehört zur Familie der lineare Modelle.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html}}\\
 Lineare Modelle sind in der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariabeln und Ausgangsvariabeln besteht.
 Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdeckt.
 Das optimale Abdecken wird mit einer Loss-Funktion ermittelt.
 Die Loss-Funktion berechnet den Unterschied zwischen vorhergesagtem Wert zu tatsächlichem Wert des Trainingsdatenpunktes.
 Lineare Modelle verwenden Optimierungsverfahren, welche iterativ Parameter verändern, um die Werte der Loss-Funktion zu minimieren und somit die bestmögliche Parameterzusammensetzung zu ermitteln.\\
-Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierungsvefahren das \glqq Stochastic Gradient Descent\grqq{} Verfahren.
+Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierungsvefahren das \glqq Stochastic Gradient Descent\grqq{} Verfahren\footnote{\url{https://scikit-learn.org/stable/modules/sgd.html}}.
 Bei diesem Verfahren kommt der mathematische Gradient zum Einsatz.
 Der Gradient zeigt bei Anpassungen der Parameter, immer in die Richtung mit der grössten Änderung des Outputs.
 Der Output wäre in diesem Falle die Aufzeichnung des Loss-Funktion.\\
 Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Optimierung jeweils nur ein Parameter zufällig ausgesucht und angepasst wird und seine Auswirkung anschliessend ermittelt wird.
-Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und trotzdem gute Werte erzielt werden können.\\
+Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können.\\
 In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
 \begin{figure}[H]	
 	\includegraphics[width=1\columnwidth,keepaspectratio]{img/sgd.png}
@@ -313,20 +312,20 @@ In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt un
 	\label{fig:sgd}
 \end{figure}
 \subsubsection{Perceptron}
-Der Perceptron-Algorithmus basiert auf dem SGDClassifier.
+Der Perceptron-Algorithmus basiert auf dem SGDClassifier.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html}}
 Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spezieller Konfiguration.\\
 Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate.
 \subsubsection{AdaBoostClassifier}
-AdaBoost gehört zu der Familie der Ensemble-Learner.
+AdaBoost gehört zu der Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html}}
 Ensemble-Learning ist ein Zusammenschluss von mehreren unterschiedlichen Klassifizieren, welche mit einem Voting-Verfahren eine schlussendliche Klassifizierung durchführen.
 Ensemble-Learning verfolgt die Annahme, dass mehrere Algorithmen im Plenum eine bessere Aussage abliefern können, als einen Algorithmus alleine.
 Bei vielen Ensemble-Verfahren werden alle Klassifizierer parallel trainiert und geben ihr Votum gleichzeitig ab.\\
-Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlichkeit mit der Theorie der genetischen Algorithmen hat.
+Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlichkeit mit der Theorie der genetischen Algorithmen hat.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html}}
 Bei Adaboost wird ein Algorithmus trainiert, validiert und als Ursprung verwendet. Alle zusätzlichen Algorithmen, welche das finale Voting durchführen, werden vom Ursprungsalgorithmus abgeleitet.
 Es werden jedoch bei den Abkömmlingen die internen Parameter schrittweise verbessert und versucht die Fehler des \glqq Vater-Algorithmus\grqq{} zu vermeiden.
 AdaBoost kann verbessert werden, indem die Anzahl von Vererbungsschritten angepasst wird.
 \subsubsection{RandomForestClassifier}
-RandomForest gehört ebenfalls zur Familie der Ensemble-Learner.
+RandomForest gehört ebenfalls zur Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}}
 RandomForest, wie der Name schon sagt, ist eine Zusammensetzung von einer Vielzahl von unterschiedlichen DecisionTrees.\\
 DecisionTree ist ebenfalls ein Algorithmus, der für die Klassifizierung verwendet werden kann.
 Der DecisionTree-Algorithmus baut schrittweise eine Baumstruktur von Entscheidungszweige auf, um eine Klassifizierungsaufgabe zu meistern. 
@@ -353,7 +352,7 @@ Anhand dieser Kategorien lässt sich für den gesamten Datensatz die oben genann
 Die Precision definiert das Verhältnis der korrekt positiv klassifizierten Menüseiten zu allen durch den Algorithmus als positiv klassifizierten Menüseiten.\\
 \[Recall=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Negativ}}\]\\
 Der Recall definiert das Verhältnis der korrekt positiv klassifizierten Proben zu allen tatsächlichen Menüseiten.\\
-\[F_{1}=\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
+\[F_{1}=2*\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
 Anhand des F1-Scores wird die Genauigkeit der Klassifizierung gemessen.
 Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.
 \section{Webapplikation}
