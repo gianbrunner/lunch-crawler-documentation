@@ -14,24 +14,28 @@ Folgende Einschränkungen werden vorgegeben, um diese Frage beantworten zu könn
 \section{Ergebnisse der Klassifizierung}
 In diesem Abschnitt wird zwischen zwei verschiedenen Ansätzen, namentlich dem regelbasierten und dem Klassifizieren mittels Machine-Learning unterschieden.
 \subsection{Regelbasiertes Klassifizieren}
-Die fünf verschiedenen Methoden des regelbasierten Klassifizierens haben folgende Ergebnisse erzielt:\\
+Alle fünf Methoden der regelbasierten Klassifikation wurden in denjenigen Konfigurationen, welche die besten Ergebnisse lieferten, anhand des Testdatensets des Gold Standards geprüft.
+Die folgenden Ergebnisse wurden erzielt:\\
+
 \begin{table}[H]
-\caption{Beste Scores der regelbasierten Klassifikation}
-\centering
-\begin{tabular}{|l|l|l|l|}
-	\hline
-	Methode & F1-Score & Precision & Recall\\
-	\hline
-	Menü im Titel & 0.17 & 0.43 & 0.11 \\
-	Preisdetektor & 0.46 & 0.45 & 0.47 \\
-	Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
-	Listing & 0.55 & 0.60 & 0.50\\
-	Bag of Words & 0.72 & 0.81 & 0.64\\
-	\hline
-\end{tabular}
+	\caption{Beste Scores der regelbasierten Klassifikation anhand des Testsets}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Menü im Titel & 0.28 & 1.00 & 0.16 \\
+		Preisdetektor & 0.65 & 0.93 & 0.50 \\
+		Kombination aus Menü im Titel und Preisdetektor & 0.70 & 0.93 & 0.56\\
+		Listing & 0.68 & 0.96 & 0.52\\
+		Bag of Words & 0.74 & 0.91 & 0.62\\
+		\hline
+	\end{tabular}
 \end{table}
 
-Hinweis: Wenn mehrere Parameterkombinationen denselben F1-Score erreicht haben, ist diejenige mit der höheren Precision bevorzugt worden.
+
+
+Hinweis: Wenn mehrere Parameterkombinationen denselben F1-Score erreicht haben, ist diejenige mit der höheren Precision bevorzugt worden.\\
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
 \begin{table}[H]
 	\caption{Konfusionsmatrix des Regelsets: Menü im Titel}
@@ -44,8 +48,8 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 	\multicolumn{1}{c}{Negativ} \\ 
 	\cline{2-4}
 	\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-	& Positiv  & 64   & 542   \\[1.5ex]
-	& Negativ  & 84   & 6173 \\ 
+	& Positiv  & 8   & 42   \\[1.5ex]
+	& Negativ  & 0   & 50 \\ 
 	\cline{2-4}
 \end{tabular}
 \end{table}
@@ -61,8 +65,8 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\multicolumn{1}{c}{Negativ} \\ 
 		\cline{2-4}
 		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-		& Positiv  & 284   & 322   \\[1.5ex]
-		& Negativ  & 344   & 5913 \\ 
+		& Positiv  & 25   & 25   \\[1.5ex]
+		& Negativ  & 2    & 48 \\ 
 		\cline{2-4}
 	\end{tabular}
 \end{table}
@@ -78,8 +82,8 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\multicolumn{1}{c}{Negativ} \\ 
 		\cline{2-4}
 		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-		& Positiv  & 316   & 290   \\[1.5ex]
-		& Negativ  & 426   & 5831 \\ 
+		& Positiv  & 28   & 22   \\[1.5ex]
+		& Negativ  & 2   & 48 \\ 
 		\cline{2-4}
 	\end{tabular}
 \end{table}
@@ -95,8 +99,8 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\multicolumn{1}{c}{Negativ} \\ 
 		\cline{2-4}
 		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-		& Positiv  & 305   & 200   \\[1.5ex]
-		& Negativ  & 301   & 6057 \\ 
+		& Positiv  & 26   & 24   \\[1.5ex]
+		& Negativ  & 1   & 49 \\ 
 		\cline{2-4}
 	\end{tabular}
 \end{table}
@@ -112,8 +116,8 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\multicolumn{1}{c}{Negativ} \\ 
 		\cline{2-4}
 		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
-		& Positiv  & 108   & 25   \\[1.5ex]
-		& Negativ  & 61   & 1865 \\ 
+		& Positiv  & 31   & 19   \\[1.5ex]
+		& Negativ  & 3   & 47 \\ 
 		\cline{2-4}
 	\end{tabular}
 \end{table}
@@ -176,30 +180,58 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 
 \section{Interpretation der Ergebnisse}
 \subsection{Regelbasiertes Klassifizieren}
-Die verschiedenen Methoden ergeben stark unterschiedliche Werte.
-Die simpelste Methode, das Überprüfen des Schlagworts \glqq menu\grqq{} im Titel hat ein sehr schlechtes Ergebnis geliefert. 
-Nur 64, also ca. 11\% der Menüseiten wurden erkannt, dafür sind 84 Webpages als solche klassifiziert worden, welche gar keine sind.
 
-Die Suche nach Preisen innerhalb des Textes hat ein etwas besseres Ergebnis geliefert, bereits 284, also ca. 57\% der Menüseiten sind gefunden worden. 
-Jedoch sind auch 344 Webpages fälschlicherweise als Menüseiten klassifiziert worden, was kein deutlich besseres Verhältnis als bei ersterer Methode ergibt.
+%\begin{table}[H]
+%\caption{Beste Scores der regelbasierten Klassifikation anhand des Trainingssets}
+%\centering
+%\begin{tabular}{|l|l|l|l|}
+%	\hline
+%	Methode & F1-Score & Precision & Recall\\
+%	\hline
+%	Menü im Titel & 0.17 & 0.43 & 0.11 \\
+%	Preisdetektor & 0.46 & 0.45 & 0.47 \\
+%	Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
+%	Listing & 0.55 & 0.60 & 0.50\\
+%	Bag of Words & 0.72 & 0.81 & 0.64\\
+%	\hline
+%\end{tabular}
+%\end{table}
+Die verschiedenen Methoden ergeben, abgesehen von der Methode \glqq Menü im Titel\grqq{}, ähnliche Werte.
+Diese hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür ist die Precision bei 1, es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
+Dafür sind auch nur 16\% der Menüseiten erkannt worden.
 
-Eine Kombination dieser beiden Methoden ergibt ebenfalls keine markant besseren Werte.
-316 oder ca. 52\% der Menüseiten wurden als solche erkannt, aber 426 Webpages wurden fälschlicherweise positiv klassifiziert.
+Die Suche nach Preisen innerhalb des Textes hat ein besseres Ergebnis geliefert, 50\% der Menüseiten wurden als solche erkannt und zwei Webpages wurden fälschlicherweise als Menüseiten klassifiziert. 
+Eine Kombination dieser beiden Methoden ergibt eine fast identische Klassifikation.
+Ebenfalls 28 von 50 Menüseiten wurden erkannt, ebenfalls zwei wurden fälschlicherweise als Menüseiten klassifiziert.
 
-Das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 305, also ca. 50\% der erkannten Webseiten wurden 301  Webpages als Menüseiten klassifiziert, welche keine sind.
-%Diese Zahlen würden sich verändern, wenn eine Änderung dieser Listen vorgenommen werden würden.
-%Ob dies zu einer Verbesserung oder Verschlechterung führt, lässt sich nicht pauschal sagen.
+Durch das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 26, also ca. 52\% der erkannten Webseiten wurde 1 Webpages als Menüseiten klassifiziert, welche keine sind.
 
 Die Klassifikation mit der Methode \glqq Bag of Words\grqq{} führt zu den besten Ergebnissen der regelbasierten Klassifikation.
-Dabei muss jedoch beachtet werden, dass ein Teil der Daten verwendet wird, um die dynamischen Listen zu erstellen.
-Dies führt zu den folgenden Zahlen: 108 Webpages (ca. 81\%) wurden korrekt als Menüseiten klassifiziert.
-Dabei wurden 61 Webpages fälschlicherweise klassifiziert.
-Dadurch können die Werte nicht direkt mit denjenigen Methoden verglichen werden, welche den kompletten Datensatz klassifizieren. \\
+31 von 50 Menüseiten wurden erkannt, zudem wurden 3 Webpages fälschlicherweise als Menüseiten klassifiziert.
 
-Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Texten unter diesen Umständen nicht möglich ist.
-In allen Fällen wurde eine grosse Anzahl Webpages fälschlicherweise positiv klassifiziert.
-Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele irrelevante Seiten angezeigt.
-Andererseits werden in Ausnahme der Methode \glqq Bag of Words\grqq{} höchstens die Hälfte der tatsächlichen Menüseiten gefunden.
+Alle Methoden der regelbasierten Klassifikation mit Ausnahme der Methode \glqq Bag of Words\grqq{} funktionieren unabhängig vom Trainingsdatensatz.
+Beim Evaluieren der besten Konfigurationsparameter wurden diese auf dem Trainingsdatensatz getestet.
+Diese Ergebnisse sind in der folgenden Tabelle ersichtlich:
+\begin{table}[H]
+\caption{Beste Scores der regelbasierten Klassifikation anhand des Trainingssets}
+\centering
+\begin{tabular}{|l|l|l|l|}
+	\hline
+	Methode & F1-Score & Precision & Recall\\
+	\hline
+	Menü im Titel & 0.17 & 0.43 & 0.11 \\
+	Preisdetektor & 0.46 & 0.45 & 0.47 \\
+	Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
+	Listing & 0.55 & 0.60 & 0.50\\
+	\hline
+\end{tabular}
+\end{table}
+
+Im Vergleich zu den Ergebnissen des Testsets ist bei allen Regeln zu erkennen, dass die Werte deutlich tiefer sind.
+Dadurch kann die Schlussfolgerung gezogen werden, dass mit einer steigender Anzahl zu klassifizierenden Daten die Diversität dieser steigt, was sich negativ auf die Ergebnisse auswirkt.
+Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Webpagen vor allem mit steigender Datendiversität nicht möglich ist.
+In allen Fällen wurde eine erhebliche Anzahl der Menüseiten nicht gefunden.
+Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele Menüseiten nicht angezeigt.
 \subsection{Klassifizieren mittels Machine-Learning Algorithmen}
 Beim Vergleich beider Klassifizierer ist ein grosser Unterschied beim Recall ersichtlich.
 Interessant ist, dass beide Algorithmen ziemlich zuverlässige Precision-Werte erzielen konnten.\\

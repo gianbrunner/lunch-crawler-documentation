@@ -219,6 +219,8 @@ Die Anzahl der Wörter dieser Listen ist konfigurierbar.
 Die Klassifikation findet mittels einem Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
+Um die Ergebnisse anhand der Testdaten evaluieren zu können, sind diese Listen zudem statisch implementiert worden.
+Ob diese dynamisch erzeugt werden oder die statisch implementierten Listen verwendet werden sollen, kann mittels Konfigurationsoption gewählt werden.
 \subsection{Feature-relevante Methoden für Machine-Learning}
 \subsubsection{Bag of Words}
 Der statistische Ansatz namens \glqq Bag of Words\grqq{} wandelt einen Text in eine Anhäufung von Wörtern um.
