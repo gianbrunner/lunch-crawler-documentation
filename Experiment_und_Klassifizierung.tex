@@ -206,18 +206,125 @@ Die Methode \glqq Bag of Words\grqq{} profitiert davon ebenfalls, da das Prinzip
 Es können keine genauen Zahlen angegeben werden, welche Scores diese Methoden ohne Preprocessing-Schritte erreichen würden, da diese Schritte zwingend benötigt werden, um den Text in eine klassifizierbare Form zu bringen.
 \subsection{Klassifizieren mittels Machine-Learning}
 \subsubsection{Einfache Preprocessingschritte}
-Das
+Das Anwenden von einfachen Preprocessingschritten hat bei allen drei Feature-Extraction Methoden Verbesserungen bewirkt.\\
+Lediglich bei der TF-IDF Methode verschlechterten sich gewisse Algorithmen mit dem einfachen Preprocessing.
+Die Verbesserungen beim TF-IDF sind jedoch markanter als die Verschlechterungen.\\
+Das einfache Preprocessing hatte auf alle drei Varianten positive Einwirkungen und wird somit auch bei allen dreien weiter verwendet.
+\begin{figure}[H]	
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/easypre.png}
+	\caption{Grafik der Auswertung für einfaches Preprocessing}
+\end{figure}
 \subsubsection{Fortschrittliche Preprocessingschritte}
+Das fortschrittliche Preprocessing erzielt bei allen drei Feature-Extraction Methoden keine eindeutigen Resultate.\\
+Bei der \glqq Bag of Words\grqq{} Methode erreicht die Konfiguration \glqq config8\grqq{} mit dem Preisdetektor, der Stoppwörterentfernung und der Stammformreduktion die grössten positiven Einwirkungen.
+Sieben Algorithmen können mit dieser Konfiguration ihre F1-Scores verbessern.
+Somit wird für \glqq Bag of Words\grqq{} die Konfiguration \glqq config8\grqq{} weiter benutzt.\\\\
+Bei der binären \glqq Bag of Words\grqq{} Methode gibt es bei keiner Konfiguration irgendwelche flächendeckenden Verbesserungen.
+Es gibt jeweils nur vereinzelte Algorithmen, welche ihre Scores verbessern können.
+Da keine Konfiguration eindeutig als Verbesserung angesehen werden kann, wird bei dieser Variante keine fortschrittlichen Preprocessingschritte angewendet.\\\\
+Bei der TF-IDF-Methode gibt es ebenfalls keine eindeutigen Verbesserungen bei irgendeiner Konfiguration.
+Es können vereinzelte Algorithmen ihre Scores verbessern, aber es findet nie flächendeckend eine Verbesserung statt.
+Bei der Konfiguration \glqq config5\grqq{} erzielt AdaBoost den höchsten Wert über alle Konfigurationen gesehen, aber die anderen Algorithmen werden nur leicht beeinflusst.
+Um bei der weiteren Ermittlung von Optimierungen nicht nur auf ein Algorithmus zu setzen, wird bei TF-IDF kein fortschrittliches Preprocessing angewendet.
+\\\\
+Die Auswertung für das fortschrittliche Preprocessing kann im Anhang gefunden werden.
 \section{Klassifizieren mittels Machine-Learning}
 \subsection{Dimensionsreduktion der Features}
+Die Verwendung der Dimensionsreduktion mittels LSA erzielt bei allen drei Feature-Extraction Methoden deutliche Verbesserungen.
+Der Grossteil der Algorithmen kann mit Hilfe von LSA den F1-Score verbessern.
+Lediglich bei der \glqq Bag of Words\grqq{} Methode ist die Summe über alle Score-Verbesserungen negativ, dies jedoch nur, weil der Multinomial-Bayes Klassifizierer mit LSA einen stetigen F1-Score von null hat.\\
+Die Dimensionsreduktion wird für alle drei Varianten weiter verwendet, da die positiven Auswirkungen sich deutlich in den F1-Scores widerspiegelt.
+Einziger Wehrmutstropfen der Dimensionsreduktion ist, dass der Multinomial-Bayes Klassifizierer keine wirkliche Klassifizierung mehr durchführen kann.
+Somit ist dieser Klassifizierer für den weiteren Verlauf nicht mehr verwendbar.
+\begin{figure}[H]	
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/dimred.png}
+	\caption{Grafik der Auswertung für die Dimensionsreduktion mittels LSA}
+\end{figure}
 \subsection{Klassenverteilung}
+Die Angabe der Klassenverteilung konnte nicht bei allen Algorithmen als Parameter angegeben werden.
+Somit werden alle Bayes-Algorithmen, KNearestNeighbor und Nearest-Centroid in dieser Auswertung nicht beachtet.\\
+Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Angabe der Klassenverteilung eine durchschnittliche Verbesserung der F1-Scores.
+Einzelne Algorithmen reagieren negativ auf die Angabe, aber die positiven Auswirkungen übertreffen die negativen Auswirkungen.
+Somit wird bei beiden \glqq Bag of Words\grqq{} Methoden die Angabe der Klassenverteilung miteinbezogen.\\\\
+Bei der TF-IDF-Methode werden drei Algorithmen negativ und vier Algorithmen positiv beeinflusst.
+Lediglich beim PassiveAgressiveClassifier gibt es eine markante Verschlechterung des F1-Scores.
+Bei den anderen Algorithmen halten sich die negativen Auswirkungen im Rahmen.
+Den F1-Score des PassiveAgressiveClassifier ausgenommen, sind die positiven Auswirkungen grösser als die negativen Auswirkungen.
+Somit wird für TF-IDF ebenfalls die Angabe der Klassenverteilung für die nächsten Schritte beibehalten.
+\begin{figure}[H]	
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/classweight.png}
+	\caption{Grafik der Auswertung für die Klassenverteilung}
+\end{figure}
 \subsection{N-Gramme}
+Sowohl \glqq Bag of Words\grqq{} als auch TF-IDF bieten in ihrer Scikit-Learn Implementierung die Möglichkeit N-Gramme zu verwenden.
+Für dieses Experiment wurden Unigramme, Bigramme und Trigramme ausgetestet.\\
+Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Verwendung von Unigrammen die besten Ergebnisse.
+Bi- und Trigramme können bei einzelnen Algorithmen ebenfalls eine Verbesserunge verzeichnen, aber im Vergleich zu Unigrammen fallen diese flächendeckend kleiner aus.
+Somit werden bei beiden \glqq Bag of Words\grqq{} Varianten nur Unigramme verwendet.
+Ebenfalls benötigt die Extrahierung der Features bei Bi- und Trigrammen circa doppelt so lange, was eine enorme Performanceeinbusse ist.\\\\
+Bei der TF-IDF-Methode erzielen Bi- und Trigramme die exakt gleichen Werte.
+Uni- und Bigramme erzielen im Durchschnitt ungefähr den gleichen Wert.
+Bei der Verwendung von Unigrammen erzielt der Algorithmus Bernoulli-Bayes einen F1-Score von null.
+Um nicht einen weiteren Algorithmus für die weiteren Schritte zu verlieren, wird deshalb die Verwendung von Bigrammen bei der TF-IDF-Methode verwendet.
+\begin{figure}[H]	
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/ngram.png}
+	\caption{Grafik der N-Gramme Auswertung}
+\end{figure}
 \subsection{Anzahl extrahierter Features}
+Für alle drei Feature-Extraction Methoden wurde ein Liniendiagramm für F1-Score, Precision und Recall erstellt.
+Aus diesen Grafiken kann entnommen werden, bei welcher Feature-Anzahl welcher Algorithmus den besten Score erzielt.
+Für die weitere Auswertung sind die Grafiken für F1-Score und Precision massgebend und werden weiter analysiert.
+\subsubsection{Bag of Words}
+Bei \glqq Bag of Words\grqq{} erzielt der Algorithmus AdaBoost bei 100 Features mit Abstand den besten F1-Score und erreicht fast die 0.8 Marke.
+Ebenfalls kann der LinearSVC Algorithmus einen guten F1-Score erzielen und teilt sich mit AdaBoost die besten Werte.
+Ersichtlich ist ebenfalls, dass die meisten Algorithmen sich zwischen 0.6 und 0.7 bewegen und das vereinzelte Klassifizierer mit ihren Werten auf und ab springen.\\
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-f1.png}
+	\caption{Grafik des F1-Score-Verlaufs bei Bag of Words}
+\end{figure}
+Bei der Precision ist der RandomForest Algorithmus der mit Abstand beste Klassifizierer.
+Vereinzelt erreicht RandomForest eine Precision von 1.0 und ist stetig über 0.8.\\
+Der Bernoulli-Bayes Algorithmus erreicht kurzzeitig ebenfalls eine Precision von eins, jedoch ist sein F1-Score jeweils unter 0.1.
+Deswegen wir Bernoulli-Bayes nicht als ernsthafte Wahl angesehen und nicht beachtet.
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-pre.png}
+	\caption{Grafik des Precision-Verlaufs bei Bag of Words}
+\end{figure}
+\subsubsection{Binäres Bag of Words}
+Bei der Methode \glqq binäres Bag of Words\grqq{} können mehrere Algorithmen einen F1-Score nahe der 0.8 Grenze verbuchen.
+Der beste Algorithmus ist Perceptron, welcher mit 325 Features einen F1-Score von 0.8 verzeichnet.\\
+Der SGDClassifier erreicht ebenfalls einen F1-Score von 0.8, jedoch mit einer höheren Anzahl von Features.
+Dies bedeutet das SGDClasifier potenziell länger für die Feature-Extraction benötigt und somit ist Perceptron der favorisierende Algorithmus bei dieser Variante.\\
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-bin-f1.png}
+	\caption{Grafik des F1-Score-Verlaufs bei binärem Bag of Words}
+\end{figure}
+Bei der Precision ist der RandomForest Algorithmus ebenfalls die beste Wahl.
+Er erreicht wieder die höchsten Prcecision-Werte bei einer vernünftigen Anzahl Features.\\
+Ebenfalls springt der Bernoulli-Bayes wieder zwischen 1.0 und 0.5 umher.
+Bei dieser Variante wird der Bernoulli-Bayes als keine Alternative gegenüber dem RandomForest in Betracht gezogen.
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-bin-pre.png}
+	\caption{Grafik des Precision-Verlaufs bei binärem Bag of Words}
+\end{figure}
+\subsubsection{TF-IDF}
+Bei der Verwendung von TF-IDF sind mehrere Algorithmen mit ihren F1-Scores im Bereich 0.7 bis 0.8.
+Der SGDClassifier Algorithmus kann als einziger die Grenze von 0.8 durchbrechen und ist somit der Algorithmus mit dem besten F1-Score.\\
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/tfidf-f1.png}
+	\caption{Grafik des F1-Score-Verlaufs bei TF-IDF}
+\end{figure}
+Bei der Precision ist der RandomForest Algorithmus ebenfalls wieder der Spitzenreiter.
+Er erzielt bei fast jeder Anzahl von Features die beste Precision und kann bei 325 Features sein Maximum erreichen.
+\begin{figure}[H]	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/tfidf-pre.png}
+	\caption{Grafik des Precision-Verlaufs bei TF-IDF}
+\end{figure}
 \subsection{Hyperparametertuning}
 Die sechs Modelle, welche aus dem vorherigen Experiment, als die besten entnommen wurden, werden mittels Kreuzvalidierung auf optimale Hyperparameter durchsucht.
 \subsubsection{Modelle mit bestem F1-Score}
-Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Scores erzielen.\\
-\begin{table}
+Die drei Modelle AdaBoost, SGDClassifier und Perceptron können die besten F1-Scores erzielen.\\
+\begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für AdaBoost mit binärem Bag of Words}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -229,7 +336,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 \end{table}
-\begin{table}
+\begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für Perceptron mit Bag of Words}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -241,7 +348,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 \end{table}
-\begin{table}
+\begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für SGDClassifier mit TF-IDF}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -253,17 +360,17 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 \end{table}
-Auffällig ist, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.
-AdaBoost konnte seinen Recall verbessern und gleichzeitig seine Precision verschlechtern.
-Da die Recallsteigerung grösser als der Precisionabfall ist, wurde der F1-Score nach oben korrigiert.\\
-Die anderen beiden Modelle erzielten mit den neuen Parametern schlechtere Werte.
-Beide konnten den Recall verbessern, jedoch mussten sie massive Gefälle bei der Precision einbüssen.
-Da die Precision viel stärker abgenommen, als der Recall zugenommen hat, wurde der F1-Score schlechter.\\
+Auffällig ist, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.\\
+AdaBoost kann seinen Recall verbessern und gleichzeitig verschlechtert sich seine Precision.
+Da die Recallsteigerung grösser als der Precisionabfall ist, wird der F1-Score nach oben korrigiert.\\
+Die anderen beiden Modelle erzielen mit den neuen Parametern schlechtere Werte.
+Beide können den Recall verbessern, jedoch müssen sie massive Gefälle bei der Precision einbüssen.
+Da die Precision viel stärker abgenommen, als der Recall zugenommen hat, wird der F1-Score schlechter.\\
 Perceptron hat im Vergleich zum SGDClassifier einen leicht tieferen F1-Score, jedoch ist seine Precision deutlich höher.
 Da für den schlussendlichen \glqq Use-Case\grqq{} Precision wichtig ist, wird das Perceptron-Modell für weitere Auswertungen verwendet.
 \subsubsection{Modelle mit bester Precision}
-Das Modell RandomForest konnte für alle drei Feature-Extraction Methoden jeweils den besten Precision-Score erzielen.\\
-\begin{table}
+Das Modell RandomForest kann für alle drei Feature-Extraction Methoden jeweils den besten Precision-Score erzielen.\\
+\begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für RandomForest mit binärem Bag of Words}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -275,7 +382,7 @@ Das Modell RandomForest konnte für alle drei Feature-Extraction Methoden jeweil
 		\hline
 	\end{tabular}
 \end{table}
-\begin{table}
+\begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für RandomForest mit Bag of Words}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -287,7 +394,7 @@ Das Modell RandomForest konnte für alle drei Feature-Extraction Methoden jeweil
 		\hline
 	\end{tabular}
 \end{table}
-\begin{table}
+\begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für RandomForest mit TF-IDF}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
@@ -299,8 +406,8 @@ Das Modell RandomForest konnte für alle drei Feature-Extraction Methoden jeweil
 		\hline
 	\end{tabular}
 \end{table}
-Alle drei Varianten konnten ihren F1-Score verbessern.
-Die Verbesserung erfolgte nur im Bereich Recall, welcher initial bei allen drei Modellen relativ tief war.
-Zusätzlich sanken bei allen drei Modellen die Precision-Scores.
+Alle drei Varianten können ihren F1-Score verbessern.
+Die Verbesserung erfolgt nur im Bereich Recall, welcher initial bei allen drei Modellen relativ tief war.
+Zusätzlich sinken bei allen drei Modellen die Precision-Scores.
 Bei beiden Varianten mit Bag of Words, waren alle drei initialen Scores identisch und die Precision maximal.\\
 Da in diesem Abschnitt auf die beste Precision geachtet wird, ist das Modell mit binärem Bag of Words und mit den Standardparametern die beste Variante.
