@@ -1,6 +1,29 @@
 \chapter{Komponenten}
 \section{Webcrawler}
 \subsection{Beschreibung der Technologie}
+\subsubsection{Docker}
+In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
+Mithilfe von Docker können ressourcenarme, modulare virtuelle Maschinen erstellt werden, welche auch Container genannt werden.
+Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden \cite{DockerRetHat}.\\
+Linux-Container verwenden den Linux-Kernel und seine Funktionen, einzelne Prozesse isolieren zu können.
+Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
+Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
+Dieses Konfigurationsfile, das sogenannte Dockerfile, definiert alle Notwendigkeiten, um den Docker Container zu realisieren.
+Im Dockerfile werden Instruktionen für das Erstellen des Images definiert.
+Da Dockerfiles einfache Textdateien sind, können sie, wie jeder andere Sourcecode, mit Git, SVN oder anderen Versionsverwaltungen verwaltet werden.
+Aus Dockerfiles werden Docker Images erstellt.
+Durch Dockerfiles können Docker Images erstellt werden, welche wiederum den dadurch definierten Container erstellen und starten.
+Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden und der Docker Container wäre eine laufende Instanz der entsprechenden Klasse. 
+%\footnote{\url{https://stackoverflow.com/questions/3175105/inserting-code-in-this-latex-document-with-indentation}}
+\subsubsection{Docker-Compose}
+Mit Docker Containern können auch Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
+Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software \glqq Docker-Compose\grqq{} diese Aufgabe.
+Mithilfe von Docker-Compose können mehrere Docker Container verknüpft und gleichzeitig gestartet werden.
+Die Abhängigkeiten zwischen den Containern wird ebenfalls mit einem Konfigurationsfile, dem Composefile, definiert.
+Wahlweise können Dateiordner vom Hostsystem in einzelne Container angehängt werden, damit die Container Daten dort abspeichern oder abrufen können.
+Dies ist insofern wichtig, da sobald die Container gestoppt werden, all ihre internen Daten verloren gehen.
+Die Containerinhalte existieren nur so lange, wie auch die Container existieren.
+Docker-Compose erstellt für alle Container in einer Gruppierung einzigartige ID-Namen, damit alle Container innerhalb der Gruppierung miteinander kommunizieren können.
 \subsubsection{Apache Storm}
 StormCrawler basiert auf Apache Storm, einem Opensource Framework zur verteilten Stream-Verarbeitung.
 Die Architektur von Apache Storm basiert auf den folgenden Komponenten:
@@ -36,30 +59,6 @@ Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websit
 Zudem berücksichtigt er die Regeln des Webcrawlings, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
 Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden.
 StromCrawler ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
-\subsubsection{Docker}
-In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
-Mithilfe von Docker können ressourcenarme, modulare virtuelle Maschinen erstellt werden, welche auch Container genannt werden.
-Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden \cite{DockerRetHat}.\\
-Linux-Container verwenden den Linux-Kernel und seine Funktionen, einzelne Prozesse isolieren zu können.
-Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
-Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
-Dieses Konfigurationsfile, das sogenannte Dockerfile, definiert alle Notwendigkeiten, um den Docker Container zu realisieren.
-Im Dockerfile werden Instruktionen für das Erstellen des Images definiert.
-Da Dockerfiles einfache Textdateien sind, können sie, wie jeder andere Sourcecode, mit Git, SVN oder anderen Versionsverwaltungen verwaltet werden.
-Aus Dockerfiles werden Docker Images erstellt.
-Durch Dockerfiles können Docker Images erstellt werden, welche wiederum den dadurch definierten Container erstellen und starten.
-Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden und der Docker Container wäre eine laufende Instanz der entsprechenden Klasse. 
-%\footnote{\url{https://stackoverflow.com/questions/3175105/inserting-code-in-this-latex-document-with-indentation}}
-
-\subsubsection{Docker-Compose}
-Mit Docker Containern können auch Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
-Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software \glqq Docker-Compose\grqq{} diese Aufgabe.
-Mithilfe von Docker-Compose können mehrere Docker Container verknüpft und gleichzeitig gestartet werden.
-Die Abhängigkeiten zwischen den Containern wird ebenfalls mit einem Konfigurationsfile, dem Composefile, definiert.
-Wahlweise können Dateiordner vom Hostsystem in einzelne Container angehängt werden, damit die Container Daten dort abspeichern oder abrufen können.
-Dies ist insofern wichtig, da sobald die Container gestoppt werden, all ihre internen Daten verloren gehen.
-Die Containerinhalte existieren nur so lange, wie auch die Container existieren.
-Docker-Compose erstellt für alle Container in einer Gruppierung einzigartige ID-Namen, damit alle Container innerhalb der Gruppierung miteinander kommunizieren können.
 \subsection{Konfiguration des StormCrawlers}
 Die Grundlage der Konfiguration ist die Standardtopologie des Stromcrawlers auf Github.
 \footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/}}
@@ -88,7 +87,6 @@ Sonderzeichen, die in Dateinamen nicht erlaubt sind, werden entfernt. Falls die 
 Zudem kommt darin eine Spracherkennung \glqq Lingua\footnote{\url{https://github.com/pemistahl/lingua}}\grqq{} zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
 Als deutsch detektierte Webpages werden in einen separaten Output-Ordner gespeichert, damit diese nachfolgend von Hand gelabelt werden können.
 Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, damit im Anschluss des Crawlens eine Aussage gemacht werden kann, wie viele Einträge des Seeds effektiv gecrawlt wurden.
-
 \section{Klassifizierung}
 \subsection{Verwendete Technologien}
 \subsubsection{Luigi}

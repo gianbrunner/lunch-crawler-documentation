@@ -32,7 +32,21 @@ Die folgenden Ergebnisse wurden erzielt:\\
 		\hline
 	\end{tabular}
 \end{table}
-
+\begin{table}[H]
+	\caption{Beste Scores der regelbasierten Klassifikation anhand des Trainingssets}
+	\label{tab:rulebased_train}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Menü im Titel & 0.17 & 0.43 & 0.11 \\
+		Preisdetektor & 0.46 & 0.45 & 0.47 \\
+		Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
+		Listing & 0.55 & 0.60 & 0.50\\
+		\hline
+	\end{tabular}
+\end{table}
 
 
 Hinweis: Wenn mehrere Parameterkombinationen denselben F1-Score erreicht haben, ist diejenige mit der höheren Precision bevorzugt worden.\\
@@ -180,58 +194,30 @@ In diesem Falle wurden die Standardparameter weiter verwendet.
 
 \section{Interpretation der Ergebnisse}
 \subsection{Regelbasiertes Klassifizieren}
-
-%\begin{table}[H]
-%\caption{Beste Scores der regelbasierten Klassifikation anhand des Trainingssets}
-%\centering
-%\begin{tabular}{|l|l|l|l|}
-%	\hline
-%	Methode & F1-Score & Precision & Recall\\
-%	\hline
-%	Menü im Titel & 0.17 & 0.43 & 0.11 \\
-%	Preisdetektor & 0.46 & 0.45 & 0.47 \\
-%	Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
-%	Listing & 0.55 & 0.60 & 0.50\\
-%	Bag of Words & 0.72 & 0.81 & 0.64\\
-%	\hline
-%\end{tabular}
-%\end{table}
-Die verschiedenen Methoden ergeben, abgesehen von der Methode \glqq Menü im Titel\grqq{}, ähnliche Werte.
-Diese hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür ist die Precision bei 1, es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
+Die verschiedenen Methoden ergeben, abgesehen von der Methode \glqq Menü im Titel\grqq{}, ähnliche Ergebnisse.
+Diese hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür einen Precision-Wert von 1, es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
 Dafür sind auch nur 16\% der Menüseiten erkannt worden.
 
 Die Suche nach Preisen innerhalb des Textes hat ein besseres Ergebnis geliefert, 50\% der Menüseiten wurden als solche erkannt und zwei Webpages wurden fälschlicherweise als Menüseiten klassifiziert. 
 Eine Kombination dieser beiden Methoden ergibt eine fast identische Klassifikation.
-Ebenfalls 28 von 50 Menüseiten wurden erkannt, ebenfalls zwei wurden fälschlicherweise als Menüseiten klassifiziert.
+28 von 50 Menüseiten wurden erkannt, ebenfalls zwei wurden fälschlicherweise als Menüseiten klassifiziert.
 
 Durch das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 26, also ca. 52\% der erkannten Webseiten wurde 1 Webpages als Menüseiten klassifiziert, welche keine sind.
 
 Die Klassifikation mit der Methode \glqq Bag of Words\grqq{} führt zu den besten Ergebnissen der regelbasierten Klassifikation.
-31 von 50 Menüseiten wurden erkannt, zudem wurden 3 Webpages fälschlicherweise als Menüseiten klassifiziert.
+31 von 50 Menüseiten wurden erkannt, zudem wurden 3 Webpages fälschlicherweise als Menüseiten klassifiziert.\\
 
+Alle Methoden erreichten auf dem Testdatensatz eine genügend hohe Precision, jedoch ist der Recall jeweils so tief, dass der F1-Score nicht die vorausgesetzte Marke von 0.8 überschreitet.
 Alle Methoden der regelbasierten Klassifikation mit Ausnahme der Methode \glqq Bag of Words\grqq{} funktionieren unabhängig vom Trainingsdatensatz.
 Beim Evaluieren der besten Konfigurationsparameter wurden diese auf dem Trainingsdatensatz getestet.
-Diese Ergebnisse sind in der folgenden Tabelle ersichtlich:
-\begin{table}[H]
-\caption{Beste Scores der regelbasierten Klassifikation anhand des Trainingssets}
-\centering
-\begin{tabular}{|l|l|l|l|}
-	\hline
-	Methode & F1-Score & Precision & Recall\\
-	\hline
-	Menü im Titel & 0.17 & 0.43 & 0.11 \\
-	Preisdetektor & 0.46 & 0.45 & 0.47 \\
-	Kombination aus Menü im Titel und Preisdetektor & 0.47 & 0.43 & 0.52\\
-	Listing & 0.55 & 0.60 & 0.50\\
-	\hline
-\end{tabular}
-\end{table}
-
+Diese Ergebnisse sind in der Tabelle \cref{tab:rulebased_train} ersichtlich.
 Im Vergleich zu den Ergebnissen des Testsets ist bei allen Regeln zu erkennen, dass die Werte deutlich tiefer sind.
 Dadurch kann die Schlussfolgerung gezogen werden, dass mit einer steigender Anzahl zu klassifizierenden Daten die Diversität dieser steigt, was sich negativ auf die Ergebnisse auswirkt.
 Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Webpagen vor allem mit steigender Datendiversität nicht möglich ist.
 In allen Fällen wurde eine erhebliche Anzahl der Menüseiten nicht gefunden.
 Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele Menüseiten nicht angezeigt.
+Im Bezug auf die Resultate des Trainingsdatensatzes ist zudem die Precision markant gesunken.
+Dadurch werden im Anwendungsfall viele Webpages angezeigt, welche keine Menüseiten sind.
 \subsection{Klassifizieren mittels Machine-Learning Algorithmen}
 Beim Vergleich beider Klassifizierer ist ein grosser Unterschied beim Recall ersichtlich.
 Interessant ist, dass beide Algorithmen ziemlich zuverlässige Precision-Werte erzielen konnten.\\
@@ -245,11 +231,11 @@ Mit einer Precision von 1.00 könnte der RandomForest-Algorithmus theoretisch we
 Mit der grösseren Trainingsmenge könnten die Algorithmen ausführlicher trainiert werden und schlussendlich bessere Einschätzungen abgeben.
 \\
 
-Für den \glqq Use-Case\grqq{} einer Suchmaschine, ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
+Für den Anwendungsfall einer Suchmaschine ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
 Dennoch dürfen nicht nur eine Hand voll von Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
 Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und Recall und wird deshalb für die Suchmaschine verwendet.
 Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
-Somit wäre in der Suchmaschine jeder 13te Vorschlag falsch, was vertretbar ist.
+Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was vertretbar ist.
 \section{Beantwortung der Forschungsfrage}
 Die Antwort auf die Forschungsfrage lautet: Ja.\\ Webpages von Restaurant-Websites können mit einer hohen Erfolgschance klassifiziert werden, ob diese Menüinformationen beinhalten.\\
 Jedoch kann die gewünschte Anforderung betreffend Qualität und Quantität dieser Klassifikation mit dem regelbasierten Ansatz nicht bewerkstelligt werden.
