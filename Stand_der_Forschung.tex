@@ -1,10 +1,13 @@
 \chapter{Stand der Forschung}
 Diese Arbeit stützt sich auf verschiedene Bücher, Websites und Artikel.
-Die Grundlagen eines Webcrawlers wurden mit Hilfe des Buchs \glqq Web Data Mining\grqq{} Kapitel 8 erkannt \cite{liu2007web}. 
-Darin wird die Vorgehensweise eines Webcrawlers erläutert und zudem diverse bekannte Implementierungsprobleme.
-Die Umsetzung mit Stormcrawler SDK wurde hauptsächlich durch die Website und das Wiki des Erstellers, Julien Nioche, erarbeitet \cite{StormCrawler} \cite{GithubStormCrawler}.
-Da Stormcrawler auf Apache Storm basiert, wurden die Prinzipien dieser Technologie durch den Artikel "Playing with Apache Storm on Docker - Like a Boss" gelernt \cite{ApacheStormDev}.
-Die Klassifizierung der Webpages erforderte grundlegende Kenntnisse in der Datenverarbeitung und Machine Learning.
-Diese Kenntisse wurden im Modul \glqq Machine Learning\grqq{} von Christoph Würsch unterrichtet. % Referenz auf Würsch???
-% Elasticsearch
-
+Die Grundlagen eines Webcrawlers wurden mit Hilfe des Buchs \glqq Web Data Mining\grqq{} Kapitel 8 erkannt \cite[p. 311ff.]{liu2007web}. 
+Darin wird die Vorgehensweise eines Webcrawlers erläutert und zudem diverse bekannte Implementierungsprobleme wie Link-Loops.
+Es wird auf die Etiquette verwiesen, wie z.B. das Berücksichtigen von Robots.txt Dateien, welche definieren, ob eine Website gecrawlt werden darf oder nicht\cite[p. 353ff.]{liu2007web}.
+Auch die Anzahl Anfragen derselben Website soll limitiert werden, um diese nicht zu überlasten\cite[p. 353ff.]{liu2007web}.\\
+Die Umsetzung des Webcrawlers mit StormCrawler SDK wurde hauptsächlich durch die Website\cite{StormCrawler} und das Wiki des Erstellers\cite{GithubStormCrawler}, Julien Nioche, erarbeitet.\\
+Da Stormcrawler auf Apache Storm basiert, sind die Prinzipien dieser Technologie ebenfalls relevant.
+In einen Artikel von Usama Ashraf werden die grundlegenden Komponenten, deren Funktionen und wie man sie verwendet, erklärt.
+Zudem wird erläutert, wie man eine Storm-Topologie mittels Docker-Compose betreibt\cite{ApacheStormDev}.\\
+Die Klassifizierung der Webpages erforderte grundlegende Kenntnisse in der Datenverarbeitung und Machine Learning sowie der Programmierspache Python.
+Diese Kenntisse wurden im Modul \glqq Machine Learning\grqq{} von Christoph Würsch unterrichtet.
+Dabei wurde 
