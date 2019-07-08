@@ -4,7 +4,7 @@
 \subsubsection{Docker}
 In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
 Mithilfe von Docker können ressourcenarme, modulare virtuelle Maschinen erstellt werden, welche auch Container genannt werden.
-Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden \cite{DockerRetHat}.\\
+Diese Container können dann einfach kopiert, ersetzt oder auf einem anderen System verwendet werden \footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker} abgerufen am: 12.01.2019}.\\
 Linux-Container verwenden den Linux-Kernel und seine Funktionen, einzelne Prozesse isolieren zu können.
 Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
 Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
@@ -61,7 +61,7 @@ Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitver
 StromCrawler ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsection{Konfiguration des StormCrawlers}
 Die Grundlage der Konfiguration ist die Standardtopologie des Stromcrawlers auf Github.
-\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/}}
+\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}
 Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
 \begin{enumerate}
 	\item MemorySpout - Einlesen einer URL aus einem Array
@@ -84,13 +84,13 @@ Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, 
 \end{itemize}
 Der Dateiname dieser JSON Dateien wird aus der URL der Webpage generiert. 
 Sonderzeichen, die in Dateinamen nicht erlaubt sind, werden entfernt. Falls die URL länger ist, als die erlaubte Dateinamenslänge, wird diese abgeschnitten und mit einem zufälligen vierstelligen Suffix erweitert.
-Zudem kommt darin eine Spracherkennung \glqq Lingua\footnote{\url{https://github.com/pemistahl/lingua}}\grqq{} zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
+Zudem kommt darin eine Spracherkennung \glqq Lingua\footnote{\url{https://github.com/pemistahl/lingua} abgerufen am: 07.05.2019}\grqq{} zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
 Als deutsch detektierte Webpages werden in einen separaten Output-Ordner gespeichert, damit diese nachfolgend von Hand gelabelt werden können.
 Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, damit im Anschluss des Crawlens eine Aussage gemacht werden kann, wie viele Einträge des Seeds effektiv gecrawlt wurden.
 \section{Klassifizierung}
 \subsection{Verwendete Technologien}
 \subsubsection{Luigi}
-Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist.\footnote{\url{https://github.com/spotify/luigi}}
+Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist.\footnote{\url{https://github.com/spotify/luigi} abgerufen am 25.03.2019}
 Pipelining dient dazu, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
 Pipelining wird meist im Kontext von Big Data oder Machine-Learning angewendet, wo sich viele einzelne Tasks mit grossen Datenmenge beschäftigen.
 Luigi wird selbst von Spotify in der produktiven Umgebung verwendet und bietet unter anderem folgende Features:
@@ -126,9 +126,9 @@ Die daraus folgende Pipeline beinhaltet folgende Tasks:
 \subsubsection{Scikit Learn}
 Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man effizient Projekte für Data-Mining, Datenvisualisierung und Machine-Learning erarbeiten kann.
 Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
-Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn}}.\\
+Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
 Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
-Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/}}
+Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}
 Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
 \subsection{Preprocessing}\label{preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
@@ -173,7 +173,7 @@ Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen L
 Da durch die vorhergehenden Schritte oft multiple Leerschläge anfallen, werden diese auf einen Leerschlag reduziert.
 \subsubsection{Stammformreduktion}
 Dieses Verfahren führt verschiedene morphologische Varianten eines Wortes auf ihren gemeinsamen Stamm zurück.
-Dafür wird der Stemmer \glqq Cistem\footnote{\url{https://github.com/LeonieWeissweiler/CISTEM}}\grqq{} verwendet, da für die deutsche Sprache nur wenig Alternativen vorhanden sind. 
+Dafür wird der Stemmer \glqq Cistem\footnote{\url{https://github.com/LeonieWeissweiler/CISTEM} abgerufen am: 18.03.2019}\grqq{} verwendet, da für die deutsche Sprache nur wenig Alternativen vorhanden sind. 
 \subsubsection{Getränkedetektor}
 % Referenz Cistem
 Eine Liste mit Einträgen diverser Getränke bildet die Grundlage dieser Methode.
@@ -244,9 +244,9 @@ TF-IDF wird aus den zwei folgenden Metriken zusammengesetzt.
 		\item TF-IDF ist nun die Multiplikation von TF und IDF.
 	\end{itemize}
 \end{itemize}
-TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang.\footnote{\url{http://www.tfidf.com/}}
+TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang.\footnote{\url{http://www.tfidf.com/} abgerufen am: 07.05.2019}
 \subsubsection{Latent Semantic Analysis}
-LSA basiert auf der Scikit-Implementation\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}} von \glqq Single Value Decomposition SVD\grqq{}oder auf deutsch \glqq Singulärwertzerlegung\grqq{}.
+LSA basiert auf der Scikit-Implementation\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html} abgerufen am: 14.05.2019} von \glqq Single Value Decomposition SVD\grqq{}oder auf deutsch \glqq Singulärwertzerlegung\grqq{}.
 SVD zerlegt die Termdokumentmatrizen, welche von den Scikit-Learn Bag of Words oder TF-IDF Algorithmen erstellt werden, in ihre K wichtigsten Werte. Wobei K frei gewählt werden kann, jedoch kleiner als die maximale Anzahl von Features aus Bag of Words oder TF-IDF sein muss.
 Wenn SVD explizit auf Termdokumentmatrizen angewendet wird, wird der Vorgang \glqq Latent Semantic Analysis\grqq{} oder auch \glqq Latent Semantic Indexing\grqq{} genannt.
 Dies hat der Grund, da die Matrizen in semantische Matrizen kleinerer Dimension umgewandelt werden.\\
@@ -292,13 +292,13 @@ Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
 Jedoch nur die Algorithmen, welche nach der vollständigen Ausführung aller Optimierungsschritte die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher umschrieben.
 Im Anhang können alle Klassifizierer mit ihren entsprechenden Scores eingesehen werden.
 \subsubsection{SGDClassifier}
-SGDClassifier gehört zur Familie der lineare Modelle.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html}}\\
+SGDClassifier gehört zur Familie der lineare Modelle.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html} abgerufen am: 14.05.2019}\\
 Lineare Modelle sind in der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariabeln und Ausgangsvariabeln besteht.
 Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdeckt.
 Das optimale Abdecken wird mit einer Loss-Funktion ermittelt.
 Die Loss-Funktion berechnet den Unterschied zwischen vorhergesagtem Wert zu tatsächlichem Wert des Trainingsdatenpunktes.
 Lineare Modelle verwenden Optimierungsverfahren, welche iterativ Parameter verändern, um die Werte der Loss-Funktion zu minimieren und somit die bestmögliche Parameterzusammensetzung zu ermitteln.\\
-Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierungsvefahren das \glqq Stochastic Gradient Descent\grqq{} Verfahren\footnote{\url{https://scikit-learn.org/stable/modules/sgd.html}}.
+Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierungsvefahren das \glqq Stochastic Gradient Descent\grqq{} Verfahren\footnote{\url{https://scikit-learn.org/stable/modules/sgd.html} abgerufen am: 14.05.2019}.
 Bei diesem Verfahren kommt der mathematische Gradient zum Einsatz.
 Der Gradient zeigt bei Anpassungen der Parameter, immer in die Richtung mit der grössten Änderung des Outputs.
 Der Output wäre in diesem Falle die Aufzeichnung des Loss-Funktion.\\
@@ -311,20 +311,20 @@ In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt un
 	\label{fig:sgd}
 \end{figure}
 \subsubsection{Perceptron}
-Der Perceptron-Algorithmus basiert auf dem SGDClassifier.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html}}
+Der Perceptron-Algorithmus basiert auf dem SGDClassifier.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html} abgerufen am: 14.05.2019}
 Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spezieller Konfiguration.\\
 Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate.
 \subsubsection{AdaBoostClassifier}
-AdaBoost gehört zu der Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html}}
+AdaBoost gehört zu der Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html} abgerufen am: 14.05.2019}
 Ensemble-Learning ist ein Zusammenschluss von mehreren unterschiedlichen Klassifizieren, welche mit einem Voting-Verfahren eine schlussendliche Klassifizierung durchführen.
 Ensemble-Learning verfolgt die Annahme, dass mehrere Algorithmen im Plenum eine bessere Aussage abliefern können, als einen Algorithmus alleine.
 Bei vielen Ensemble-Verfahren werden alle Klassifizierer parallel trainiert und geben ihr Votum gleichzeitig ab.\\
-Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlichkeit mit der Theorie der genetischen Algorithmen hat.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html}}
+Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlichkeit mit der Theorie der genetischen Algorithmen hat.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html} abgerufen am: 14.05.2019}
 Bei Adaboost wird ein Algorithmus trainiert, validiert und als Ursprung verwendet. Alle zusätzlichen Algorithmen, welche das finale Voting durchführen, werden vom Ursprungsalgorithmus abgeleitet.
 Es werden jedoch bei den Abkömmlingen die internen Parameter schrittweise verbessert und versucht die Fehler des \glqq Vater-Algorithmus\grqq{} zu vermeiden.
 AdaBoost kann verbessert werden, indem die Anzahl von Vererbungsschritten angepasst wird.
 \subsubsection{RandomForestClassifier}
-RandomForest gehört ebenfalls zur Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html}}
+RandomForest gehört ebenfalls zur Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html} abgerufen am: 14.05.2019}
 RandomForest, wie der Name schon sagt, ist eine Zusammensetzung von einer Vielzahl von unterschiedlichen DecisionTrees.\\
 DecisionTree ist ebenfalls ein Algorithmus, der für die Klassifizierung verwendet werden kann.
 Der DecisionTree-Algorithmus baut schrittweise eine Baumstruktur von Entscheidungszweige auf, um eine Klassifizierungsaufgabe zu meistern. 

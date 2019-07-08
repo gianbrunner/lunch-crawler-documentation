@@ -4,8 +4,8 @@
 Als Quelle für das Abrufen von Websites dient das Seed.
 Das Ziel war es, dieses mit möglichst vielen URLs von Schweizer Restaurant-Websites zu füllen.
 Dafür wurden zwei Ansätze verfolgt.
-Ein Verein Schweizer Restaurants, namentlich Lunch-Check\footnote{\url{https://www.lunch-check.ch/}} wurde angefragt, ob sie eine Liste ihrer Mitglieder zur Verfügung stellen.
-Zudem wurde der OpenStreetmap-API\footnote{\url{https://www.openstreetmap.ch/}} genutzt, um die darin enthaltenen Restaurant-URLs abzufragen.
+Ein Verein Schweizer Restaurants, namentlich Lunch-Check\footnote{\url{https://www.lunch-check.ch/} abgerufen am: 07.01.2019} wurde angefragt, ob sie eine Liste ihrer Mitglieder zur Verfügung stellen.
+Zudem wurde der OpenStreetmap-API\footnote{\url{https://www.openstreetmap.ch/} abgerufen am: 07.01.2019} genutzt, um die darin enthaltenen Restaurant-URLs abzufragen.
 Die Daten aus beiden Quellen wurden zusammengeführt und dienen nun als Seed für die Abfragen des Webcrawlers.
 \subsection{Erarbeitung des Webcrawlers}
 Als erstes fand eine Einarbeitung in die Thematik von Docker statt, um StormCrawler damit zu betreiben.
@@ -23,7 +23,7 @@ Dieses Team, speziell ein wissenschaftlicher Mitarbeiter, hat Support angeboten,
 \subsubsection{Docker}
 Stormcrawler wurde nicht direkt installiert, sondern mittels Docker-Container aufgesetzt.
 Dies aus dem Grund, dass dadurch eine Skalierung einfach möglich ist.
-Zudem ist die Installation hinfällig, da auf Docker Hub\footnote{\url{https://hub.docker.com/}} bereits fertige Images von Apache Storm und StormCrawler vorhanden sind.
+Zudem ist die Installation hinfällig, da auf Docker Hub\footnote{\url{https://hub.docker.com/} abgerufen am: 08.01.2019} bereits fertige Images von Apache Storm und StormCrawler vorhanden sind.
 \section{Gold Standard}
 \subsection{Crawlen der Rohdaten}
 Das Crawlen der Rohdaten war mit diversen Komplikationen verbunden.
@@ -67,19 +67,19 @@ Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten aus
 Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
 \subsection{Verwendete Technologien}
 \subsubsection{Labeling-Tool}
-Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool}} erstellt worden, welches das Labeling vereinfacht.
+Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool} abgerufen am: 11.03.2019} erstellt worden, welches das Labeling vereinfacht.
 Dieses Tool ruft eine Webpage der zufällig extrahierten Webpages aus den Rohdaten auf und zeigt sowohl den Text, als auch den HTML-Inhalt.
 Der Anwender des Tools muss anhand dieser Informationen entscheiden, ob es sich um eine Webpage mit Menüinformationen handelt und ob diese zeitlich begrenzt sind.
 Mittels Shortkeys findet die Klassifizierung statt.
 Das Tool verschiebt die Datei in den entsprechenden Ordner und zeigt die Informationen der nächsten Webpage an.
 \section{Klassifikation}
 \subsection{Preprocessing}
-Die Basisfunktionen des Preprocessings orientieren sich an einem Online-Artikel von Usman Malik\footnote{\url{https://stackabuse.com/text-classification-with-python-and-scikit-learn/}}.
+Die Basisfunktionen des Preprocessings orientieren sich an einem Online-Artikel von Usman Malik\footnote{\url{https://stackabuse.com/text-classification-with-python-and-scikit-learn/} abgerufen am: 19.03.2019}.
 Teile der darin beschriebenen Funktionen wurden angepasst und übernommen.
 Weiter wurde erkannt, dass Preise mittels Regulären Ausdrücken erkannt werden müssen, damit diese Informationen nicht verloren gehen.
 Darum ist eine Methode entwickelt worden, die diese Aufgabe erledigt.
 Für die Funktion der Stammformreduktion ist nach einer entsprechenden Funktion gesucht worden, welche diese Aufgabe für die deutsche Sprache verrichtet.
-Über die Dokumentation des Toolkits NLTK\footnote{\url{https://www.nltk.org/api/nltk.stem.html}} ist Cistem, ein Stemmer für die deutsche Sprache, gefunden und später als Preprocessing-Methode implementiert worden.
+Über die Dokumentation des Toolkits NLTK\footnote{\url{https://www.nltk.org/api/nltk.stem.html} abgerufen am: 19.01.2019} ist Cistem, ein Stemmer für die deutsche Sprache, gefunden und später als Preprocessing-Methode implementiert worden.
 Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt worden.
 \subsection{Regelbasierte Klassifikation}
 Die erstellten Regeln sind grösstenteils anhand Beobachtungen beim manuellen Labeln entstanden.
@@ -96,7 +96,7 @@ Die Parameter dazu sind in \cref{cap:exp_class} ersichtlich.
 \subsection{Machine-Learning Klassifikation}
 \subsubsection{Einleitung}
 Für die Klassifizierung mit Machine-Learning wurden mehrere Algorithmen jeweils mit den Metriken F1-Score, Recall und Precision ausgewertet.
-Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html}}\footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538}} zusammengetragen und stetig anhand ihrer Metriken verglichen.
+Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html} abgerufen am: 07.05.2019}\footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538} abgerufen am: 07.05.2019} zusammengetragen und stetig anhand ihrer Metriken verglichen.
 Alle Algorithmen wurden aus Online-Artikeln entnommen, die ebenfalls eine textliche Klassifizierung verfolgten und diese Artikel dienten als Leitfaden für den Aufbau der ganzen Machine-Learning Pipelines.
 Alle Algorithmen wurden jeweils mit ihrer Standardkonfiguration trainiert und anschliessend mit einem vorbehaltenen Validierungsset validiert, um einen möglichst unverzerrten Vergleich zu erzielen.
 Schrittweise wurden für alle 14 Algorithmen folgende Pipelinekomponenten angepasst und versucht, einen optimalen Wert zu ermitteln.
@@ -114,7 +114,7 @@ Die Erkenntnisse aus den Optimierungen flossen immer beim nächsten Optimierungs
 Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und Bag-of-Words ohne Worthäufigkeit verwendet.
 Die Ermittlung der optimalen Pipelinekomponenten erfolgte somit unabhängig für drei unterschiedliche Feature-Extraction Methoden und jeweils für 14 Algorithmen mit deren Standardkonfigurationen.
 \subsubsection{Dimensionsreduktion der Features}
-Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Analysis)\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}} versucht, aus einer Vielzahl von Features nur die Aussagekräftigsten zu ermitteln.
+Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Analysis)\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}abgerufen am: 14.05.2019} versucht, aus einer Vielzahl von Features nur die Aussagekräftigsten zu ermitteln.
 Dies wird erreicht, indem SLA Beziehungen von Wörtern mit ähnlicher Bedeutung erkennt.
 Zuerst wurde über die API der drei Feature-Extraction Methoden die Anzahl Features direkt auf 100 Stück reduziert und ohne Verwendung von LSA an die Algorithmen weitergegeben.
 Diese wurden dann trainiert, validiert und die Werte aufgenommen.
@@ -169,16 +169,33 @@ Es wurde eine Kreuzvalidierung von fünf ausgewählt, um Overfitting gegenzuwirk
 Es wurden jeweils die Modelle mit den drei besten F1-Scores und den besten Precisions kreuzvalidiert.
 Für jedes Modell wurde eine Liste von anpassbaren Parametern zusammengestellt.
 Für jeden Parameter wurde ein Bereich von möglichen Werten angegeben.
-Mittels der Funktion \glqq GridSearchCV\grqq{}\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}} von Scikit-Learn wurde die Hyperparametersuche durchgeführt.\\
+Mittels der Funktion \glqq GridSearchCV\grqq{}\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}abgerufen am: 07.05.2019} von Scikit-Learn wurde die Hyperparametersuche durchgeführt.\\
 Je nach Algorithmus und Grösse der Parameterliste kann die Hyperparametersuche extrem lange dauern.
 Ebenfalls ist es möglich, dass die Standardparameter bereits ein Optimum darstellen und keine besseren Parameter gefunden werden.
-\subsubsection{Erstellen der Konfigurationen}
 \section{Produktive Pipeline}
+Um die gesammelten Daten des Webcrawlers für die Webapplikation verwendbar zu machen, ist eine produktive Pipeline erstellt worden.
+Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
+Dafür ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um diese Rohdaten zu klassifizieren.
+Um die Menüseiten mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von Openstreetmap bereits die Koordinaten des Restaurants beinhalteten.
+Die Daten von Lunch Check waren nicht mit Geoinformationen versehen, jedoch mit den Adressinformationen.
+Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen Installation von Nominatim\footnote{\url{https://nominatim.openstreetmap.org/}abgerufen am: 02.07.2019} mit den Geoinformationen zu erweitern.
+Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.
+Somit ist aus mehreren Quellen eine einheitliche Datenstruktur erstellt worden.
+\subsection{Verwendete Technologien}
+Die Klassifikation ist mittels Python und Luigi durchgeführt worden.
+Für das Zusammenführen der verschiedenen Daten wurde ein NodeJS-Skript erstellt\footnote{\url{https://nodejs.org/en/}abgerufen am: 02.07.2019}.
+Da die öffentliche Version von Nominatim eine Limitierung betreffend der Anzahl Anfragen hat, wurde mittels Docker eine lokale Instanz dieser Software eingerichtet\footnote{\url{https://github.com/mediagis/nominatim-docker}abgerufen am: 02.07.2019}.
 \section{Webapplikation}
 \subsection{Erarbeitung der Webapplikation}
 \subsection{Verwendete Technologien}
 \subsubsection{Frontend-Komponenten}
 \subsubsection{Backend-Komponenten}
 \subsection{Search Engine}
-\subsubsection{Vorgehen}
 \subsubsection{Verwendete Technologien}
+Das Search Engine wurde mit der Software Elasticsearch in Kombination mit Docker umgesetzt.
+Diese Entscheidung wurde anhand der Empfehlung des Referenten getroffen, zudem ist es eine Open Source Software.
+\subsubsection{Umsetzung}
+Die lokale Installation von Elasticsearch erfolgte in Kombination mit Docker\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html}abgerufen am: 14.05.2019}.
+Sobald eine funktionsfähige Instanz vorhanden war, wurde ermittelt, wie Daten in Elasticsearch gespeichert, verwaltet und abgefragt werden können.
+Elasticsearch bietet eine REST-API, dadurch können Kategorien sowie einzelne Datensätze einfach mittels HTTP-Request, erstellt bzw. abgefragt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html}abgerufen am: 14.05.2019}\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html}abgerufen am: 14.05.2019}.
+Mit einem Shell-Skript, welches ein POST auf die entsprechende URL ausführt, konnten die Daten der produktiven Pipeline hinzugefügt werden.
