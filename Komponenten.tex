@@ -231,12 +231,12 @@ TF-IDF wird aus den zwei folgenden Metriken zusammengesetzt.
 	\item TF
 	\begin{itemize}
 		\item Termfrequenz berechnet das Vorkommnis eines Termes in einem Dokument. Anschliessend wird das Vorkommnis mit der gesamten Anzahl von Termen im Dokument dividert. Dies erreicht eine Normalisierung der Termfrequenz, da bei langen Texten der Term potentiell öfters vorkommen kann.\\
+		TF ermittelt nur die Häufigkeit der Terme. Terme wie \glqq die\grqq{} oder ähnliche kommen oft vor, sind aber nicht relevant.\\
 		TF verfolgt einen ähnlichen Ansatz wie Bag of Words.
 	\end{itemize}
 	\item IDF
 	\begin{itemize}
-		\item TF ermittelt nur die Häufigkeit der Terme. Terme wie \glqq die\grqq{} oder ähnliche kommen oft vor, sind aber nicht relevant.\\
-		IDF ermittelt nun die Relevanz der Terme indem berechnet wird, wie viele Dokumente den Term T in sich enthalten. Die gesamte Anzahl an Dokumenten wird durch die ermittelte Anzahl von Dokumenten mit Term T dividiert und mit dem natürlichen Logarithmus logarithmiert.\\
+		Inverse Dokumentfrequenz hingegen ermittelt nun die Relevanz der Terme indem berechnet wird, wie viele Dokumente den Term T in sich enthalten. Die gesamte Anzahl an Dokumenten wird durch die ermittelte Anzahl von Dokumenten mit Term T dividiert und mit dem natürlichen Logarithmus logarithmiert.\\
 		Somit ist ein Term, welcher in vielen Dokumenten vorkommt, weniger relevant als ein rarer Term.
 	\end{itemize}
 	\item TF-IDF
@@ -253,7 +253,7 @@ Dies hat der Grund, da die Matrizen in semantische Matrizen kleinerer Dimension 
 Ein Vorteil von LSA ist, es kann Synonyme, mehrere Wörter mit gleicher Bedeutung, erkennen und somit die Termdokumentmatrizen dementsprechend reduzieren, jedoch ohne grosse Verluste in der Aussagekraft zu erleiden.
 \subsection{Machine Learning Algorithmen}
 \subsubsection{Übersicht}
-Wegen des "No free lunch"-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
+Wegen des \glqq No free lunch\grqq{}-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
 Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
 \begin{itemize}
 	\item Lineare Modelle
@@ -289,7 +289,7 @@ Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
 		\item LinearSVC (Support Vector Classification)
 	\end{itemize}
 \end{itemize}
-Jedoch nur die Algorithmen, welche nach der vollständigen Ausführung aller Optimierungsschritte die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher umschrieben.
+Jedoch nur die Algorithmen, welche nach der vollständigen Ausführung aller Optimierungsschritte die höchsten F1-Scores oder Precisions erzielt haben, werden weiter unten näher erläutert.
 Im Anhang können alle Klassifizierer mit ihren entsprechenden Scores eingesehen werden.
 \subsubsection{SGDClassifier}
 SGDClassifier gehört zur Familie der lineare Modelle.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html} abgerufen am: 14.05.2019}\\
@@ -316,7 +316,7 @@ Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spe
 Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate.
 \subsubsection{AdaBoostClassifier}
 AdaBoost gehört zu der Familie der Ensemble-Learner.\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostClassifier.html} abgerufen am: 14.05.2019}
-Ensemble-Learning ist ein Zusammenschluss von mehreren unterschiedlichen Klassifizieren, welche mit einem Voting-Verfahren eine schlussendliche Klassifizierung durchführen.
+Ensemble-Learning ist ein Zusammenschluss von mehreren unterschiedlichen Klassifizierern, welche mit einem Voting-Verfahren eine schlussendliche Klassifizierung durchführen.
 Ensemble-Learning verfolgt die Annahme, dass mehrere Algorithmen im Plenum eine bessere Aussage abliefern können, als einen Algorithmus alleine.
 Bei vielen Ensemble-Verfahren werden alle Klassifizierer parallel trainiert und geben ihr Votum gleichzeitig ab.\\
 Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlichkeit mit der Theorie der genetischen Algorithmen hat.\footnote{\url{https://scikit-learn.org/stable/modules/ensemble.html} abgerufen am: 14.05.2019}

@@ -209,13 +209,16 @@ Die Methode \glqq Bag of Words\grqq{} profitiert davon ebenfalls, da das Prinzip
 Es können keine genauen Zahlen angegeben werden, welche Scores diese Methoden ohne Preprocessingschritte erreichen würden, da diese Schritte zwingend benötigt werden, um den Text in eine klassifizierbare Form zu bringen.
 \subsection{Klassifizieren mittels Machine-Learning}
 \subsubsection{Einfache Preprocessingschritte}
-Das Anwenden von einfachen Preprocessingschritten hat bei allen drei Feature-Extraction Methoden Verbesserungen bewirkt.\\
-Lediglich bei der TF-IDF Methode verschlechterten sich gewisse Algorithmen mit dem einfachen Preprocessing.
-Die Verbesserungen beim TF-IDF sind jedoch markanter als die Verschlechterungen.\\
+Das Anwenden von einfachen Preprocessingschritten hat bei allen drei Feature-Extraction Methoden Verbesserungen bewirkt, welches man in der Abbildung \cref{abb:preprocess} an den grünen Zellen sehen kann.\\
+Lediglich bei der TF-IDF Methode verschlechterten sich mehrere Algorithmen mit dem einfachen Preprocessing.
+Die Verbesserungen beim TF-IDF sind jedoch markanter als die Verschlechterungen, da die totale Differenz grün markiert ist.\\
 Das einfache Preprocessing hatte auf alle drei Varianten positive Einwirkungen und wird somit auch bei allen dreien weiter verwendet.
-\begin{figure}[H]	
-	\includegraphics[width=1\columnwidth,keepaspectratio]{img/easypre.png}
+\begin{figure}[H]
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/easypre.png}} 
 	\caption{Grafik der Auswertung für einfaches Preprocessing}
+	\label{abb:preprocess}
 \end{figure}
 \subsubsection{Fortschrittliche Preprocessingschritte}
 Das fortschrittliche Preprocessing erzielt bei allen drei Feature-Extraction Methoden keine eindeutigen Resultate.\\
@@ -233,19 +236,23 @@ Um bei der weiteren Ermittlung von Optimierungen nicht nur auf ein Algorithmus z
 Die Auswertung für das fortschrittliche Preprocessing kann im Anhang gefunden werden.
 \section{Klassifizieren mittels Machine-Learning}
 \subsection{Dimensionsreduktion der Features}
-Die Verwendung der Dimensionsreduktion mittels LSA erzielt bei allen drei Feature-Extraction Methoden deutliche Verbesserungen.
-Der Grossteil der Algorithmen kann mit Hilfe von LSA den F1-Score verbessern.
-Lediglich bei der \glqq Bag of Words\grqq{} Methode ist die Summe über alle Score-Verbesserungen negativ, dies jedoch nur, weil der Multinomial-Bayes Klassifizierer mit LSA einen stetigen F1-Score von null hat.\\
+Die Verwendung der Dimensionsreduktion mittels LSA erzielt bei allen drei Feature-Extraction Methoden erkennbare Verbesserungen.
+Der Grossteil der Algorithmen kann mit Hilfe von LSA den F1-Score verbessern, was in der Abbildung \cref{abb:dimred} durch die grüne Markierung der Zellen ersichtlich ist.
+Lediglich bei der \glqq Bag of Words\grqq{} Methode ist die Summe über alle Score-Verbesserungen negativ, dies jedoch nur, weil der Multinomial-Bayes Klassifizierer mit LSA einen sehr hohen Einfluss mit seinem stetigen F1-Score von null ausübt.\\
+Der Bernoulli Bayes Klassifizierer, abgesehen vom Multinomial Bayes, ist der einzige Algorithmus, welcher über alle drei Feature-Extraction Methoden signifikante Verschlechterungen mit LSA erzielt hat. Die F1-Scores sind mit Dimensionsreduktion unter 0.1 gelangt, was diesen Algorithmus nach der Meinung der Autoren für weitere Experimente unbrauchbar macht. Die Annahme der Autoren lautet, dass ein F1-Score unter 0.1 trotz weiteren Massnahmen keinen zufriedenstellenden F1-Score erreichen wird.\\
 Die Dimensionsreduktion wird für alle drei Varianten weiter verwendet, da die positiven Auswirkungen sich deutlich in den F1-Scores widerspiegelt.
-Einziger Wehrmutstropfen der Dimensionsreduktion ist, dass der Multinomial-Bayes Klassifizierer keine wirkliche Klassifizierung mehr durchführen kann.
-Somit ist dieser Klassifizierer für den weiteren Verlauf nicht mehr verwendbar.
-\begin{figure}[H]	
-	\includegraphics[width=1\columnwidth,keepaspectratio]{img/dimred.png}
+Einzige Wehrmutstropfen der Dimensionsreduktion sind, dass der Multinomial-Bayes Klassifizierer keine wirkliche Klassifizierung mehr durchführen kann und der Bernoulli Bayes Klassifizierer unbrauchbare Scores liefert.
+Somit werden beide Klassifizierer für den weiteren Verlauf nicht mehr verwendet und werden aus den folgenden Auswertungsgrafiken entfernt.
+\begin{figure}[H]
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/dimred.png}} 
 	\caption{Grafik der Auswertung für die Dimensionsreduktion mittels LSA}
+	\label{abb:dimred}
 \end{figure}
 \subsection{Klassenverteilung}
 Die Angabe der Klassenverteilung konnte nicht bei allen Algorithmen als Parameter angegeben werden.
-Somit werden alle Bayes-Algorithmen, KNearestNeighbor und Nearest-Centroid in dieser Auswertung nicht beachtet.\\
+Somit werden alle Bayes-Algorithmen, KNearestNeighbor und Nearest-Centroid in der Abbildung \cref{abb:classweight} nicht beachtet, da es dort zu keiner Veränderung der Scores kommt.\\
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Angabe der Klassenverteilung eine durchschnittliche Verbesserung der F1-Scores.
 Einzelne Algorithmen reagieren negativ auf die Angabe, aber die positiven Auswirkungen übertreffen die negativen Auswirkungen.
 Somit wird bei beiden \glqq Bag of Words\grqq{} Methoden die Angabe der Klassenverteilung miteinbezogen.\\
@@ -255,81 +262,110 @@ Bei den anderen Algorithmen halten sich die negativen Auswirkungen im Rahmen.
 Den F1-Score des PassiveAgressiveClassifier ausgenommen, sind die positiven Auswirkungen grösser als die negativen Auswirkungen.
 Somit wird für TF-IDF ebenfalls die Angabe der Klassenverteilung für die nächsten Schritte beibehalten.
 \begin{figure}[H]	
-	\includegraphics[width=1\columnwidth,keepaspectratio]{img/classweight.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/classweight.png}} 
 	\caption{Grafik der Auswertung für die Klassenverteilung}
+	\label{abb:classweight}
 \end{figure}
 \subsection{N-Gramme}
 Sowohl \glqq Bag of Words\grqq{} als auch TF-IDF bieten in ihrer Scikit-Learn Implementierung die Möglichkeit N-Gramme zu verwenden.
 Für dieses Experiment wurden Unigramme, Bigramme und Trigramme ausgetestet.\\
+Die Ergebnisse sind in der Abbildung \cref{abb:ngram} ersichtlich.
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Verwendung von Unigrammen die besten Ergebnisse.
 Bi- und Trigramme können bei einzelnen Algorithmen ebenfalls eine Verbesserunge verzeichnen, aber im Vergleich zu Unigrammen fallen diese flächendeckend kleiner aus.
 Somit werden bei beiden \glqq Bag of Words\grqq{} Varianten nur Unigramme verwendet.
-Ebenfalls benötigt die Extrahierung der Features bei Bi- und Trigrammen circa doppelt so lange, was eine enorme Performanceeinbusse ist.\\
+Ebenfalls benötigt die Extrahierung der Features bei Bi- und Trigrammen etwa doppelt so lange, was eine enorme Performanceeinbusse ist.\\
 Bei der TF-IDF-Methode erzielen Bi- und Trigramme die exakt gleichen Werte.
-Uni- und Bigramme erzielen im Durchschnitt ungefähr den gleichen Wert.
-Bei der Verwendung von Unigrammen erzielt der Algorithmus Bernoulli-Bayes einen F1-Score von null.
-Um nicht einen weiteren Algorithmus für die weiteren Schritte zu verlieren, wird deshalb die Verwendung von Bigrammen bei der TF-IDF-Methode verwendet.
+Dies ist zu erklären, dass die TF-IDF Methode keine relevanten Trigramme gefunden hat und somit auf Bigramme zurückgegriffen hat.
+Unigramme erzielen im Durchschnitt leicht bessere Werte im Vergleich zu Bi- und Trigrammen.
+Jedoch sind von den fünf besten Ergebnissen drei mit Bi-, beziehungsweise Trigrammen erzielt worden, was anhand der gelb markierten Zellen ersichtlich ist.
+Da die Entscheidung bei der TF-IDF Methode nicht eindeutig gefällt werden konnte, entschieden sich die Autoren für die Anwendung von Bigrammen.
 \begin{figure}[H]	
-	\includegraphics[width=1\columnwidth,keepaspectratio]{img/ngram.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/ngram.png}} 
 	\caption{Grafik der N-Gramme Auswertung}
+	\label{abb:ngram}
 \end{figure}
 \subsection{Anzahl extrahierter Features}
 Für alle drei Feature-Extraction Methoden wurde ein Liniendiagramm für F1-Score, Precision und Recall erstellt.
 Aus diesen Grafiken kann entnommen werden, bei welcher Feature-Anzahl welcher Algorithmus den besten Score erzielt.
 Für die weitere Auswertung sind die Grafiken für F1-Score und Precision massgebend und werden weiter analysiert.
 \subsubsection{Bag of Words}
-Bei \glqq Bag of Words\grqq{} erzielt der Algorithmus AdaBoost bei 100 Features mit Abstand den besten F1-Score und erreicht fast die 0.8 Marke.
+In der Abbildung \cref{abb:bow-f1} ist ersichtlich, dass mit \glqq Bag of Words\grqq{} der Algorithmus AdaBoost bei 100 Features mit Abstand den besten F1-Score erzielt und fast die 0.8 Marke erreicht.
 Ebenfalls kann der LinearSVC Algorithmus einen guten F1-Score erzielen und teilt sich mit AdaBoost die besten Werte.
 Ersichtlich ist ebenfalls, dass die meisten Algorithmen sich zwischen 0.6 und 0.7 bewegen und das vereinzelte Klassifizierer mit ihren Werten auf und ab springen.\\
+Die springenden Algorithmen Perceptron, SGDClassifier und PassiveAgressiveClassifier sind alle von der Familie \glqq Linear\_Model\grqq{}. Ein Grund für das auffällige Verhalten wurde nicht gefunden.
+Da der F1-Score vom Recall und der Precision abgeleitet wird, sind die Sprünge in der Abbildung \cref{abb:bow-f1} auf die ähnlichen Sprünge aus der Precision-Grafik \cref{abb:bow-pre} zurückzuführen.\\
 \begin{figure}[H]	
-	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-f1.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/bow-f1.png}} 
 	\caption{Grafik des F1-Score-Verlaufs bei Bag of Words}
+	\label{abb:bow-f1}
 \end{figure}
-Bei der Precision ist der RandomForest Algorithmus der mit Abstand beste Klassifizierer.
+Bei der Precision, welche in der Abbildung \cref{abb:bow-pre} aufgezeigt wird, ist der RandomForest Algorithmus der mit Abstand beste Klassifizierer.
 Vereinzelt erreicht RandomForest eine Precision von 1.0 und ist stetig über 0.8.\\
-Der Bernoulli-Bayes Algorithmus erreicht kurzzeitig ebenfalls eine Precision von eins, jedoch ist sein F1-Score jeweils unter 0.1.
-Deswegen wir Bernoulli-Bayes nicht als ernsthafte Wahl angesehen und nicht beachtet.
+Die oben erwähnten Sprünge der linearen Modelle sind deutlich im Precision-Verlauf in der Abbildung \cref{abb:bow-pre} ersichtlich.
 \begin{figure}[H]	
-	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-pre.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/bow-pre.png}} 
 	\caption{Grafik des Precision-Verlaufs bei Bag of Words}
+	\label{abb:bow-pre}
 \end{figure}
 \subsubsection{Binäres Bag of Words}
 Bei der Methode \glqq binäres Bag of Words\grqq{} können mehrere Algorithmen einen F1-Score nahe der 0.8 Grenze verbuchen.
+In der Abbildung \cref{abb:bow-bin-f1} ist klar erkennbar, dass die meisten Algorithmen einen F1-Score zwischen 0.6 und 0.8 erzielen.
 Der beste Algorithmus ist Perceptron, welcher mit 325 Features einen F1-Score von 0.8 verzeichnet.\\
 Der SGDClassifier erreicht ebenfalls einen F1-Score von 0.8, jedoch mit einer höheren Anzahl von Features.
 Dies bedeutet das SGDClasifier potenziell länger für die Feature-Extraction benötigt und somit ist Perceptron der favorisierende Algorithmus bei dieser Variante.\\
 \begin{figure}[H]	
-	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-bin-f1.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/bow-bin-f1.png}} 
 	\caption{Grafik des F1-Score-Verlaufs bei binärem Bag of Words}
+	\label{abb:bow-bin-f1}
 \end{figure}
-Bei der Precision ist der RandomForest Algorithmus ebenfalls die beste Wahl.
-Er erreicht wieder die höchsten Prcecision-Werte bei einer vernünftigen Anzahl Features.\\
-Ebenfalls springt der Bernoulli-Bayes wieder zwischen 1.0 und 0.5 umher.
-Bei dieser Variante wird der Bernoulli-Bayes als keine Alternative gegenüber dem RandomForest in Betracht gezogen.
+Bei der Precision, die in der Abbildung \cref{abb:bow-bin-pre} aufgezeigt wird, ist der RandomForest Algorithmus ebenfalls die beste Wahl.
+Er erreicht wieder die höchsten Prcecision-Werte bei fast jeder Anzahl an Features.\\
+Die Sprünge der linearen Modelle, welche bereits bei der oberen \glqq Bag of Words\grqq{} Methode dargestellt wurden, sind ebenfalls wieder in der Precision-Grafik \cref{abb:bow-bin-pre} und der oberen F1-Score-Grafik \cref{abb:bow-bin-f1} zu erkennen.
 \begin{figure}[H]	
-	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/bow-bin-pre.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/bow-bin-pre.png}} 
 	\caption{Grafik des Precision-Verlaufs bei binärem Bag of Words}
+	\label{abb:bow-bin-pre}
 \end{figure}
 \subsubsection{TF-IDF}
 Bei der Verwendung von TF-IDF sind mehrere Algorithmen mit ihren F1-Scores im Bereich 0.7 bis 0.8.
-Der SGDClassifier Algorithmus kann als einziger die Grenze von 0.8 durchbrechen und ist somit der Algorithmus mit dem besten F1-Score.\\
+In der Abbildung \cref{abb:tfidf-f1} ist erkennbar, dass der SGDClassifier Algorithmus als einziger die Grenze von 0.8 durchbrechen kann und ist somit der Algorithmus mit dem besten F1-Score.\\
+Auch bei der TF-IDF Methode sind wieder Sprünge bei den linearen Modellen in beiden Grafiken \cref{abb:tfidf-f1} und \cref{abb:tfidf-pre} deutlich ersichtlich.
 \begin{figure}[H]	
-	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/tfidf-f1.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/tfidf-f1.png}} 
 	\caption{Grafik des F1-Score-Verlaufs bei TF-IDF}
+	\label{abb:tfidf-f1}
 \end{figure}
 Bei der Precision ist der RandomForest Algorithmus ebenfalls wieder der Spitzenreiter.
 Er erzielt bei fast jeder Anzahl von Features die beste Precision und kann bei 325 Features sein Maximum erreichen.
 \begin{figure}[H]	
-	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/tfidf-pre.png}
+	\setlength{\fboxsep}{0.3pt} 
+	\setlength{\fboxrule}{0.3pt} 
+	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/tfidf-pre.png}} 
 	\caption{Grafik des Precision-Verlaufs bei TF-IDF}
+	\label{abb:tfidf-pre}
 \end{figure}
 \subsection{Hyperparametertuning}
 Die sechs Modelle, welche aus dem vorherigen Experiment, als die besten entnommen wurden, werden mittels Kreuzvalidierung auf optimale Hyperparameter durchsucht.
 \subsubsection{Modelle mit bestem F1-Score}
-Die drei Modelle AdaBoost, SGDClassifier und Perceptron können die besten F1-Scores erzielen.\\
+Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Scores erzielen.\\
 \begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für AdaBoost mit binärem Bag of Words}
 	\centering
+	\label{tab:ada}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		 & F1-Score & Precision & Recall\\
@@ -342,6 +378,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron können die besten F1-Sc
 \begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für Perceptron mit Bag of Words}
 	\centering
+	\label{tab:per}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		& F1-Score & Precision & Recall\\
@@ -354,6 +391,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron können die besten F1-Sc
 \begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für SGDClassifier mit TF-IDF}
 	\centering
+	\label{tab:sgd}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		& F1-Score & Precision & Recall\\
@@ -363,12 +401,13 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron können die besten F1-Sc
 		\hline
 	\end{tabular}
 \end{table}
-Auffällig ist, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.\\
+In der Tabelle \cref{tab:ada} ist auffällig, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.\\
 AdaBoost kann seinen Recall verbessern und gleichzeitig verschlechtert sich seine Precision.
 Da die Recallsteigerung grösser als der Precisionabfall ist, wird der F1-Score nach oben korrigiert.\\
-Die anderen beiden Modelle erzielen mit den neuen Parametern schlechtere Werte.
+Die anderen beiden Modelle Perceptron in Tabelle \cref{tab:per} und SGDClassifier in der Tabelle \cref{tab:sgd} erzielen mit den neuen Parametern schlechtere Werte.
 Beide können den Recall verbessern, jedoch müssen sie massive Gefälle bei der Precision einbüssen.
 Da die Precision viel stärker abgenommen, als der Recall zugenommen hat, wird der F1-Score schlechter.\\
+Somit sind die Standardparameter für Perceptron und SGDClassifier für diesen \glqq Use-Case\grqq{} bereits optimal gewählt worden, da beim Hyperparametertuning eine ausführliche Liste von veränderbaren Parametern keine Verbesserung erzielen konnte.\\
 Perceptron hat im Vergleich zum SGDClassifier einen leicht tieferen F1-Score, jedoch ist seine Precision deutlich höher.
 Da für den schlussendlichen \glqq Use-Case\grqq{} Precision wichtig ist, wird das Perceptron-Modell für weitere Auswertungen verwendet.
 \subsubsection{Modelle mit bester Precision}
@@ -376,6 +415,7 @@ Das Modell RandomForest kann für alle drei Feature-Extraction Methoden jeweils 
 \begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für RandomForest mit binärem Bag of Words}
 	\centering
+	\label{tab:bow-rf}
 	\begin{tabular}{|l|l|l|l|}
 		\hline
 		& F1-Score & Precision & Recall\\
@@ -413,4 +453,4 @@ Alle drei Varianten können ihren F1-Score verbessern.
 Die Verbesserung erfolgt nur im Bereich Recall, welcher initial bei allen drei Modellen relativ tief war.
 Zusätzlich sinken bei allen drei Modellen die Precision-Scores.
 Bei beiden Varianten mit Bag of Words, waren alle drei initialen Scores identisch und die Precision maximal.\\
-Da in diesem Abschnitt auf die beste Precision geachtet wird, ist das Modell mit binärem Bag of Words und mit den Standardparametern die beste Variante.
+Da in diesem Unterkapitel auf die beste Precision geachtet wird, ist das Modell aus der Tabelle \cref{tab:bow-rf} mit binärem Bag of Words und mit den Standardparametern die beste Wahl und wird für weitere Auswertungen verwendet.
