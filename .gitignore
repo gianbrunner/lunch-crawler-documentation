@@ -6,4 +6,5 @@
 !.gitignore
 !/img/
 !/img/*
+!/v1/
 !/v1/*

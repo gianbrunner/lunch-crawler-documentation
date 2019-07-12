@@ -1,0 +1,201 @@
+\chapter{Vorgehen}
+\section{Webcrawler}
+\subsection{Erarbeitung des Seeds}
+Als Quelle für das Abrufen von Websites dient das Seed.
+Das Ziel war es, dieses mit möglichst vielen URLs von Schweizer Restaurant-Websites zu füllen.
+Dafür wurden zwei Ansätze verfolgt.
+Ein Verein Schweizer Restaurants, namentlich Lunch-Check\footnote{\url{https://www.lunch-check.ch/} abgerufen am: 07.01.2019} wurde angefragt, ob sie eine Liste ihrer Mitglieder zur Verfügung stellen.
+Zudem wurde der OpenStreetmap-API\footnote{\url{https://www.openstreetmap.ch/} abgerufen am: 07.01.2019} genutzt, um die darin enthaltenen Restaurant-URLs abzufragen.
+Die Daten aus beiden Quellen wurden zusammengeführt und dienen nun als Seed für die Abfragen des Webcrawlers.
+\subsection{Erarbeitung des Webcrawlers}
+Als erstes fand eine Einarbeitung in die Thematik von Docker statt, um StormCrawler damit zu betreiben.
+Apache Storm ist ebenfalls thematisiert worden, da StormCrawler darauf basiert.
+Danach folgte die Einarbeitung in StormCrawler.
+Zu Beginn war das Ziel, die Standardtopologie zu verstehen.
+Sobald die Standardtopologie funktionierte, fanden Anpassungen statt, welche zur Erstellung der Rohdaten für den Gold Standard dienten.
+Explizit ist die Erstellung des Bolts zu erwähnen, welcher für das Schreiben der Output-Dateien zuständig ist.
+Dieser wurde zudem mit einer Sprachdetektion erweitert, welche erkennt, ob die Sprache der Webpage deutsch ist.
+\subsection{Verwendete Technologien}
+\subsubsection{StormCrawler}
+Es fand keine Evaluation zur Findung eines geeigneten Webcrawlers statt.
+Stormcrawler wird eingesetzt, da an der Hochschule für Technik und Wirtschaft Chur ein Team bereits mit diesem arbeitet und dadurch Know-how besitzt.
+Dieses Team, speziell ein wissenschaftlicher Mitarbeiter, hat Support angeboten, weshalb die Entscheidung getroffen wurde, Stormcrawler zu verwenden.
+\subsubsection{Docker}
+Stormcrawler wurde nicht direkt installiert, sondern mittels Docker-Container aufgesetzt.
+Dies aus dem Grund, dass dadurch eine Skalierung einfach möglich ist.
+Zudem ist die Installation hinfällig, da auf Docker Hub\footnote{\url{https://hub.docker.com/} abgerufen am: 08.01.2019} bereits fertige Images von Apache Storm und StormCrawler vorhanden sind.
+\section{Gold Standard}
+\subsection{Crawlen der Rohdaten}
+Das Crawlen der Rohdaten war mit diversen Komplikationen verbunden.
+Die Performance des Webcrawlers war zu Beginn nicht zufriedenstellend, es wurden lediglich ca. 30 Webpages pro Minute gespeichert.
+Trotzdem wurde ein erster Rohdatensatz mit dieser Performance gecrawlt, auf dem das erste manuelle Labeling durchgeführt wurde.
+Bei diesem Rohdatensatz wurden nur die als deutsch detektierten Webpages gespeichert, somit konnte die Abdeckung des Seeds nicht ausgewertet werden.
+Der Crawler wurde nochmals angepasst, sodass alle Webpages gespeichert werden, dies ermöglicht eine genauere Analyse der Rohdaten.
+Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt wurden und die Sprachdetektion nicht für jede Webpage neu gestartet wurde, was eine massive Performancesteigerung zur Folge hatte.
+Diverse weitere Crawldurchläufe wurden gemacht und die gecrawlten Daten analysiert.
+Diese Analysen haben ergeben, dass einzelne Websites aus dem Seed enorm viele Webpages beinhalten, zum Teil über 30'000.
+Diese URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
+Für die zweite Durchführung des manuellen Labelings wurden die Rohdaten mit dem angepassten Seed neu gecrawlt.
+Bei diesen Rohdaten wurde analysiert, wieviele Einträge des Seeds gecrawlt wurden.
+Von 5870 Seedeinträgen konnten 1362 Einträge nicht gecrawlt werden, das entspricht etwa 20\% der Einträge.
+Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist eine Stichprobe von 100 Einträgen genommen worden und genauer untersucht worden, dabei sind folgende Erkenntnisse gewonnen worden:
+\begin{itemize}
+	\item 34\% der Websites sind offline
+	\item 25\% der Websites verlinken zu einer neuen Website
+	\item 8\% der Websites haben lange Wartezeiten
+\end{itemize}
+Somit können mindestens 67\% der Websites aus plausiblen Gründen nicht gecrawlt werden.
+Es wurde nicht erfasst, wieviele Websites über Mechanismen wie Robots.txt-File oder Metatags zur Verhinderung von Crawlern verfügen, darum könnte diese Zahl noch höher sein.
+Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwohl sie crawlbar wären, ergibt dies hochgerechnet 450 Seedeinträge oder 7\%, die nicht gecrawlt wurden.
+Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Klassifizierung verwendet.
+\subsubsection{Erarbeitung des Entscheidungsrasters}
+Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten.
+Für dieses wurden die folgenden Entscheidungen getroffen:
+\begin{itemize}
+	\item Die Webpage muss auf Deutsch verfasst sein
+	\item Der Anbieter muss entweder ein Restaurant, Take-Away oder Lieferdienst sein
+	\item Der Text muss statisch im HTML vorhanden sein, da dynamisch gerenderte Informationen vom Webcrawler nicht gespeichert werden
+	\item Es muss ein Menü, also eine Kombination aus mehreren Speisen oder eine einzelne Speise vorhanden sein
+	\item Eine genauere Beschreibung oder der Preis muss vorhanden sein
+	\item Getränkekarten werden explizit als negativ gelabelt
+\end{itemize}
+Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da diese Angebote zu einem späteren Zeitpunkt eventuell zusätzlich erkannt werden möchten.
+\subsubsection{Manuelles Labeling der Daten}
+In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort \glqq Menu\grqq{} in der URL enthalten.
+Die mit dieser Heuristik gefilterten Daten entsprechen jedoch nicht einer repräsentativen Teilmenge der gesamten Rohdaten.
+Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten ausgewählt und manuell gelabelt.
+Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
+\subsection{Verwendete Technologien}
+\subsubsection{Labeling-Tool}
+Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool} abgerufen am: 11.03.2019} erstellt worden, welches das Labeling vereinfacht.
+Dieses Tool ruft eine Webpage der zufällig extrahierten Webpages aus den Rohdaten auf und zeigt sowohl den Text, als auch den HTML-Inhalt.
+Der Anwender des Tools muss anhand dieser Informationen entscheiden, ob es sich um eine Webpage mit Menüinformationen handelt und ob diese zeitlich begrenzt sind.
+Mittels Shortkeys findet die Klassifizierung statt.
+Das Tool verschiebt die Datei in den entsprechenden Ordner und zeigt die Informationen der nächsten Webpage an.
+\section{Klassifikation}
+\subsection{Preprocessing}
+Die Basisfunktionen des Preprocessings orientieren sich an einem Online-Artikel von Usman Malik\footnote{\url{https://stackabuse.com/text-classification-with-python-and-scikit-learn/} abgerufen am: 19.03.2019}.
+Teile der darin beschriebenen Funktionen wurden angepasst und übernommen.
+Weiter wurde erkannt, dass Preise mittels Regulären Ausdrücken erkannt werden müssen, damit diese Informationen nicht verloren gehen.
+Darum ist eine Methode entwickelt worden, die diese Aufgabe erledigt.
+Für die Funktion der Stammformreduktion ist nach einer entsprechenden Funktion gesucht worden, welche diese Aufgabe für die deutsche Sprache verrichtet.
+Über die Dokumentation des Toolkits NLTK\footnote{\url{https://www.nltk.org/api/nltk.stem.html} abgerufen am: 19.01.2019} ist Cistem, ein Stemmer für die deutsche Sprache, gefunden und später als Preprocessing-Methode implementiert worden.
+Zudem ist eine deutsche Stoppwortliste aus mehreren Quellen zusammengesetzt worden.
+\subsection{Regelbasierte Klassifikation}
+Die erstellten Regeln sind grösstenteils anhand Beobachtungen beim manuellen Labeln entstanden.
+Dabei wurde erkannt, dass Preise sowie Speisenamen und Zutaten ein markantes Merkmal von Menüseiten sind.
+Diese Informationen eignen sich für eine Whitelist.
+Im Gegensatz gibt es viele Websites mit Webpages wie \glqq Imperessum\grqq{}, \glqq Anfahrt\grqq{} etc. welche typische Schlagwörter beinhalten, die in einer Blacklist aufgeführt werden können.
+Durch die Regel \glqq Bag of Words\grqq{} wurde derselbe Ansatz wie beim Listing verfolgt, jedoch mit dem Ziel, durch die gleichnamige statistische Methode diese Listen dynamisch zu erzeugen.
+Lediglich die Regel zur Erkennung des Schlagworts \glqq menü\grqq{} ist unter der Annahme entstanden, dass Webpages eine korrekte Angabe von Informationen im Metatag \glqq Title\grqq{} verwenden.
+\subsubsection{Erstellen der Konfigurationen}
+Die Konfiguration wurde erstellt, um einzelne Methoden des Preprocessings sowie die Art der Klassifizierung angeben zu können.
+Wo möglich wurden Schwellwerte eingebaut, um die Klassifizierung eines Dokuments regulieren zu können.
+Diese Schwellwerte wurden über mehrere Iterationen verändert, um möglichst hohe Scores zu erreichen.
+Die Parameter dazu sind in \cref{cap:exp_class} ersichtlich.
+\subsection{Machine-Learning Klassifikation}
+\subsubsection{Einleitung}
+Für die Klassifizierung mit Machine-Learning wurden mehrere Algorithmen jeweils mit den Metriken F1-Score, Recall und Precision ausgewertet.
+Wegen des \glqq No free lunch\grqq{}-Theorems wurden insgesamt 14 unterschiedliche Algorithmen aus zwei unterschiedlichen Online-Artikeln\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html} abgerufen am: 07.05.2019}\footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538} abgerufen am: 07.05.2019} zusammengetragen und stetig anhand ihrer Metriken verglichen.
+Alle Algorithmen wurden aus Online-Artikeln entnommen, die ebenfalls eine textliche Klassifizierung verfolgten und diese Artikel dienten als Leitfaden für den Aufbau der ganzen Machine-Learning Pipelines.
+Alle Algorithmen wurden jeweils mit ihrer Standardkonfiguration trainiert und anschliessend mit einem vorbehaltenen Validierungsset validiert, um einen möglichst unverzerrten Vergleich zu erzielen.
+Schrittweise wurden für alle 14 Algorithmen folgende Pipelinekomponenten angepasst und versucht, einen optimalen Wert zu ermitteln.
+Dabei wurde die Reihenfolge der Auflistung bei der schrittweisen Optimierung beibehalten.
+Die Erkenntnisse aus den Optimierungen flossen immer beim nächsten Optimierungsschritt mit ein.
+\begin{enumerate}
+	\item Dimensionsreduktion der Features 
+	\item Angabe von Klassenverteilung
+	\item Anwendung von N-Gramme (N={1,2,3})
+	\item Anwendung von einfachen Preprocessingschritten
+	\item Anwendung von fortgeschrittenen Preprocessingschritten
+	\item Anzahl extrahierter Features
+	\item Hyperparametertuning
+\end{enumerate}
+Ebenfalls wurde für die Feature-Extraction die Methoden Bag-of-Words mit Worthäufigkeit, TF-IDF und Bag-of-Words ohne Worthäufigkeit verwendet.
+Die Ermittlung der optimalen Pipelinekomponenten erfolgte somit unabhängig für drei unterschiedliche Feature-Extraction Methoden und jeweils für 14 Algorithmen mit deren Standardkonfigurationen.
+\subsubsection{Dimensionsreduktion der Features}
+Bei der Dimensionsreduktion der Features wurde mittels LSA (Latent Sentiment Analysis)\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html}abgerufen am: 14.05.2019} versucht, aus einer Vielzahl von Features nur die Aussagekräftigsten zu ermitteln.
+Dies wird erreicht, indem SLA Beziehungen von Wörtern mit ähnlicher Bedeutung erkennt.
+Zuerst wurde über die API der drei Feature-Extraction Methoden die Anzahl Features direkt auf 100 Stück reduziert und ohne Verwendung von LSA an die Algorithmen weitergegeben.
+Diese wurden dann trainiert, validiert und die Werte aufgenommen.
+Anschliessend wurde für alle drei Feature-Extraction Methoden keine Begrenzung der Anzahl Features vorgenommen und erst mit LSA beziehungsweise der direkten Scikit-Learn Implementierung \glqq TruncatedSVD\grqq{} die Feature-Reduktion auf 100 Stück durchgeführt.
+Danach wurden die Algorithmen mit den Features trainiert und validiert.
+Die aus beiden Aushebungen ermittelten Werte wurde dann miteinander verglichen.
+\subsubsection{Klassenverteilung}
+Da die Daten aus dem Goldstandard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
+Die Gewichtung, auf ein positives Sample folgen 10.32 negative Samples, wurde den Algorithmen fürs Trainieren mitgegeben.
+Mittels der Klassenverteilung können die Algorithmen die unterrepräsentierten Klassen, in unserem Falle die positive Klasse, stärker gewichten und den Fokus darauf setzen.
+Einerseits wurden die Algorithmen ohne Klassengewichtung trainiert und validiert und andererseits mit der Angabe der Klassengewichtung.
+Zu erwähnen ist, dass die Gewichtung nicht allen Algorithmen zugewiesen werden konnte, da manche Algorithmen während dem Training solche Informationen nicht verwerten können.
+\subsubsection{N-Gramme}
+Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
+Aufgrund von verschiedenen Visualisierungen der Textdaten wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
+Die Scikit-Learn Feature-Extraction Methoden bieten einfache Schnittstellen für die Extrahierung von N-Grammen.
+Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die 14 Algorithmen mit den neuen Features trainiert und wieder validiert.
+\subsubsection{Einfaches Preprocessing}
+Um die Textdaten auf eine vereinheitlichte Form zu bringen, wurden einfache Preprocessingschritte durchgeführt.
+Als einfache Preprocessingschritte gelten im Kontext vom Machine-Learning Teil der Bachelorarbeit folgende Funktionen:
+\begin{itemize}
+\item Den gesamten Text auf Kleinbuchstaben umwandeln
+\item Die Umlaute ersetzen
+\item Sonderzeichen entfernen
+\item Alleinstehende Zeichen entfernen
+\item Multiple Leerzeichen entfernen
+\end{itemize}
+Diese Funktionen können im Unterkapitel \ref{preprocessing} nachgeschlagen werden.
+Es wurde lediglich analysiert, was für Auswirkungen gar kein Preprocessing im Vergleich zu einfachem Preprocessing besitzt.
+\subsubsection{Fortgeschrittenes Preprocessing}
+Fortschrittliche Preprocessingschritte haben die Aufgabe den Text weiter zu modifizieren und die Extrahierung von zusätzlichen Informationen zu vereinfachen.
+Im Kontext vom Machine-Learning Teil zählen folgende Preprocessingschritte zu den fortschrittlichen Funktionen:
+\begin{itemize}
+	\item Das Markieren von Preisen mit entsprechenden Tags
+	\item Die Stammformreduktion
+	\item Das Entfernen von Stopwörtern
+	\item Das Markieren von Information, die sich auf Getränke beziehen
+\end{itemize}
+Diese fortschrittlichen Funktionen können ebenfalls im Unterkapitel \ref{preprocessing} nachgelesen werden.
+Es wurden die Auswirkungen von jeglichen Kombinationen der fortgeschrittenen Preprocessingschritten getestet.
+Bei vier verschiedenen Arten ergeben sich 16 verschiedene Kombinationen.
+\subsubsection{Anzahl extrahierter Features}
+Jeder Algorithmus verhaltet sich mit der Änderung der Anzahl Features unterschiedlich.
+Um eine optimale Anzahl an Features zu ermitteln, musste schrittweise die Anzahl Features erhöht werden, die Algorithmen mit der neuen Anzahl trainiert und schlussendlich validiert werden.
+Dies ist ein recht rechenintensives Unterfangen, führt in der Regel jedoch zu spürbaren Verbesserungen der Scores bei allen Algorithmen, sofern ein lokales Maximum der jeweiligen Algorithmen gefunden werden kann.
+Die Messungen wurden mit einer Anzahl Features von 10 gestartet und schrittweise um 25 Features erhöht, bis schlussendlich eine maximale Anzahl von 400 Features erreicht wurde.
+Da die Rechenzeit stetig mit der Erhöhung von Features steigt, wurde die Grenze bei 400 Features gesetzt.
+Grundsätzlich macht eine Begrenzung der Features Sinn, da ab einer gewissen Anzahl Features die Algorithmen mit der Handhabung der Features überfordert sind und dies sich dementsprechend auf schlechteren Scores widerspiegelt.
+\subsubsection{Hyperparametertuning}
+Als letzter Schritt der Algorithmenoptimierung wurde eine ausführliche Hyperparametersuche mit Kreuzvalidierung durchgeführt.
+Es wurde eine Kreuzvalidierung von fünf ausgewählt, um Overfitting gegenzuwirken.
+Es wurden jeweils die Modelle mit den drei besten F1-Scores und den besten Precisions kreuzvalidiert.
+Für jedes Modell wurde eine Liste von anpassbaren Parametern zusammengestellt.
+Für jeden Parameter wurde ein Bereich von möglichen Werten angegeben.
+Mittels der Funktion \glqq GridSearchCV\grqq{}\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}abgerufen am: 07.05.2019} von Scikit-Learn wurde die Hyperparametersuche für die Optimierung des F1-Scores durchgeführt.\\
+Je nach Algorithmus und Grösse der Parameterliste kann die Hyperparametersuche extrem lange dauern.
+Ebenfalls ist es möglich, dass die Standardparameter bereits ein Optimum darstellen und keine besseren Parameter gefunden werden.
+\section{Produktive Pipeline}
+Um die gesammelten Daten des Webcrawlers für die Webapplikation verwendbar zu machen, ist eine produktive Pipeline erstellt worden.
+Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
+Dafür ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um diese Rohdaten zu klassifizieren.
+Um die Menüseiten mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von Openstreetmap bereits die Koordinaten des Restaurants beinhalteten.
+Die Daten von Lunch Check waren nicht mit Geoinformationen versehen, jedoch mit den Adressinformationen.
+Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen Installation von Nominatim\footnote{\url{https://nominatim.openstreetmap.org/}abgerufen am: 02.07.2019} mit den Geoinformationen zu erweitern.
+Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.
+Somit ist aus mehreren Quellen eine einheitliche Datenstruktur erstellt worden.
+\subsection{Verwendete Technologien}
+Die Klassifikation ist mittels Python und Luigi durchgeführt worden.
+Für das Zusammenführen der verschiedenen Daten wurde ein NodeJS-Skript erstellt\footnote{\url{https://nodejs.org/en/}abgerufen am: 02.07.2019}.
+Da die öffentliche Version von Nominatim eine Limitierung betreffend der Anzahl Anfragen hat, wurde mittels Docker eine lokale Instanz dieser Software eingerichtet\footnote{\url{https://github.com/mediagis/nominatim-docker}abgerufen am: 02.07.2019}.
+\section{Webapplikation}
+\subsection{Erarbeitung der Webapplikation}
+\subsection{Verwendete Technologien}
+\subsubsection{Frontend-Komponenten}
+\subsubsection{Backend-Komponenten}
+\subsection{Search Engine}
+\subsubsection{Verwendete Technologien}
+Das Search Engine wurde mit der Software Elasticsearch in Kombination mit Docker umgesetzt.
+Diese Entscheidung wurde anhand der Empfehlung des Referenten getroffen, zudem ist es eine Open Source Software.
+\subsubsection{Umsetzung}
+Die lokale Installation von Elasticsearch erfolgte in Kombination mit Docker\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html}abgerufen am: 14.05.2019}.
+Sobald eine funktionsfähige Instanz vorhanden war, wurde ermittelt, wie Daten in Elasticsearch gespeichert, verwaltet und abgefragt werden können.
+Elasticsearch bietet eine REST-API, dadurch können Kategorien sowie einzelne Datensätze einfach mittels HTTP-Request, erstellt bzw. abgefragt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html}abgerufen am: 14.05.2019}\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html}abgerufen am: 14.05.2019}.
+Mit einem Shell-Skript, welches ein POST auf die entsprechende URL ausführt, konnten die Daten der produktiven Pipeline hinzugefügt werden.
