@@ -40,6 +40,10 @@ Die gespeicherte Webpage wird auf Verlinkungen (HTML-Achortags) geprüft, falls 
 Als Gold Standard wird in dieser Arbeit einen Datensatz bezeichnet, der aus den vom Webcrawler gespeicherten Webpages erstellt wurde.
 Er besteht aus einer zufälligen Teilmenge dieser Rohdaten, welche von Hand in die Kategorien \glqq Keine Menüseite\grqq{}, \glqq Menüseite\grqq{} und \glqq Tagesmenüseite\grqq{} aufgeteilt wurden.
 Dieser Datensatz wird als Referenz zur Messung von Klassifikationsalgorithmen verwendet.
+\section{Preprocessing}
+Als Preprocessing wird die Vorverarbeitung von zu klassifizierenden Daten verstanden.
+Das Ziel dieses Vorgangs ist, diese Daten zu bereinigen und in eine einheitliche Form zu bringen \cite[p.155]{liu2007web}.
+In dieser Arbeit bezieht sich das Preprocessing auf die Vorverarbeitung von Texten.
 \section{Klassifikation bzw. Klassifizierung}
 Unter einer Klassifikation bzw. Klassifizierung versteht sich das Einordnen in definierte Kategorien\footnote{\url{https://www.duden.de/rechtschreibung/Klassifikation} abgerufen am: 10.07.2019}.
 Diese zwei Begriffe werden in dieser Arbeit als Synonyme verwendet.
@@ -52,10 +56,22 @@ Ein Beispiel: Wenn das Wort \glqq menu\grqq{} im Titel einer Webpage vorkommt, i
 Die Klassifizierung mittels Machine-Learning findet nach dem Ansatz des \glqq Supervised Learning\grqq{}, also dem überwachten Lernen, statt.
 Dabei wird einem Machine-Learning-Algorithmus ein von Hand kategorisierter Datensatz (in diesem Fall ein Teil des Gold Standards) übergeben.
 Anhand dieser Daten entscheidet der Algorithmus für zukünftige Daten, wie er sie klassifizieren soll \footnote{\url{https://towardsdatascience.com/supervised-machine-learning-classification-5e685fe18a6d} abgerufen am: 10.07.2019}.
-\section{Preprocessing}
-Als Preprocessing wird die Vorverarbeitung von zu klassifizierenden Daten verstanden.
-Das Ziel dieses Vorgangs ist, diese Daten zu bereinigen und in eine einheitliche Form zu bringen \cite[p.155]{liu2007web}.
-In dieser Arbeit bezieht sich das Preprocessing auf die Vorverarbeitung von Texten.
+\section{Evaluierung}
+Um eine binäre Klassifizierung, also das Einordnen von Daten in zwei verschiedene Kategorieren messen zu können, werden Metriken wie F1-Score, Precision und Recall verwendet.
+Dazu müssen zuerst die folgenden Klassifizierungskategorien erläutert werden:
+\begin{itemize}
+	\item Richtig Positiv: Die Webpage wurde als Menüseite klassifiziert und ist eine Menüseite
+	\item Falsch Positiv: Die Webpage wurde als Menüseite klassifiziert, ist aber keine Menüseite
+	\item Falsch Negativ: Die Webpage wurde nicht als Menüseite klassifiziert, ist aber eine Menüseite
+	\item Richtig Negativ: Die Webpage wurde nicht als Menüseite klassifiziert und ist keine Menüseite
+\end{itemize}
+Jede klassifizierte Webpage lässt sich in eine dieser Kategorie einordnen.
+Anhand dieser Kategorien lässt sich für den gesamten Datensatz die oben genannten Metriken berechnen:\\
+\[Precision=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Positiv}}\]\\
+Die Precision definiert das Verhältnis der korrekt positiv klassifizierten Menüseiten zu allen durch den Algorithmus als positiv klassifizierten Menüseiten.\\
+\[Recall=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Negativ}}\]\\
+Der Recall definiert das Verhältnis der korrekt positiv klassifizierten Proben zu allen tatsächlichen Menüseiten.\\
+\[F_{1}=2*\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
+Anhand des F1-Scores wird die Genauigkeit der Klassifizierung gemessen.
+Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.
 
-% Eval / Measuring
-% 
