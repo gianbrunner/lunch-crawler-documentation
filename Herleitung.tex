@@ -1,0 +1,61 @@
+\chapter{Herleitung}
+Damit verschiedene Begriffe im Bezug auf diese Arbeit richtig verstanden werden, werden sie nun genauer erläutert.
+\section{Website / Webpage}
+Unter einer Website versteht sich eine Sammlung von Webpages (deutsch: Webseite) \footnote{\url{http://openbook.rheinwerk-verlag.de/windows_server_2012r2/17_001.html} abgerufen am: 10.07.2019}.\\
+Die aufgeführte Beispielstruktur bildet als Ganzes eine Website ab:\\
+
+\begin{forest}
+	for tree={
+		font=\ttfamily,
+		grow'=0,
+		child anchor=west,
+		parent anchor=south,
+		anchor=west,
+		calign=first,
+		edge path={
+			\noexpand\path [draw, \forestoption{edge}]
+			(!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+		},
+		before typesetting nodes={
+			if n=1
+			{insert before={[,phantom]}}
+			{}
+		},
+		fit=band,
+		before computing xy={l=15pt},
+	}
+	[www.bachelorarbeit.ch -> Homepage
+	[www.bachelorarbeit.ch/ueber-uns -> Webpage]
+	[www.bachelorarbeit.ch/team -> Webpage]
+	]
+	]
+\end{forest}
+\section{Webcrawler}
+Ein Webcrawler ist ein Programm, das automatisch das World Wide Web durchsucht und Webseiten analysiert\cite[p.311]{liu2007web}.
+Eine mögliche Funktionsweise ist die folgende:
+Um starten zu können, muss dieser ein Seed besitzen, welches URLs von Websites beinhaltet.
+Der Webcrawler ruft diese URL mittels HTTP-Request auf und speichert sie.
+Die gespeicherte Webpage wird auf Verlinkungen (HTML-Achortags) geprüft, falls solche vorhanden sind, werden sie ebenfalls zum Seed hinzugefügt und durchlaufen denselben Prozess.
+\section{Gold Standard}
+Als Gold Standard wird in dieser Arbeit einen Datensatz bezeichnet, der aus den vom Webcrawler gespeicherten Webpages erstellt wurde.
+Er besteht aus einer zufälligen Teilmenge dieser Rohdaten, welche von Hand in die Kategorien \glqq Keine Menüseite\grqq{}, \glqq Menüseite\grqq{} und \glqq Tagesmenüseite\grqq{} aufgeteilt wurden.
+Dieser Datensatz wird als Referenz zur Messung von Klassifikationsalgorithmen verwendet.
+\section{Klassifikation bzw. Klassifizierung}
+Unter einer Klassifikation bzw. Klassifizierung versteht sich das Einordnen in definierte Kategorien\footnote{\url{https://www.duden.de/rechtschreibung/Klassifikation} abgerufen am: 10.07.2019}.
+Diese zwei Begriffe werden in dieser Arbeit als Synonyme verwendet.
+In dieser Arbeit werden zwei verschiedene Ansätze verfolgt:
+\subsection{Regelbasierte Klassifizierung}
+Bei der regelbasierten Klassifizierung wird anhand von definierten Regeln entschieden, in welche Kategorie eine Webpage eingeordnet wird.
+Diese werden typischerweise mit \glqq Wenn-Dann\grqq-Bedingungen aufgebaut.
+Ein Beispiel: Wenn das Wort \glqq menu\grqq{} im Titel einer Webpage vorkommt, ist es eine Menüseite, ansonsten nicht.
+\subsection{Klassifizierung mittels Machine-Learning}
+Die Klassifizierung mittels Machine-Learning findet nach dem Ansatz des \glqq Supervised Learning\grqq{}, also dem überwachten Lernen, statt.
+Dabei wird einem Machine-Learning-Algorithmus ein von Hand kategorisierter Datensatz (in diesem Fall ein Teil des Gold Standards) übergeben.
+Anhand dieser Daten entscheidet der Algorithmus für zukünftige Daten, wie er sie klassifizieren soll \footnote{\url{https://towardsdatascience.com/supervised-machine-learning-classification-5e685fe18a6d} abgerufen am: 10.07.2019}.
+\section{Preprocessing}
+Als Preprocessing wird die Vorverarbeitung von zu klassifizierenden Daten verstanden.
+Das Ziel dieses Vorgangs ist, diese Daten zu bereinigen und in eine einheitliche Form zu bringen \cite[p.155]{liu2007web}.
+In dieser Arbeit bezieht sich das Preprocessing auf die Vorverarbeitung von Texten.
+
+% Eval / Measuring
+% 

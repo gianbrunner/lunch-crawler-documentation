@@ -1,0 +1,17 @@
+\chapter{Stand der Forschung}
+\section{Gold Standard}
+% Was definiert einen guten Gold Standard?
+Öffentliche Datensätze, welche Daten in Textform beinhalten, sind in verschiedenen Kategorien verfügbar\footnote{\url{https://medium.com/@dataturks/rare-text-classification-open-datasets-9d340c8c508e}}.
+Auch Datensätze, die Informationen über Menüs beinhalten, sind bereits öffentlich verfügbar \footnote{\url{https://data.world/data-society/discover-the-menu}}.
+Deutsche Textdatensätze sind bereits weniger verbreitet wie solche in englischer Sprache, jedoch sind ebenfalls welche frei verfügbar\footnote{\url{http://wortschatz.uni-leipzig.de/en/download/}}.
+Einen Datensatz, welcher auf der deutschen Sprache basiert und Informationen über Menüseiten beinhaltet, konnte jedoch nicht gefunden werden, daher ist die Erarbeitung eines solchen Datensatzes Teil dieser Arbeit.
+\section{Klassifikation}
+Eine Methode, um Text in verschiedene Kategorien zu klassifizieren, ist das Erstellen von Regeln.
+Mit einem ausgefeilten Regelsatz kann dies bei einer geringen Anzahl verschiedener Kategorien gut funktionieren \cite[p.125]{jackson2007natural}.
+Das Erstellen eines solchen Regelsatzes ist zeitaufwendig und muss mit einem repräsentativen Datensatz überprüft werden \cite[p.125]{jackson2007natural}.
+Somit ist es ein iterativer Prozess und der Ersteller muss sich im Themengebiet gut auskennen \cite[p.125]{jackson2007natural}.
+Solche Regelsätze bestehen aus \glqq Wenn-Dann\grqq-Bedingungen, welche mit logischen \glqq UND\grqq{} bzw. \glqq ODER\grqq{} Operatoren verknüpft sind in Kombination mit regulären Ausdrücken \cite[p.126]{jackson2007natural}.
+Mit solchen Regelsätzen könnten zwar hohe Scores erreicht werden, ein grosses Problem des Erstellens solcher Regelsätze ist der Zeitaufwand, denn dieser steigt linear mit der Komplexität \cite[p.127]{jackson2007natural}.
+Aus diesem Grund besteht ein hoher Bedarf, Daten mittels statistischer Methoden automatisiert zu klassifizieren, ohne dass ein Mensch zuerst neue Regelsätze implementieren muss \cite[p.127]{jackson2007natural}.\\
+An diesem Punkt kommen Machine-Learning-Algorithmen zum Zug.
+Diese analysieren einen Datensatz, bei dem die Proben bereits eine Zuteilung zur jeweiligen Kategorie hinterlegt haben, und klassifiziert künftige Daten anhand dieser Analyse \cite[p.127]{jackson2007natural}. 
