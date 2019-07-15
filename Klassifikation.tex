@@ -18,6 +18,9 @@ Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standar
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
 Sie können mittels Konfiguration sowohl für den Text als auch Titel eines Dokuments ein- oder ausgeschaltet werden.
 \subsection{Basis Preprocessing}
+Um Text besser klassifizieren zu können, muss dieser zuerst bereinigt und standardisiert werden\footnote{\url{https://machinelearningmastery.com/clean-text-machine-learning-python/} abgerufen am: 11.07.2019}.
+Die nachfolgenden Methoden des Basis Preprocessing werden in jedem Fall der Klassifikation durchgeführt.
+Sie verändern jeweils nur einzelne Zeichen des Textes.
 \subsubsection{Gross-/Kleinschreibung}
 Alle Buchstaben, welche grossgeschrieben sind, werden durch die entsprechenden Kleinbuchstaben ersetzt.
 \subsubsection{Umlaute ersetzen}
@@ -37,6 +40,8 @@ Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen L
 \subsubsection{Multiple Leerschläge entfernen}
 Da durch die vorhergehenden Schritte oft multiple Leerschläge anfallen, werden diese auf einen Leerschlag reduziert.
 \subsection{Erweiterte Preprocessing}\label{sec:advancedpre}
+Die nachfolgenden Methoden stellen das erweiterte Preprocessing dar.
+Im Gegensatz zum Basis Preprocessing ersetzen, löschen oder verändern sie ganze Wörter im Text.
 \subsubsection{Preisdetektor}
 Da Menüs häufig in Verbindung mit Preisen vorkommen und in weiteren Preprocessing-Schritten Zahlen und Sonderzeichen entfernt werden, ist es von Vorteil, diese Informationen nicht zu verlieren.
 Daher erkennt diese Methode verschiedene Varianten von Preisen mittels Regulären Ausdrücken (Regex, Regular Expression) und ersetzt diese mit einem Schlüsselwort.
@@ -71,14 +76,14 @@ Die Experimente sind auf dem Trainings-Datensatzes des Gold Standards durchgefü
 Die schlussendlichen Resultate wurden anhand des Test-Datensatzes dessen durchgeführt.
 \section{Regelbasierte Experimente}
 \subsection{Regelsatz: Menü im Titel}
-\subsubsection{Beschreibung der Komponente}
+\subsubsection{Methode}
 Dieser simple Algorithmus kontrolliert, ob das Wort \glqq menu\grqq{} im Metatag \glqq Title\grqq{} vorkommt.
 Falls ja, wird das Dokument als Menüseite klassiert.
-\subsubsection{Methoden}
+\subsubsection{Resultate}
 Für dieses Regelset sind keine Parameter verfügbar, daher ist nur eine Konfiguration durchgeführt worden.
-Diese hat folgende Metriken ergeben:\\
+Diese hat anhand der Trainingsdaten folgende Metriken ergeben:\\
 \begin{table}[H]
-	\caption{Score des Regelsets: Menü im Titel}
+	\caption{Score des Regelsets: Menü im Titel anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|}
 		\hline
@@ -88,16 +93,45 @@ Diese hat folgende Metriken ergeben:\\
 		\hline
 	\end{tabular}
 \end{table}
-\subsubsection{Resultate}
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Menü im Titel & 0.28 & 1.00 & 0.16 \\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Menü im Titel anhand der Testdaten}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 8   & 42   \\[1.5ex]
+		& Negativ  & 0   & 50 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Preisdetektor}
-\subsubsection{Beschreibung der Komponente}
+\subsubsection{Methode}
 Dieser Algorithmus funktioniert dank der Preprocessing-Methode, welche den Preis erkennt und mit einem Schlüsselwort ersetzt.
-Sofern dieses Schlüsselwort im Text vorhanden ist, wird das Dokument als Menüseite klassifiziert. Dies unter der Annahme, dass Menüpreise oft zweistellig sind, im Gegensatz zu Getränkepreisen welche häufig einstellig sind und Hotelpreisen, die meist dreistellig sind.
+Sofern dieses Schlüsselwort für zweistellige Preise im Text vorhanden ist, wird das Dokument als Menüseite klassifiziert. 
+Dies unter der Annahme, dass Menüpreise oft zweistellig sind, im Gegensatz zu Getränkepreisen welche häufig einstellig sind und Hotelpreisen, die meist dreistellig sind.
 Die Anzahl vorhandener Preise kann über die Konfiguration angegeben werden.
-\subsubsection{Methoden}
+\subsubsection{Resultate}
 Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise angegeben werden, die vorhanden sein müssen, um eine Webpage als positiv zu klassifizieren.\\
 \begin{table}[H]
-	\caption{Scores des Regelsets: Preisdetektor}
+	\caption{Scores des Regelsets: Preisdetektor anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -111,16 +145,45 @@ Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise an
 \end{table}
 Das beste Ergebnis hat ein Schwellwert von zwei erzielt, danach ist der F1-Score wieder schlechter geworden.
 Daraus wurde geschlussfolgert, dass für dieses Regelset das Maximum bereits erreicht wurde.
-\subsubsection{Resultate}
+\\
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten} 
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Preisdetektor & 0.65 & 0.93 & 0.50 \\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Preisdetektor anhand der Testdaten}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 25   & 25   \\[1.5ex]
+		& Negativ  & 2    & 48 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Kombination aus Menü im Titel und Preisdetektor}
-\subsubsection{Beschreibung der Komponente}
+\subsubsection{Methode}
 Diese Kombination führt eine sequenzielle Klassifikation aus.
 Im ersten Schritt wird der Mechanismus des Algorithmus \glqq Menü im Titel\grqq{} verwendet.
 Falls durch diesen keine positive Klassifikation zustande kommt, wird durch den Preisdetektor nochmals neu klassifiziert.
-\subsubsection{Methoden}
+\subsubsection{Resultate}
 Bei dieser Konfiguration kann der Schwellwert ebenfalls für die Anzahl erkannter Preise angegeben werden.\\
 \begin{table}[H]
-	\caption{Scores des Regelsets: Kombination aus Menü im Titel und Preisdetektor}
+	\caption{Scores des Regelsets: Kombination aus Menü im Titel und Preisdetektor anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -133,9 +196,38 @@ Bei dieser Konfiguration kann der Schwellwert ebenfalls für die Anzahl erkannte
 	\end{tabular}
 \end{table}
 Auch bei diesem Regelset hat die Konfiguration mit einem Schwellwert von zwei das beste Ergebnis erzielt.
-\subsubsection{Resultate}
+\\
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Kombination aus Menü im Titel und Preisdetektor & 0.70 & 0.93 & 0.56\\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Kombination aus Menü im Titel und Preisdetektor anhand der Testdaten}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 28   & 22   \\[1.5ex]
+		& Negativ  & 2   & 48 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Listing}
-\subsubsection{Beschreibung der Komponente}
+\subsubsection{Methode}
 Dieser Algorithmus basiert sowohl auf dem Black- als auch auf dem Whitelisting Ansatz.
 Dazu wird eine Blacklist und eine Whitelist verwendet, die von Hand erstellt wurden und Einträge enthalten, welche für die jeweiligen Kategorien typisch sind.
 Falls ein Wort einer Liste im Text einer Webpage vorkommt, wird ein entsprechender Zähler hochgezählt.
@@ -143,11 +235,10 @@ Zum Schluss findet eine sequenzielle Klassifizierung statt, das heisst:
 Wenn der Zähler der Blacklist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als negativ klassifiziert. 
 Wenn der Zähler der Whitelist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als Menüseite klassifiziert.
 Falls keiner der beiden Zähler den Schwellwert überschreitet, wird die Webpage ebenfalls als negativ klassifiziert. 
-\subsubsection{Methoden}
-Beim Listing können zwei Schwellwerte angeben werden, einen für die Anzahl übereinstimmender Wörter aus der Whitelist und einen für die Blacklist.
+\subsubsection{Resultate}
 In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erhöht:\\
 \begin{table}[H]
-	\caption{Scores der ersten Iteration des Regelsets: Listing}
+	\caption{Scores der ersten Iteration des Regelsets: Listing anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
 		\hline
@@ -164,7 +255,7 @@ In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erh�
 Dieser Versuch hat gezeigt, dass ein maximaler F1-Score bei gleichen Werten zwischen 5 und 20 zu erreichen ist.\\
 Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden im zweiten Versuch unterschiedliche Verhältnisse getestet:\\
 \begin{table}[H]
-	\caption{Scores der zweiten Iteration des Regelsets: Listing}
+	\caption{Scores der zweiten Iteration des Regelsets: Listing anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
 		\hline
@@ -178,7 +269,7 @@ Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden 
 Aus diesem Versuch entstand die Schlussfolgerung, dass ein höherer Schwellwert der Blacklist als der Whitelist erforderlich ist, um einen möglichst hohen Score zu erreichen.
 Diese Erkenntnis wurde in einem weiteren Versuch in mehreren Iterationen getestet:\\
 \begin{table}[H]
-	\caption{Scores der dritten Iteration des Regelsets: Listing}
+	\caption{Scores der dritten Iteration des Regelsets: Listing anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|l|}
 		\hline
@@ -202,27 +293,55 @@ Verschiedene Schwellwerte in unterschiedlichen Verhältnissen wurden dabei getes
 Sobald einer dieser Schwellwerte zu einem schlechteren Ergebnis geführt hat, wurde er wieder reduziert oder ein neues Verhältnis wurde getestet.
 Beim Verhältnis 6/20 bzw. 7/20 wurde das Maximum des F1-Scores erreicht.
 Da diese Werte nicht im Bereich einer zufriedenstellenden Klassifikation sind, wurde auf das Ermitteln aller möglichen Kombinationen verzichtet.
-\subsubsection{Resultate}
+\\
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Listing & 0.68 & 0.96 & 0.52\\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Listing anhand der Testdaten}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 26   & 24   \\[1.5ex]
+		& Negativ  & 1    & 49 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Bag of Words}
-\subsubsection{Beschreibung der Komponente}
-Dieser Algorithmus basiert auf dem statistischen Ansatz namens \glqq Bag of Words\grqq{}.
-Dafür wird der komplette Datensatz in einen Trainings- und Testsatz in einem konfigurierbaren Verhältnis aufgeteilt.
+\subsubsection{Methode}
+Dieser Algorithmus basiert auf dem statistischen Methode \glqq Bag of Words\grqq{}.
+Dafür wird der komplette Trainingsdatensatz des Gold Standards in einen Trainings- und Testsatz in einem konfigurierbaren Verhältnis aufgeteilt.
 Bag of Words zählt für jedes Dokument der Trainingsdaten, wie oft ein Wort darin vorkommt.
-In dieser Anwendung wird jedoch nur erkannt, ob ein Wort vorkommt, oder nicht, die Anzahl spielt keine Rolle.
+In dieser Anwendung wird jedoch nur erkannt, ob ein Wort vorkommt, oder nicht, die Anzahl spielt keine Rolle (binäres Bag of Words).
 Anhand dieser Wörter wird eine dynamische Black- und Whitelist erstellt, Wörter die in beiden Listen vorkommen, werden entfernt.
 Anhand dieser Listen wird der Testdatensatz klassifiziert.
 Die Anzahl der Wörter dieser Listen ist konfigurierbar.
 Die Klassifikation findet mittels einem Zähler statt.
 Für jedes Wort eines Dokuments, welches in der Liste der positiven Beispielen vorkommt, wird der Zähler hochgezählt, für jedes Wort aus der Liste der negativen Beispielen wird er heruntergezählt.
 Für die Klassifizierung wird der Zähler mit einem konfigurierbaren Schwellwert verglichen, Falls der Zähler grösser ist als der Schwellwert, wird das Dokument als positiv klassifiziert, ansonsten negativ.
-Um die Ergebnisse anhand der Testdaten evaluieren zu können, sind diese Listen zudem statisch implementiert worden.
-Ob diese dynamisch erzeugt werden oder die statisch implementierten Listen verwendet werden sollen, kann mittels Konfigurationsoption gewählt werden.
-\subsubsection{Methoden}
+Um die Ergebnisse anhand der Testdaten evaluieren zu können, sind diese Listen (diejenigen der Konfiguration, welche auf den Trainingsdaten das beste Ergebnis lieferten) zudem statisch implementiert worden.
+\subsubsection{Resultate}
 Bei diesem Regelset kann die Grösse der Black- und Whitelist (Features), das Verhältnis zwischen Test- und Trainingsdaten (Split) sowie ein Schwellwert angegeben werden.
 Für das Verhältnis zwischen Test- und Trainingsdaten wurden die Werte 0.3, 0.5 und 0.7 getestet.
 In einer ersten Iteration wurde die Anzahl von 200 Features und ein Split von 0.3 verwendet, um herauszufinden, ob ein positiver oder negativer Schwellwert bessere Werte erzielt.\\
 \begin{table}[H]
-	\caption{Scores der ersten Iteration des Regelsets: Bag of Words}
+	\caption{Scores der ersten Iteration des Regelsets: Bag of Words anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -237,7 +356,7 @@ In einer ersten Iteration wurde die Anzahl von 200 Features und ein Split von 0.
 Dabei wurde erkannt, dass sich ein negativer Schwellwert positiv auf den F1-Score auswirkt.\\
 In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
 \begin{table}[H]
-	\caption{Scores der zweiten Iteration des Regelsets: Bag of Words}
+	\caption{Scores der zweiten Iteration des Regelsets: Bag of Words anhand der Trainingsdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -253,7 +372,7 @@ Da diese Werte sich fast nicht unterscheiden, wurden alle weiterverwendet, um ei
 In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 bis 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die Tabelle \cref{tab:bow3} zeigt diese Tests, sortiert nach bestem F1-Score:\\
 \FloatBarrier
 \begin{table}
-	\caption{Scores der dritten Iteration des Regelsets: Bag of Words}
+	\caption{Scores der dritten Iteration des Regelsets: Bag of Words anhand der Trainingsdaten}
 	\centering
 	\label{tab:bow3}
 	\begin{tabular}{ | l | l | l | l | l | l | }
@@ -302,8 +421,60 @@ Das Verhältnis zwischen Test- und Trainingsdaten ist nicht so relevant, da sowo
 Der Schwellwert ist im Bereich -2 bis -5 ebenfalls nicht aussagekräftig, da auch dieser bei den besten Scores vertreten ist.
 Es muss zudem berücksichtigt werden, dass der Split zufällig gewählt wird und keine Kreuzvalidierung stattfindet, dadurch können diese Ergebnisse variieren.
 \FloatBarrier
-\subsubsection{Resultate}
-\subsection{Diskussion der regelbasierten Experimente}
+
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Bag of Words & 0.74 & 0.91 & 0.62\\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Bag of Words anhand der Testdaten}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 31   & 19   \\[1.5ex]
+		& Negativ  & 3    & 47 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
+\subsection{Diskussion der Resultate der regelbasierten Experimente}
+Die verschiedenen Regelsätze ergeben, abgesehen von der Methode \glqq Menü im Titel\grqq{}, ähnliche Ergebnisse.
+Diese hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür einen Precision-Wert von 1, es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
+Dafür sind auch nur 16\% der Menüseiten erkannt worden.
+
+Die Suche nach Preisen innerhalb des Textes hat ein besseres Ergebnis geliefert, 50\% der Menüseiten wurden als solche erkannt und zwei Webpages wurden fälschlicherweise als Menüseiten klassifiziert. 
+Eine Kombination dieser beiden Methoden ergibt eine fast identische Klassifikation.
+28 von 50 Menüseiten wurden erkannt, ebenfalls zwei wurden fälschlicherweise als Menüseiten klassifiziert.
+
+Durch das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 26, also ca. 52\% der erkannten Webseiten wurde 1 Webpages als Menüseiten klassifiziert, welche keine sind.
+
+Die Klassifikation mit der Methode \glqq Bag of Words\grqq{} führt zu den besten Ergebnissen der regelbasierten Klassifikation.
+31 von 50 Menüseiten wurden erkannt, zudem wurden 3 Webpages fälschlicherweise als Menüseiten klassifiziert.\\
+
+Alle Methoden erreichten auf dem Testdatensatz eine genügend hohe Precision, jedoch ist der Recall jeweils so tief, dass der F1-Score nicht die vorausgesetzte Marke von 0.8 überschreitet.
+Alle Methoden der regelbasierten Klassifikation mit Ausnahme der Methode \glqq Bag of Words\grqq{} funktionieren unabhängig vom Trainingsdatensatz.
+Beim Evaluieren der besten Konfigurationsparameter wurden diese auf dem Trainingsdatensatz getestet.
+Im Vergleich zu den Ergebnissen des Testsets ist bei allen Regeln zu erkennen, dass die Werte deutlich tiefer sind.
+Dadurch kann die Schlussfolgerung gezogen werden, dass mit einer steigender Anzahl zu klassifizierenden Daten die Diversität dieser steigt, was sich negativ auf die Ergebnisse auswirkt.
+Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Webpages vor allem mit steigender Datendiversität nicht möglich ist.
+In allen Fällen wurde eine erhebliche Anzahl der Menüseiten nicht gefunden.
+Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele Menüseiten nicht angezeigt.
+Im Bezug auf die Resultate des Trainingsdatensatzes ist zudem die Precision markant gesunken.
+Dadurch werden im Anwendungsfall viele Webpages angezeigt, welche keine Menüseiten sind.
 \section{Experimente mittels Machine-Learning}
 \subsection{Einleitung}
 % grafik pipeline mit allen drei feature-Extraction methode
