@@ -2,5 +2,28 @@
 \section{Forschungsfrage}
 Aus dem Stand der Forschung ist die folgende Forschungsfrage entstanden:\\
 
-\section{Methodik}
+\emph{Können Webpages von Restaurant-Websites mit hoher Erfolgschance klassifiziert werden, ob sie Menüinformationen beinhalten?}\\
 
+Als hohe Erfolgschance wird ein F1-Score von mindestens 0.8 definiert.
+Es handelt sich um eine binäre Klassifikation, also eine Einteilung in zwei Kategorien, nämlich \glqq Menüseite\grqq{} oder \glqq Keine Menüseite\grqq.
+Zudem sind die unter \cref{chap:scope} definierten Einschränkungen zu berücksichtigen.
+\section{Methodik}
+Um die Forschungsfrage beantworten zu können, werden zwei verschiedene Ansätze, namentlich das regelbasierte Klassifizieren sowie die Klassifikation mittels Machine-Learning angewendet.
+Dies findet in mehreren Experimenten statt.
+Um die Ergebnisse dieser Experimente messen und miteinander vergleichen zu können, wird ein Gold Standard erstellt.
+\subsection{Gold Standard}
+Als Startpunkt zur Erstellung des Gold Standards dient der Output des in \cref{chap:engineering} erstellten Webcrawlers.
+Diese Daten werden von Hand kategorisiert, sodass ein representativer Datensatz zur Messung der Klassifikation entsteht.
+Um diese Daten kategorisieren zu können, müssen die Kategorien definiert und ein Entscheidungsraster erstellt werden.
+Die zu klassifizierenden Daten werden zufällig ausgewählt, sodass eine natürliche Verteilung der jeweiligen Kategorien entsteht.
+Die Daten werden zum Schluss in einen Trainings- und Testdatensatz unterteilt.
+\subsection{Klassifikation}
+Um die Daten des Gold Standards zu klassifizieren, werden sie zuerst mittels Preprocessing in eine standardisierte Form gebracht.
+Die Klassifikation selbst wird in zwei verschiedene Kategorien unterteilt, das regelbasierte Klassifizieren sowie die Klassifikation mittels Machine-Learning.
+Beim regelbasierten Klassifizieren werden fünf Methoden entwickelt, anhand welcher die Daten klassifiziert werden.
+Bei der Klassifikation mittels Machine Learning werden verschiedene Algorithmen verwendet.
+Um einen möglichst hohen F1-Score zu erreichen, wird in beiden Fällen mit verschiedenen Konfigurationen gearbeitet.\\
+Die Experimente werden bei jeglichen Klassifikationsmethoden anhand des Trainingsdatensatzes durchgeführt.
+Um die schlussendlich gültigen Resultate zu erheben, wird bis dahin unberührte Testdatensatz verwendet.
+Die Ergebnisse werden anhand des F1-Scores gemessen.
+Wenn zwei verschiedene Konfigurationen denselben F1-Score erreichen, wird diejenige Konfiguration bevorzugt, welche die höhere Precision erreicht.
