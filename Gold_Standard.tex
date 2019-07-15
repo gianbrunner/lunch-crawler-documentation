@@ -19,17 +19,20 @@ Dabei wurden aus den nun aufgeführten Gründen mehrere Einträge entfernt:
 Websites mit mehr als 300 Webpages wurden entfernt, da diese keine typische Restaurant-Website repräsentieren und somit das Gesamtbild verzerren.
 Es kann keine Gewähr gegeben werden, dass dieses Seed nur Restaurant-Websites beinhaltet, da nicht jeder Eintrag geprüft wurde.
 \section{Entscheidungsraster}
-Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten, daher wurde es als erstes erstellt.
+Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten.
 Für dieses wurden die folgenden Entscheidungen getroffen:
 \begin{itemize}
 	\item Die Webpage muss auf Deutsch verfasst sein
 	\item Der Anbieter muss entweder ein Restaurant, Take-Away oder Lieferdienst sein
-	\item Der Text muss statisch im HTML vorhanden sein, da dynamisch gerenderte Informationen vom Webcrawler nicht gespeichert werden
+	\item Der Text muss statisch im HTML vorhanden sein
 	\item Es muss ein Menü, also eine Kombination aus mehreren Speisen oder eine einzelne Speise vorhanden sein
 	\item Eine genauere Beschreibung oder der Preis muss vorhanden sein
 	\item Getränkekarten werden explizit als negativ gelabelt
 \end{itemize}
 Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da diese Angebote zu einem späteren Zeitpunkt eventuell zusätzlich erkannt werden möchten.
+Bei der Sprache ist anzumerken, dass gewisse Begriffe, vor allem für Speisebezeichnungen, auch fremdsprachig sein dürfen, da Speisebezeichnungen je nach Küche international ausgelegt sind.
+Der Inhalt muss statisch im HTML verfügbar sein, da der Webcrawler nicht mit dynamisch gerenderten Websites umgehen kann.
+Zudem wurden reine Getränkekarten explizit negativ klassifiziert.
 \FloatBarrier
 Der Gold Standard wurde anhand des Entscheidungsrasters erstellt, welches in der \cref{fig:classificationtree} dargestellt wird.
 \begin{figure}	
@@ -37,14 +40,6 @@ Der Gold Standard wurde anhand des Entscheidungsrasters erstellt, welches in der
 	\caption{Entscheidungsraster}
 	\label{fig:classificationtree}
 \end{figure}
-Obwohl bereits beim Webcrawler eine Spracherkennung eingesetzt wurde, damit nur als deutsch erkannte Webpages gespeichert werden, wurde bei der manuellen Klassifikation nochmals darauf geachtet, dass die Webpage in deutsch verfasst wurde.
-Dabei ist anzumerken, dass gewisse Begriffe, vor allem für Speisebezeichnungen, auch fremdsprachig sein dürfen, da Speisebezeichnungen je nach Küche international ausgelegt sind.
-Der Anbieter muss zwingend ein Restaurant, Take-Away oder Lieferdienst sein.
-Der Inhalt muss statisch in der HTTP-Antwort verfügbar sein, da der Webcrawler nur diesen speichert und nicht mit dynamisch gerenderten Websites umgehen kann.
-Der Name der Speise und eine genauere Beschreibung oder der Preis muss vorhanden sein.
-Danach folgt die Unterscheidung zwischen zeitlich begrenzten und unbegrenzten Angeboten, welche zur Kategorisierung führt.
-Getränkekarten wurden explizit negativ klassifiziert.
-
 \section{Manuelles Labeling der Daten}
 In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort \glqq Menu\grqq{} in der URL enthalten.
 Die mit dieser Heuristik gefilterten Daten entsprechen jedoch nicht einer repräsentativen Teilmenge der gesamten Rohdaten.
