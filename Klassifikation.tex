@@ -18,6 +18,9 @@ Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standar
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
 Sie können mittels Konfiguration sowohl für den Text als auch Titel eines Dokuments ein- oder ausgeschaltet werden.
 \subsection{Basis Preprocessing}
+Um Text besser klassifizieren zu können, muss dieser zuerst bereinigt und standardisiert werden\footnote{\url{https://machinelearningmastery.com/clean-text-machine-learning-python/} abgerufen am: 11.07.2019}.
+Die nachfolgenden Methoden des Basis Preprocessing werden in jedem Fall der Klassifikation durchgeführt.
+Sie verändern jeweils nur einzelne Zeichen des Textes.
 \subsubsection{Gross-/Kleinschreibung}
 Alle Buchstaben, welche grossgeschrieben sind, werden durch die entsprechenden Kleinbuchstaben ersetzt.
 \subsubsection{Umlaute ersetzen}
@@ -37,6 +40,8 @@ Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen L
 \subsubsection{Multiple Leerschläge entfernen}
 Da durch die vorhergehenden Schritte oft multiple Leerschläge anfallen, werden diese auf einen Leerschlag reduziert.
 \subsection{Erweiterte Preprocessing}
+Die nachfolgenden Methoden stellen das erweiterte Preprocessing dar.
+Im Gegensatz zum Basis Preprocessing ersetzen, löschen oder verändern sie ganze Wörter im Text.
 \subsubsection{Preisdetektor}
 Da Menüs häufig in Verbindung mit Preisen vorkommen und in weiteren Preprocessing-Schritten Zahlen und Sonderzeichen entfernt werden, ist es von Vorteil, diese Informationen nicht zu verlieren.
 Daher erkennt diese Methode verschiedene Varianten von Preisen mittels Regulären Ausdrücken (Regex, Regular Expression) und ersetzt diese mit einem Schlüsselwort.
