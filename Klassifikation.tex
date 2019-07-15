@@ -36,7 +36,7 @@ Alle Sonderzeichen, die nicht in der folgenden Auflistung vorkommen, werden durc
 Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen Leerschlag angrenzen, werden entfernt.
 \subsubsection{Multiple Leerschläge entfernen}
 Da durch die vorhergehenden Schritte oft multiple Leerschläge anfallen, werden diese auf einen Leerschlag reduziert.
-\subsection{Erweiterte Preprocessing}
+\subsection{Erweiterte Preprocessing}\label{sec:advancedpre}
 \subsubsection{Preisdetektor}
 Da Menüs häufig in Verbindung mit Preisen vorkommen und in weiteren Preprocessing-Schritten Zahlen und Sonderzeichen entfernt werden, ist es von Vorteil, diese Informationen nicht zu verlieren.
 Daher erkennt diese Methode verschiedene Varianten von Preisen mittels Regulären Ausdrücken (Regex, Regular Expression) und ersetzt diese mit einem Schlüsselwort.
@@ -307,21 +307,31 @@ Es muss zudem berücksichtigt werden, dass der Split zufällig gewählt wird und
 \section{Experimente mittels Machine-Learning}
 \subsection{Einleitung}
 % grafik pipeline mit allen drei feature-Extraction methode
-% struktur in einleitung bringen
 % stand der forschung mit allen algorithmen
-% erwähnen von validierungsset und testset
-% einfügen von ergebnissen aus methodikteil
-% eventuell auflistung von folgenden Experimenten
-% nummerierung korrigieren
+\subsubsection{Durchführung der Experimente}
 Alle Experimente werden mit der Pipeline, welche im Kapitel \cref{sec:classification} beschrieben wird, durchgeführt.
 Um eine möglichst grosse Abdeckung von Experimenten zu erzielen, werden bei jedem Experiment drei parallele Pipelines verwendet, die jeweils eine andere Feature-Extraction Methode verwenden.
-Die drei verwendeten Feature-Extraction Methoden sind \glqq Bag of Words\grqq{}, \glqq binäres Bag of Words\grqq{} und \glqq TF-IDF\grqq{}, welche folgend weiter erklärt werden.
-\subsubsection{Bag of Words und binäres Bag of Words}
+Die drei verwendeten Feature-Extraction Methoden sind \glqq Bag of Words\grqq{}, \glqq binäres Bag of Words\grqq{} und \glqq TF-IDF\grqq{}, welche in \cref{sub:bow} und \cref{sub:tfidf} erläutert werden.\\
+Für jede Pipeline wurde vor dem Training der Algorithmen, welche im \cref{sub:clf} ersichtlich sind, aus den Trainingsdaten eine kleine Teilmenge als Validierungsset entnommen.
+Die einzelnen Pipelines wurden danach mit dem Rest des Trainingssets trainiert und mit dem entnommenen Validierungsset validiert.
+Dies wurde konsequent für alle Experimente durchgeführt, um eine unverzerrte Einschätzung der Performance der Algorithmen während der Experimente zu erhalten.
+Würde man die Validierung auf den Trainingsdaten durchführen, hätte man eine verzerrte Einschätzung der Performance.\footnote{\url{https://machinelearningmastery.com/difference-test-validation-datasets/} abgerufen am: 10.07.2019}\\
+Zusätzlich wurde nach Abschluss aller Experimente die Performance des besten Klassifizierers auf einem ungesehenen Testdatenset überprüft.
+Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann.
+\subsubsection{Konfigurationen zu den einzelnen Experimenten}
+Jede ausgeführte Pipeline erzeugt eine Textdatei mit den Ergebnissen und der Konfiguration der Pipeline.
+Somit kann jedes Ergebnisse der Experimente wiederholt und nachvollzogen werden.
+Alle Textdateien können im Anhang ....... des Dokuments gefunden werden.
+Es wird in diesem Kapitel verzichtet, jeweils die Konfigurationen aufzulisten, um den Lesefluss nicht zu stören.
+Für genauere Einblicke in die einzelnen Konfigurationen kann der Anhang miteinbezogen werden.\\
+Als Einstiegspunkt für die Experimente, wurde das erste Experiment mit Standardkonfigurationen für alle drei Feature-Extraction Methoden ausgeführt.\\
+Alle Experimente wurden sequentiell durchgeführt und die Erkenntnisse des vorherigen Experiments in die Konfigurationen des nächsten Experiments miteinbezogen.
+\subsubsection{Bag of Words und binäres Bag of Words}\label{sub:bow}
 Der statistische Ansatz namens \glqq Bag of Words\grqq{} wandelt einen Text in eine Anhäufung von Wörtern um.
 Danach wird für jedes Wort die Häufigkeit des Vorkommens in dieser Anhäufung gezählt und hinterlegt.
 Bag of Words erstellt im Grunde ein Histogramm aller Wörter eines Textes.
 Ebenfalls kann die boolsche Häufigkeit (Term vorhanden/nicht vorhanden) verwendet werden, damit man nur ein Set von allen im Text vorkommenden Wörtern erhält.
-\subsubsection{TF-IDF}
+\subsubsection{TF-IDF}\label{sub:tfidf}
 TF-IDF (TermFrequency-InverseDocumentFrequency) ist eine Methodik zur Bestimmung der Relevanz eines Terms in einer Sammlung von Dokumenten (Dokumentkorpus).\\
 TF-IDF wird aus den zwei folgenden Metriken zusammengesetzt.
 \begin{itemize}
@@ -342,11 +352,7 @@ TF-IDF wird aus den zwei folgenden Metriken zusammengesetzt.
 	\end{itemize}
 \end{itemize}
 TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang.\footnote{\url{http://www.tfidf.com/} abgerufen am: 07.05.2019}
-\subsubsection{Konfigurationen zu den einzelnen Experimenten}
-Jede ausgeführte Pipeline erzeugt eine Textdatei mit den Ergebnissen und der Konfiguration der Pipeline.
-Somit kann jedes Ergebnisse der Experimente wiederholt und nachvollzogen werden.
-Alle Textdateien können im Anhang ....... des Dokuments gefunden werden.
-\subsubsection{Machine-Learning Algorithmen}
+\subsubsection{Übersicht der verwendeten Machine-Learning Algorithmen}\label{sub:clf}
 Wegen des \glqq No free lunch\grqq{}-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
 Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
 \begin{itemize}
@@ -415,7 +421,6 @@ Somit werden beide Klassifizierer für den weiteren Verlauf nicht mehr verwendet
 	\label{abb:dimred}
 \end{figure}
 \subsection{Angabe von Klassenverteilung}
-\subsubsection{Beschreibung der Komponente}
 \subsubsection{Methoden}
 Da die Daten aus dem Goldstandard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
 Die Gewichtung, auf ein positives Sample folgen 10.32 negative Samples, wurde den Algorithmen fürs Trainieren mitgegeben.
@@ -441,15 +446,12 @@ Somit wird für TF-IDF ebenfalls die Angabe der Klassenverteilung für die näch
 	\label{abb:classweight}
 \end{figure}
 \subsection{Anwendung von N-Gramme}
-\subsubsection{Beschreibung der Komponente}
 \subsubsection{Methoden}
 Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
-Aufgrund von verschiedenen Visualisierungen der Textdaten wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
+Aufgrund von verschiedenen Visualisierungen der Textdaten, welche im Anhang gefunden werden können, wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
 Die Scikit-Learn Feature-Extraction Methoden bieten einfache Schnittstellen für die Extrahierung von N-Grammen.
-Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die 14 Algorithmen mit den neuen Features trainiert und wieder validiert.
+Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die Algorithmen mit den neuen Features trainiert und wieder validiert.
 \subsubsection{Resultate}
-Sowohl \glqq Bag of Words\grqq{} als auch TF-IDF bieten in ihrer Scikit-Learn Implementierung die Möglichkeit N-Gramme zu verwenden.
-Für dieses Experiment wurden Unigramme, Bigramme und Trigramme ausgetestet.\\
 Die Ergebnisse sind in der Abbildung \cref{abb:ngram} ersichtlich.
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Verwendung von Unigrammen die besten Ergebnisse.
 Bi- und Trigramme können bei einzelnen Algorithmen ebenfalls eine Verbesserunge verzeichnen, aber im Vergleich zu Unigrammen fallen diese flächendeckend kleiner aus.
@@ -468,7 +470,6 @@ Da die Entscheidung bei der TF-IDF Methode nicht eindeutig gefällt werden konnt
 	\label{abb:ngram}
 \end{figure}
 \subsection{Anwendung von fortgeschrittenen Preprocessingschritten}
-\subsubsection{Beschreibung der Komponente}
 \subsubsection{Methoden}
 Fortschrittliche Preprocessingschritte haben die Aufgabe den Text weiter zu modifizieren und die Extrahierung von zusätzlichen Informationen zu vereinfachen.
 Im Kontext vom Machine-Learning Teil zählen folgende Preprocessingschritte zu den fortschrittlichen Funktionen:
@@ -478,7 +479,7 @@ Im Kontext vom Machine-Learning Teil zählen folgende Preprocessingschritte zu d
 	\item Das Entfernen von Stopwörtern
 	\item Das Markieren von Information, die sich auf Getränke beziehen
 \end{itemize}
-Diese fortschrittlichen Funktionen können ebenfalls im Unterkapitel \ref{preprocessing} nachgelesen werden.
+Diese fortschrittlichen Funktionen können ebenfalls im Unterkapitel \ref{sec:advancedpre} nachgelesen werden.
 Es wurden die Auswirkungen von jeglichen Kombinationen der fortgeschrittenen Preprocessingschritten getestet.
 Bei vier verschiedenen Arten ergeben sich 16 verschiedene Kombinationen.
 \subsubsection{Resultate}
@@ -496,7 +497,6 @@ Um bei der weiteren Ermittlung von Optimierungen nicht nur auf ein Algorithmus z
 \\\\
 Die Auswertung für das fortschrittliche Preprocessing kann im Anhang gefunden werden.
 \subsection{Anzahl extrahierter Features}
-\subsubsection{Beschreibung der Komponente}
 \subsubsection{Methoden}
 Jeder Algorithmus verhaltet sich mit der Änderung der Anzahl Features unterschiedlich.
 Um eine optimale Anzahl an Features zu ermitteln, musste schrittweise die Anzahl Features erhöht werden, die Algorithmen mit der neuen Anzahl trainiert und schlussendlich validiert werden.
@@ -507,13 +507,12 @@ Grundsätzlich macht eine Begrenzung der Features Sinn, da ab einer gewissen Anz
 \subsubsection{Resultate}
 Für alle drei Feature-Extraction Methoden wurde ein Liniendiagramm für F1-Score, Precision und Recall erstellt.
 Aus diesen Grafiken kann entnommen werden, bei welcher Feature-Anzahl welcher Algorithmus den besten Score erzielt.
-Für die weitere Auswertung sind die Grafiken für F1-Score und Precision massgebend und werden weiter analysiert.
-\subsubsection{Bag of Words}
+Für die weitere Auswertung ist die Grafik für F1-Score massgebend und wird weiter analysiert.
+\paragraph{Bag of Words}
 In der Abbildung \cref{abb:bow-f1} ist ersichtlich, dass mit \glqq Bag of Words\grqq{} der Algorithmus AdaBoost bei 100 Features mit Abstand den besten F1-Score erzielt und fast die 0.8 Marke erreicht.
 Ebenfalls kann der LinearSVC Algorithmus einen guten F1-Score erzielen und teilt sich mit AdaBoost die besten Werte.
 Ersichtlich ist ebenfalls, dass die meisten Algorithmen sich zwischen 0.6 und 0.7 bewegen und das vereinzelte Klassifizierer mit ihren Werten auf und ab springen.\\
 Die springenden Algorithmen Perceptron, SGDClassifier und PassiveAgressiveClassifier sind alle von der Familie \glqq Linear\_Model\grqq{}. Ein Grund für das auffällige Verhalten wurde nicht gefunden.
-Da der F1-Score vom Recall und der Precision abgeleitet wird, sind die Sprünge in der Abbildung \cref{abb:bow-f1} auf die ähnlichen Sprünge aus der Precision-Grafik \cref{abb:bow-pre} zurückzuführen.\\
 \begin{figure}[H]	
 	\setlength{\fboxsep}{0.3pt} 
 	\setlength{\fboxrule}{0.3pt} 
@@ -521,22 +520,13 @@ Da der F1-Score vom Recall und der Precision abgeleitet wird, sind die Sprünge 
 	\caption{Grafik des F1-Score-Verlaufs bei Bag of Words}
 	\label{abb:bow-f1}
 \end{figure}
-Bei der Precision, welche in der Abbildung \cref{abb:bow-pre} aufgezeigt wird, ist der RandomForest Algorithmus der mit Abstand beste Klassifizierer.
-Vereinzelt erreicht RandomForest eine Precision von 1.0 und ist stetig über 0.8.\\
-Die oben erwähnten Sprünge der linearen Modelle sind deutlich im Precision-Verlauf in der Abbildung \cref{abb:bow-pre} ersichtlich.
-\begin{figure}[H]	
-	\setlength{\fboxsep}{0.3pt} 
-	\setlength{\fboxrule}{0.3pt} 
-	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/bow-pre.png}} 
-	\caption{Grafik des Precision-Verlaufs bei Bag of Words}
-	\label{abb:bow-pre}
-\end{figure}
-\subsubsection{Binäres Bag of Words}
+\paragraph{Binäres Bag of Words}
 Bei der Methode \glqq binäres Bag of Words\grqq{} können mehrere Algorithmen einen F1-Score nahe der 0.8 Grenze verbuchen.
 In der Abbildung \cref{abb:bow-bin-f1} ist klar erkennbar, dass die meisten Algorithmen einen F1-Score zwischen 0.6 und 0.8 erzielen.
 Der beste Algorithmus ist Perceptron, welcher mit 325 Features einen F1-Score von 0.8 verzeichnet.\\
 Der SGDClassifier erreicht ebenfalls einen F1-Score von 0.8, jedoch mit einer höheren Anzahl von Features.
 Dies bedeutet das SGDClasifier potenziell länger für die Feature-Extraction benötigt und somit ist Perceptron der favorisierende Algorithmus bei dieser Variante.\\
+Die Sprünge der linearen Modelle, welche bereits bei der oberen \glqq Bag of Words\grqq{} Methode dargestellt wurden, sind ebenfalls wieder in der F1-Score-Grafik \cref{abb:bow-bin-f1} zu erkennen.
 \begin{figure}[H]	
 	\setlength{\fboxsep}{0.3pt} 
 	\setlength{\fboxrule}{0.3pt} 
@@ -544,20 +534,11 @@ Dies bedeutet das SGDClasifier potenziell länger für die Feature-Extraction be
 	\caption{Grafik des F1-Score-Verlaufs bei binärem Bag of Words}
 	\label{abb:bow-bin-f1}
 \end{figure}
-Bei der Precision, die in der Abbildung \cref{abb:bow-bin-pre} aufgezeigt wird, ist der RandomForest Algorithmus ebenfalls die beste Wahl.
-Er erreicht wieder die höchsten Prcecision-Werte bei fast jeder Anzahl an Features.\\
-Die Sprünge der linearen Modelle, welche bereits bei der oberen \glqq Bag of Words\grqq{} Methode dargestellt wurden, sind ebenfalls wieder in der Precision-Grafik \cref{abb:bow-bin-pre} und der oberen F1-Score-Grafik \cref{abb:bow-bin-f1} zu erkennen.
-\begin{figure}[H]	
-	\setlength{\fboxsep}{0.3pt} 
-	\setlength{\fboxrule}{0.3pt} 
-	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/bow-bin-pre.png}} 
-	\caption{Grafik des Precision-Verlaufs bei binärem Bag of Words}
-	\label{abb:bow-bin-pre}
-\end{figure}
-\subsubsection{TF-IDF}
+\paragraph{TF-IDF}
 Bei der Verwendung von TF-IDF sind mehrere Algorithmen mit ihren F1-Scores im Bereich 0.7 bis 0.8.
-In der Abbildung \cref{abb:tfidf-f1} ist erkennbar, dass der SGDClassifier Algorithmus als einziger die Grenze von 0.8 durchbrechen kann und ist somit der Algorithmus mit dem besten F1-Score.\\
-Auch bei der TF-IDF Methode sind wieder Sprünge bei den linearen Modellen in beiden Grafiken \cref{abb:tfidf-f1} und \cref{abb:tfidf-pre} deutlich ersichtlich.
+In der Abbildung \cref{abb:tfidf-f1} ist erkennbar, dass der SGDClassifier Algorithmus als einziger die Grenze von 0.8 durchbrechen kann.
+Dies erreicht er mit einer Anzahl Features von 150 und ist somit der Algorithmus mit dem besten F1-Score.\\
+Auch bei der TF-IDF Methode sind wieder Sprünge bei den linearen Modellen in der F1-Score-Grafik \cref{abb:tfidf-f1} deutlich erkennbar.
 \begin{figure}[H]	
 	\setlength{\fboxsep}{0.3pt} 
 	\setlength{\fboxrule}{0.3pt} 
@@ -565,29 +546,18 @@ Auch bei der TF-IDF Methode sind wieder Sprünge bei den linearen Modellen in be
 	\caption{Grafik des F1-Score-Verlaufs bei TF-IDF}
 	\label{abb:tfidf-f1}
 \end{figure}
-Bei der Precision ist der RandomForest Algorithmus ebenfalls wieder der Spitzenreiter.
-Er erzielt bei fast jeder Anzahl von Features die beste Precision und kann bei 325 Features sein Maximum erreichen.
-\begin{figure}[H]	
-	\setlength{\fboxsep}{0.3pt} 
-	\setlength{\fboxrule}{0.3pt} 
-	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/tfidf-pre.png}} 
-	\caption{Grafik des Precision-Verlaufs bei TF-IDF}
-	\label{abb:tfidf-pre}
-\end{figure}
 \subsection{Hyperparametertuning}
-\subsubsection{Beschreibung der Komponente}
 \subsubsection{Methoden}
 Als letzter Schritt der Algorithmenoptimierung wurde eine ausführliche Hyperparametersuche mit Kreuzvalidierung durchgeführt.
 Es wurde eine Kreuzvalidierung von fünf ausgewählt, um Overfitting gegenzuwirken.
-Es wurden jeweils die Modelle mit den drei besten F1-Scores und den besten Precisions kreuzvalidiert.
+Es wurden für die drei Feature-Extraction Methoden jeweils das Modell mit dem besten F1-Score kreuzvalidiert.
 Für jedes Modell wurde eine Liste von anpassbaren Parametern zusammengestellt.
 Für jeden Parameter wurde ein Bereich von möglichen Werten angegeben.
 Mittels der Funktion \glqq GridSearchCV\grqq{}\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}abgerufen am: 07.05.2019} von Scikit-Learn wurde die Hyperparametersuche für die Optimierung des F1-Scores durchgeführt.\\
 Je nach Algorithmus und Grösse der Parameterliste kann die Hyperparametersuche extrem lange dauern.
 Ebenfalls ist es möglich, dass die Standardparameter bereits ein Optimum darstellen und keine besseren Parameter gefunden werden.
 \subsubsection{Resultate}
-Die sechs Modelle, welche aus dem vorherigen Experiment, als die besten entnommen wurden, werden mittels Kreuzvalidierung auf optimale Hyperparameter durchsucht.
-\subsubsection{Modelle mit bestem F1-Score}
+Die drei Modelle, welche aus dem vorherigen Experiment, als die besten entnommen wurden, werden mittels Kreuzvalidierung auf optimale Hyperparameter durchsucht.\\
 Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Scores erzielen.\\
 \begin{table}[H]
 	\caption{Auwertung Hyperparametertuning für AdaBoost mit binärem Bag of Words}
@@ -634,54 +604,66 @@ Da die Recallsteigerung grösser als der Precisionabfall ist, wird der F1-Score 
 Die anderen beiden Modelle Perceptron in Tabelle \cref{tab:per} und SGDClassifier in der Tabelle \cref{tab:sgd} erzielen mit den neuen Parametern schlechtere Werte.
 Beide können den Recall verbessern, jedoch müssen sie massive Gefälle bei der Precision einbüssen.
 Da die Precision viel stärker abgenommen, als der Recall zugenommen hat, wird der F1-Score schlechter.\\
-Somit sind die Standardparameter für Perceptron und SGDClassifier für diesen \glqq Use-Case\grqq{} bereits optimal gewählt worden, da beim Hyperparametertuning eine ausführliche Liste von veränderbaren Parametern keine Verbesserung erzielen konnte.\\
+Somit sind die Standardparameter für Perceptron und SGDClassifier für den \glqq Use-Case: Restaurant-Suchmaschine\grqq{} bereits optimal gewählt worden, da beim Hyperparametertuning eine ausführliche Liste von veränderbaren Parametern keine Verbesserung erzielen konnte.\\
 Perceptron hat im Vergleich zum SGDClassifier einen leicht tieferen F1-Score, jedoch ist seine Precision deutlich höher.
 Da für den schlussendlichen \glqq Use-Case\grqq{} Precision wichtig ist, wird das Perceptron-Modell für weitere Auswertungen verwendet.
-\subsubsection{Modelle mit bester Precision}
-Das Modell RandomForest kann für alle drei Feature-Extraction Methoden jeweils den besten Precision-Score erzielen.\\
-\begin{table}[H]
-	\caption{Auwertung Hyperparametertuning für RandomForest mit binärem Bag of Words}
-	\centering
-	\label{tab:bow-rf}
-	\begin{tabular}{|l|l|l|l|}
-		\hline
-		& F1-Score & Precision & Recall\\
-		\hline
-		Vor Hyperparametertuning & 0.636 & 1.0 & 0.466 \\
-		Nach Hyperparametertuning & 0.736 & 0.8 & 0.682 \\
-		\hline
-	\end{tabular}
-\end{table}
-\begin{table}[H]
-	\caption{Auwertung Hyperparametertuning für RandomForest mit Bag of Words}
-	\centering
-	\begin{tabular}{|l|l|l|l|}
-		\hline
-		& F1-Score & Precision & Recall\\
-		\hline
-		Vor Hyperparametertuning & 0.636 & 1.0 & 0.466 \\
-		Nach Hyperparametertuning & 0.768 & 0.829 & 0.716 \\
-		\hline
-	\end{tabular}
-\end{table}
-\begin{table}[H]
-	\caption{Auwertung Hyperparametertuning für RandomForest mit TF-IDF}
-	\centering
-	\begin{tabular}{|l|l|l|l|}
-		\hline
-		& F1-Score & Precision & Recall\\
-		\hline
-		Vor Hyperparametertuning & 0.747 & 0.956 & 0.614 \\
-		Nach Hyperparametertuning & 0.794 & 0.823 & 0.767 \\
-		\hline
-	\end{tabular}
-\end{table}
-Alle drei Varianten können ihren F1-Score verbessern.
-Die Verbesserung erfolgt nur im Bereich Recall, welcher initial bei allen drei Modellen relativ tief war.
-Zusätzlich sinken bei allen drei Modellen die Precision-Scores.
-Bei beiden Varianten mit Bag of Words, waren alle drei initialen Scores identisch und die Precision maximal.\\
-Da in diesem Unterkapitel auf die beste Precision geachtet wird, ist das Modell aus der Tabelle \cref{tab:bow-rf} mit binärem Bag of Words und mit den Standardparametern die beste Wahl und wird für weitere Auswertungen verwendet.
+Die Annahme der Autoren lautet, dass es bei einer Suchmaschine wichtiger ist, richtige Ergebnisse zu finden, anstelle möglichst viele Ergebnisse zu finden.
+Wegen dieser Annahme wird das Perceptron-Modell für eine produktive Pipeline weiterverwendet.
 \subsection{Diskussion der Experimente mittels Machine-Learning}
+Bei allen Experimenten wurden die Modelle jeweils auf dem Validierungssset validiert.
+Um nun die wirkliche Performance des besten Modells zu überprüfen, wird die Klassifizierung mit dem ungesehenen Testset durchgeführt.
+Für die Auswertung werden der F1-Score, die Precision und der Recall aufgezeigt.
+Zusätzlich wird eine Konfusionsmatrix erstellt, welche darlegt, wie viele Webpages korrekt oder falsch eingestuft worden sind.
+\\\\
+Hinweis: Beim Perceptron wurde bei der Hyperparametersuche keine besseren Parameter gefunden.
+Aufgrund dessen wurden die Standardparameter weiter verwendet.
+
+\begin{table}[H]
+	\caption{Bester Algorithmus der Machine-Learning Klassifikation}
+	\centering
+	\label{tab:bestclf}
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Perceptron mit binärem Bag of Words & 0.78 & 0.92 & 0.68 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
+	\centering
+	\label{tab:conf}
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 34   & 16   \\[1.5ex]
+		& Negativ  & 3   & 47 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
+In der \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zur \cref{tab:per} der F1-Score leicht abgenommen hat.
+Dies hat den Grund, dass der Recall spürbar an Wert verloren hat.
+Die Precision jedoch stieg und wirkte der Reduzierung des F1-Scores entgegen.\\
+In der Konfusionsmatrix \cref{tab:conf} ist deutlich die hohe Precision zu erkennen.
+Der Algorithmus klassifizierte 34 Webpages korrekt als Menüseiten.
+Ebenfalls wurden nur drei Webpages als Menüseiten klassifiziert, welche aber keine gewesen sind.
+Die schlussendliche Performance des Klassifizierers ist für den genannten \glqq Use-Case\grqq{} zufriedenstellend und somit wird der Algorithmus Perceptron in einer produktiven Pipeline weiterverwendet.
+\\\\
+Schlussendlich ist ersichtlich, dass die Variante mit dem Perceptron-Algorithmus eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.
+Der F1-Score liegt zwar leicht unter dem selbst definierten Schwellwert von 0.8, jedoch ist die Precision mit 0.92 weit darüber.\\
+
+Für den Anwendungsfall einer Suchmaschine ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
+Dennoch dürfen nicht nur eine Hand voll von Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
+Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und Recall und wird deshalb für die Suchmaschine verwendet.
+Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
+Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
 \section{Diskussion}
 \section{Beantwortung der Forschungsfrage}
 \section{Verwendete Technologien}
