@@ -1,9 +1,25 @@
 \chapter{Teil 1: Gold Standard}
-\section{Vorgehen}
 Als Rohdaten zur Erhebung dieses Gold Standards dient der Output des Webcrawlers.
-Die Erarbeitung dieser Rohdaten kann im \cref{chap:engineering} nachgelesen werden.\\
-\subsection{Erarbeitung des Entscheidungsrasters}
-Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten.
+Die Erarbeitung dieser Rohdaten kann im \cref{chap:engineering} nachgelesen werden.
+\section{Seed}
+Das Seed wurde als Datenquelle des Webcrawlers verwendet und bildet somit die Grundlage dieses Gold Standards.
+Es wurde aus den folgenden zwei Quellen zusammengestellt:
+\begin{itemize}
+	\item OpenStreetMap - 3557 URLs
+	\item Lunch-Check - 3803 URLs
+\end{itemize}
+Diese Quellen wurden verwendet, da sie diese Daten für diese Arbeit kostenlos zur Verfügung stellen.
+Die URLs wurden zusammengeführt und Duplikate entfernt.
+Daraus ist ein Seed entstanden, welches 5870 Einträge von Restaurant-URLs enthält.
+Dabei wurden aus den nun aufgeführten Gründen mehrere Einträge entfernt:
+\begin{itemize}
+	\item Die Website enthält mehr als 300 Webpages
+	\item Die Website ist offensichtlich keine Restaurant-Website
+\end{itemize}
+Websites mit mehr als 300 Webpages wurden entfernt, da diese keine typische Restaurant-Website repräsentieren und somit das Gesamtbild verzerren.
+Es kann keine Gewähr gegeben werden, dass dieses Seed nur Restaurant-Websites beinhaltet, da nicht jeder Eintrag geprüft wurde.
+\section{Entscheidungsraster}
+Das Entscheidungsraster ist die Grundlage des manuellen Labeling der Rohdaten, daher wurde es als erstes erstellt.
 Für dieses wurden die folgenden Entscheidungen getroffen:
 \begin{itemize}
 	\item Die Webpage muss auf Deutsch verfasst sein
@@ -14,35 +30,6 @@ Für dieses wurden die folgenden Entscheidungen getroffen:
 	\item Getränkekarten werden explizit als negativ gelabelt
 \end{itemize}
 Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da diese Angebote zu einem späteren Zeitpunkt eventuell zusätzlich erkannt werden möchten.
-\subsection{Manuelles Labeling der Daten}
-In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort \glqq Menu\grqq{} in der URL enthalten.
-Die mit dieser Heuristik gefilterten Daten entsprechen jedoch nicht einer repräsentativen Teilmenge der gesamten Rohdaten.
-Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten ausgewählt und manuell gelabelt.
-Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
-\subsection{Hilfsmittel: Labeling-Tool}
-Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool} abgerufen am: 11.03.2019} erstellt worden, welches das Labeling vereinfacht.
-Dieses Tool ruft eine Webpage der zufällig extrahierten Webpages aus den Rohdaten auf und zeigt sowohl den Text, als auch den HTML-Inhalt.
-Der Anwender des Tools muss anhand dieser Informationen entscheiden, ob es sich um eine Webpage mit Menüinformationen handelt und ob diese zeitlich begrenzt sind.
-Mittels Shortkeys findet die Klassifizierung statt.
-Das Tool verschiebt die Datei in den entsprechenden Ordner und zeigt die Informationen der nächsten Webpage an.
-\section{Seed}
-Das Seed wurde als Datenquelle des Webcrawlers verwendet und bildet somit die Grundlage dieses Gold Standards.
-Es wurde aus den folgenden zwei Quellen zusammengestellt:
-\begin{itemize}
-	\item OpenStreetMap - 3557 URLs
-	\item Lunch-Check - 3803 URLs
-\end{itemize}
-Diese Quellen wurden verwendet, da sie diese Daten für diese Arbeit kostenlos zur Verfügung stellen.
-Die URLs wurden zusammengeführt und Duplikate sind entfernt worden.
-Daraus ist ein Seed entstanden, welches 5870 Einträge von Restaurant-URLs enthält.
-Dabei wurden aus den nun aufgeführten Gründen mehrere Einträge entfernt:
-\begin{itemize}
-	\item Die Website enthält mehr als 300 Webpages
-	\item Die Website ist offensichtlich keine Restaurant-Website
-\end{itemize}
-Websites mit mehr als 300 Webpages wurden entfernt, da diese keine typische Restaurant-Website repräsentieren und somit das Gesamtbild verzerren.
-Es kann keine Gewähr gegeben werden, dass dieses Seed nur Restaurant-Websites beinhaltet, da nicht jeder Eintrag geprüft wurde.
-\section{Entscheidungsraster}
 \FloatBarrier
 Der Gold Standard wurde anhand des Entscheidungsrasters erstellt, welches in der \cref{fig:classificationtree} dargestellt wird.
 \begin{figure}	
@@ -57,15 +44,27 @@ Der Inhalt muss statisch in der HTTP-Antwort verfügbar sein, da der Webcrawler 
 Der Name der Speise und eine genauere Beschreibung oder der Preis muss vorhanden sein.
 Danach folgt die Unterscheidung zwischen zeitlich begrenzten und unbegrenzten Angeboten, welche zur Kategorisierung führt.
 Getränkekarten wurden explizit negativ klassifiziert.
+
+\section{Manuelles Labeling der Daten}
+In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien klassifiziert, welche das Schlüsselwort \glqq Menu\grqq{} in der URL enthalten.
+Die mit dieser Heuristik gefilterten Daten entsprechen jedoch nicht einer repräsentativen Teilmenge der gesamten Rohdaten.
+Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten ausgewählt und manuell gelabelt.
+Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
+\subsection{Hilfsmittel: Labeling-Tool}
+Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool} abgerufen am: 11.03.2019} erstellt worden, welches das Labeling vereinfacht.
+Dieses Tool ruft eine Webpage der zufällig extrahierten Webpages aus den Rohdaten auf und zeigt sowohl den Text, als auch den HTML-Inhalt.
+Der Anwender des Tools muss anhand dieser Informationen entscheiden, ob es sich um eine Webpage mit Menüinformationen handelt und ob diese zeitlich begrenzt sind.
+Mittels Shortkeys findet die Klassifizierung statt.
+Das Tool verschiebt die Datei in den entsprechenden Ordner und zeigt die Informationen der nächsten Webpage an.
 \FloatBarrier
 \section{Beschreibung des Gold Standards}
 Der erarbeitete Gold Standard besteht insgesamt aus 6963 Dateien des Formats JSON, welche jeweils eine Webpage einer Restaurant-Website repräsentieren.
 Diese Daten sind in einen Test- und einen Trainings- und Validierungsdatensatz unterteilt.
 Der Gold Standard beinhaltet die folgenden drei Kategorien:
 \begin{itemize}
-	\item neg $\rightarrow$ Kein Menü
-	\item pos\textunderscore daily\textunderscore menu $\rightarrow$ Zeitlich änderndes Menü
-	\item pos\textunderscore menu $\rightarrow$ Menü
+	\item neg $\rightarrow$ Keine Menüseite
+	\item pos\textunderscore daily\textunderscore menu $\rightarrow$ Zeitlich ändernde Menüseite
+	\item pos\textunderscore menu $\rightarrow$ Menüseite
 \end{itemize}
 Die Datenstruktur des Gold Standards sieht wie folgt aus:\\
 
