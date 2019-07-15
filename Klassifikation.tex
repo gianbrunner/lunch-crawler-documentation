@@ -89,6 +89,35 @@ Diese hat folgende Metriken ergeben:\\
 	\end{tabular}
 \end{table}
 \subsubsection{Resultate}
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Menü im Titel & 0.28 & 1.00 & 0.16 \\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Menü im Titel}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 8   & 42   \\[1.5ex]
+		& Negativ  & 0   & 50 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Preisdetektor}
 \subsubsection{Beschreibung der Komponente}
 Dieser Algorithmus funktioniert dank der Preprocessing-Methode, welche den Preis erkennt und mit einem Schlüsselwort ersetzt.
@@ -112,6 +141,35 @@ Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise an
 Das beste Ergebnis hat ein Schwellwert von zwei erzielt, danach ist der F1-Score wieder schlechter geworden.
 Daraus wurde geschlussfolgert, dass für dieses Regelset das Maximum bereits erreicht wurde.
 \subsubsection{Resultate}
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Preisdetektor & 0.65 & 0.93 & 0.50 \\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Preisdetektor}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 25   & 25   \\[1.5ex]
+		& Negativ  & 2    & 48 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Kombination aus Menü im Titel und Preisdetektor}
 \subsubsection{Beschreibung der Komponente}
 Diese Kombination führt eine sequenzielle Klassifikation aus.
@@ -134,6 +192,35 @@ Bei dieser Konfiguration kann der Schwellwert ebenfalls für die Anzahl erkannte
 \end{table}
 Auch bei diesem Regelset hat die Konfiguration mit einem Schwellwert von zwei das beste Ergebnis erzielt.
 \subsubsection{Resultate}
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Kombination aus Menü im Titel und Preisdetektor & 0.70 & 0.93 & 0.56\\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Kombination aus Menü im Titel und Preisdetektor}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 28   & 22   \\[1.5ex]
+		& Negativ  & 2   & 48 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Listing}
 \subsubsection{Beschreibung der Komponente}
 Dieser Algorithmus basiert sowohl auf dem Black- als auch auf dem Whitelisting Ansatz.
@@ -203,6 +290,35 @@ Sobald einer dieser Schwellwerte zu einem schlechteren Ergebnis geführt hat, wu
 Beim Verhältnis 6/20 bzw. 7/20 wurde das Maximum des F1-Scores erreicht.
 Da diese Werte nicht im Bereich einer zufriedenstellenden Klassifikation sind, wurde auf das Ermitteln aller möglichen Kombinationen verzichtet.
 \subsubsection{Resultate}
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Listing & 0.68 & 0.96 & 0.52\\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Listing}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 26   & 24   \\[1.5ex]
+		& Negativ  & 1   & 49 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Regelsatz: Bag of Words}
 \subsubsection{Beschreibung der Komponente}
 Dieser Algorithmus basiert auf dem statistischen Ansatz namens \glqq Bag of Words\grqq{}.
@@ -303,6 +419,35 @@ Der Schwellwert ist im Bereich -2 bis -5 ebenfalls nicht aussagekräftig, da auc
 Es muss zudem berücksichtigt werden, dass der Split zufällig gewählt wird und keine Kreuzvalidierung stattfindet, dadurch können diese Ergebnisse variieren.
 \FloatBarrier
 \subsubsection{Resultate}
+Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:\\
+\begin{table}[H]
+	\caption{Beste Scores des Regelsatzes: Menü im Titel}
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		Methode & F1-Score & Precision & Recall\\
+		\hline
+		Bag of Words & 0.74 & 0.91 & 0.62\\
+		\hline
+	\end{tabular}
+\end{table}
+Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
+\begin{table}[H]
+	\caption{Konfusionsmatrix des Regelsets: Bag of Words}
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & 31   & 19   \\[1.5ex]
+		& Negativ  & 3   & 47 \\ 
+		\cline{2-4}
+	\end{tabular}
+\end{table}
 \subsection{Diskussion der regelbasierten Experimente}
 \section{Experimente mittels Machine-Learning}
 \subsection{Dimensionsreduktion der Features}
