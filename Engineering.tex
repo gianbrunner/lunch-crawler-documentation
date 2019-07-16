@@ -147,25 +147,51 @@ Es wurde nicht erfasst, wieviele Websites über Mechanismen wie Robots.txt-File 
 Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwohl sie crawlbar wären, ergibt dies hochgerechnet 450 Seedeinträge oder 7\%, die nicht gecrawlt wurden.
 Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Klassifizierung verwendet.
 \section{Webapplikation}
-\subsection{Idee}
-
 \subsection{Datenaufbereitung}
 Um die gesammelten Daten des Webcrawlers für die Webapplikation verwendbar zu machen, ist eine produktive Pipeline erstellt worden.
 Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
-Dafür ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um diese Rohdaten zu klassifizieren.
-Um die Menüseiten mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von Openstreetmap bereits die Koordinaten des Restaurants beinhalteten.
-Die Daten von Lunch Check waren nicht mit Geoinformationen versehen, jedoch mit den Adressinformationen.
+Es ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um die Rohdaten des Webcrawlers zu klassifizieren.
+Um die Menüseiten mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von OpenStreetMap bereits die Koordinaten des Restaurants beinhalteten.
+Die Daten von Lunch-Check waren nicht mit Geoinformationen versehen, jedoch mit den Adressinformationen.
 Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen Installation von Nominatim\footnote{\url{https://nominatim.openstreetmap.org/}abgerufen am: 02.07.2019} mit den Geoinformationen zu erweitern.
 Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.
-Somit ist aus mehreren Quellen eine einheitliche Datenstruktur erstellt worden.
+Somit ist aus mehreren Quellen eine einheitliche Datenstruktur im JSON-Format erstellt worden.
+Diese Struktur wird in \cref{fig:json_struktur} verdeutlicht:
+\begin{figure}[H]	
+	\includegraphics[width=1\columnwidth,keepaspectratio]{img/json_struktur.png}
+	\caption{JSON-Struktur anhand eines Beispiels}
+	\label{fig:json_struktur}
+\end{figure}
+\subsection{Idee}
+Ziel der Webapplikation ist es, dass ein Benutzer einfach und überschaubar nach Menüs suchen kann.
+Um dies zu erreichen, wurde ein Mockup mit dem Layout der Benutzeroberfläche erstellt, welches in \cref{fig:webapp_mockup} dargestellt wird.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/webapp_mockup.png}
+	\caption{Mockup der Webapplikation}
+	\label{fig:webapp_mockup}
+\end{figure}
+Dieses enthält lediglich eine Kartenansicht und einen Suchbalken.
+Der Standort des Benutzers soll beim Aufruf der Webapplikation abgefragt werden, damit der Kartenfokus auf diesen gesetzt werden kann.
+Durch die Eingabe einer Speise im Suchbalken werden alle Restaurants angezeigt, welche diese Speise in ihrer Menükarte führen.
+\subsection{Frontend}
+Das Frontend ist nach dem Prinzip einer Single-Page-Applikation aufgebaut.
+Eine HTML-Datei dient als Grundgerüst und wird durch die entsprechenden JavaScript-Dateien angepasst.
+Um ein ansprechendes Layout und Responsive Design zu gewährleisten, wird die Bibliothek \glqq Bootstrap\footnote{\url{https://getbootstrap.com/}}\grqq{} verwendet.
+Durch die Geolocation API\footnote{\url{https://www.w3schools.com/html/html5_geolocation.asp}} wird der Standort des Benutzers abgefragt.
+Das Verwenden des Suchbalkens löst eine Fetch-Anfrage auf das Backend aus.
+Die Ergebnisse dieser Anfrage werden dann mit der Bibliothek \glqq Leaflet\footnote{\url{https://leafletjs.com/}}\grqq{} angezeigt.
+Für jedes Restaurant wird ein Marker mit einem Popup-Fenster erstellt, welches einen Link zur Homepage sowie der Menüseite beinhaltet.
+\subsection{Backend}
+Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/}}\grqq{} verwendet, da bereits Erfahrung mit dieser Technologie gemacht wurde und sie geeignet ist für Anwendungen dieser Grösse.
+Ein Aufruf der Basis-URL stellt die HTML-Datei sowie die entsprechenden JavaScript-Dateien des Frontends zur Verfügung\footnote{\url{https://github.com/s-santoro/lunch-crawler/blob/master/webapp-lunch-crawler/routes/index.js}}.
+Das Verwenden des Suchbalkens gibt die Informationen über den Standort sowie das Such-Query an das Backend weiter.
+Dieses löst eine Fetch-Anfrage auf Elasticsearch aus, welche die entsprechenden Resultate als JSON zurückliefert.
+Diese JSON-Dateien werden dann an das Frontend weitergeleitet.
 \subsection{Search Engine}
 Als Search Engine wird die Software \glqq Elasticsearch\grqq{} eingesetzt\footnote{\url{https://www.elastic.co/de/products/elasticsearch}}.
 Da StormCrawler SDK entsprechende Komponenten zur Anbindung anbietet\footnote{\url{http://stormcrawler.net/getting-started/}} und dies in Betracht gezogen wurde, wird diese Software eingesetzt.
 Elasticsearch wird in einem Docker-Container betrieben\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html}}.
 Daten können im JSON-Format mittels HTTP-Request (POST) darin abgelegt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html}}.
 Ebenfalls mittels HTTP-Request (GET) können Suchabfragen auf die darin enthaltenen Daten getätigt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html}}.
-\subsection{Backend}
-Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/}}\grqq{} verwendet.
-
-\subsection{Frontend}
-\subsection{Benutzung der Webapplikation}
+Durch diese Funktionalität nimmt Elasticsearch in diesem Fall die Funktion einer Datenbank ein.
