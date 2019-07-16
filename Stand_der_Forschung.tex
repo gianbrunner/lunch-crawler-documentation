@@ -32,10 +32,6 @@ Ein Theorem vom bekannten Informatiker David H. Wolpert, welches sinngemäss die
 		\item KNeighborClassifier
 		\item Nearest Centroid
 	\end{itemize}
-	\item Support Vector Machines Modelle
-	\begin{itemize}
-		\item LinearSVC (Support Vector Classification)
-	\end{itemize}
 \end{itemize}
 \subsection{Lineare Modell}
 Lineare Modelle sind in der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariablen und Ausgangsvariablen besteht.
@@ -63,9 +59,10 @@ In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt un
 \begin{figure}[H]	
 	\includegraphics[width=1\columnwidth,keepaspectratio]{img/sgd.png}
 	\caption{Visualisierung des Gradienten und der Loss-Funktion (J(w) = Loss; w = Parameteränderung)}
+	\source{\url{http://rasbt.github.io/mlxtend/user_guide/general_concepts/gradient-optimization/}}
 	\label{fig:sgd}
 \end{figure}
-\subsection{Perceptron}
+\subsubsection{Perceptron}
 Der Perceptron-Algorithmus basiert auf dem SGDClassifier\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html} abgerufen am: 14.05.2019}\cite{scikit-learn}.
 Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spezieller Konfiguration.\\
 Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate.
@@ -89,7 +86,50 @@ Adaboost verwendet jedoch die Methode des \glqq Boosting\grqq{}, welche Ähnlich
 Bei Adaboost wird ein Algorithmus trainiert, validiert und als Ursprung verwendet. Alle zusätzlichen Algorithmen, welche das finale Voting durchführen, werden vom Ursprungsalgorithmus abgeleitet.
 Es werden jedoch bei den Abkömmlingen die internen Parameter schrittweise verbessert und versucht die Fehler des \glqq Vater-Algorithmus\grqq{} zu vermeiden.
 AdaBoost kann verbessert werden, indem die Anzahl von Vererbungsschritten angepasst wird\cite{freund1999short}.
-\section{Hyperparametertuning}
+\subsection{Nearest Neighbor Modelle}
+Der Nearest Neigbhor (NN) Algorithmus ist einer der simpelsten Entscheidungsprozesse für Klassifikationen.
+Beim NN Algorithmus werden Datenpunkte entsprechend ihren nächsten Nachbarn klassifiziert\cite{cover1967nearest}.
+Dieses Verhalten ist in der \cref{fig:knn} für unterschiedliche Schwellwerte der Anzahl Nachbarn ersichtlich.
+\begin{figure}[H]	
+	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/knn.png}
+	\caption{Darstellung einer simplen K-Nearest Neighbor Prozedur.}
+	\source{\cite{cover1967nearest}}
+	\label{fig:knn}
+\end{figure}
+\subsubsection{K-Nearest-Neighbor}
+Der KNN Algorithmus funktioniert nach dem gleichen Prinzip wie der NN Algorithmus.
+Ein Unterschied ist, dass eine spezifische Anzahl von Nachbarn mit der Kennzahl K definiert wird.
+Alle K-nächsten Datenpunkten klassifizieren den gesuchten Datenpunkt mit einem Mehrheitsentscheid.
+Dies ist in der \cref{fig:knn} für K=3 und K=5 ersichtlich.
+K kann frei gewählt werden und dient hervorragend als Parameter für eine Hyperparametersuche \cref{sec:hyp}\cite{cover1967nearest}.
+\subsubsection{Nearest Centroid}
+Der Nearest Centroid Algorithmus basiert auf dem Prinzip des NN Algorithmus.
+Zuerst werden die Schwerpunkte aller Klassen berechnet, indem alle zur Klasse zugewiesenen Datenpunkte miteinbezogen werden.
+Danach wird der zu klassifizierende Datenpunkt der Klasse zugewiesen, mit der kleinsten Differenz von Datenpunkt zu Schwerpunkt der Klasse.
+Somit wird für den Nearest Centroid Algorithmus nicht der Mehrheitsentscheid der nächsten Nachbarn zur Klassifikation verwendet, sondern die Distanzen zu den Klassenschwerpunkten.
+Dieses Verhalten ist in \cref{fig:centroid} ersichtlich.
+Wobei s1 die Distanz vom Schwerpunkt der Klasse \glqq Investing Picks\grq{} zum Datenpunkt und s2, beziehungsweise s3, zu den Schwerpunkten ihrer dazugehörigen Klassen.
+\begin{figure}[H]	
+	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/centroid.png}
+	\caption{Darstellung einer simplen Nearest Centroid Prozedur.}
+	\source{\url{https://www.slideshare.net/mgrcar/text-and-text-stream-mining-tutorial-15137759}}
+	\label{fig:centroid}
+\end{figure}
+\subsection{Support Vector Machine Modelle}
+SVM-Classifier (Support Vector Machine) erzielen gute Resultate bei der Klassifizierung von Textdateien.
+Ein Vorteil von SVM ist, dass ihre Lernrate unabhängig von der Dimension der Features ist\cite{joachims1998text}.
+Dies wird erreicht, da SVM nicht auf die ganzen Features angewiesen ist.
+Zwischen den unterschiedlichen Klassen werden Hyperebenen gelegt, welche das Ziel haben, die Abstände zu den einzelnen Klassen zu maximieren.
+In der \cref{fig:svm} ist eine solche Hyperebene ersichtlich.
+Die Features, welche am nächsten zu den Hyperebenen liegen, werden Support Vektoren genannt.
+Der Algorithmus kann nach der Trennung der Klassen nun die Position von neuen Features bestimmen und somit eine Schätzung einer geeigneten Klasse vornehmen\cite{tong2001support}.
+\begin{figure}[H]	
+	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/svm.png}
+	\caption{Darstellung einer simplen Support Vector Machine.}
+	\source{\cite{tong2001support}}
+	\label{fig:svm}
+\end{figure}
+\section{Hyperparametertuning}\label{sec:hyp}
 Parameter, welche nicht selbstständig vom Machine-Learning Modell angepasst werden können, werden Hyperparameter genannt und sind meist Übergabeparameter in der Konstruktor-Methode.
 Diese Hyperparameter definieren das Verhalten von den Modellen.
 Die geeignetsten Hyperparameter können mit einer ausführlichen Suche gefunden werden, was als Hyperparametertuning bezeichnet wird\footnote{\url{https://scikit-learn.org/stable/modules/grid_search.html} abgerufen am: 14.05.2019}\cite{scikit-learn}.
