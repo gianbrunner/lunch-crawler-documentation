@@ -583,6 +583,9 @@ Lediglich bei der \glqq Bag of Words\grqq{} Methode ist die Summe über alle Sco
 Der Bernoulli Bayes Klassifizierer, abgesehen vom Multinomial Bayes, ist der einzige Algorithmus, welcher über alle drei Feature-Extraction Methoden signifikante Verschlechterungen mit LSA erzielt hat. Die F1-Scores sind mit Dimensionsreduktion unter 0.1 gelangt, was diesen Algorithmus nach der Meinung der Autoren für weitere Experimente unbrauchbar macht. Die Annahme der Autoren lautet, dass ein F1-Score unter 0.1 trotz weiteren Massnahmen keinen zufriedenstellenden F1-Score erreichen wird.\\
 Die Dimensionsreduktion wird für alle drei Varianten weiter verwendet, da die positiven Auswirkungen sich deutlich in den F1-Scores widerspiegelt.
 Einzige Wehrmutstropfen der Dimensionsreduktion sind, dass der Multinomial-Bayes Klassifizierer keine wirkliche Klassifizierung mehr durchführen kann und der Bernoulli Bayes Klassifizierer unbrauchbare Scores liefert.
+Nach gewisser Recherche des Problems konnte nur ein Stackoverflow-Beitrag\footnote{\url{https://stackoverflow.com/questions/24169238/dealing-with-negative-values-in-sklearn-multinomialnb} abgerufen am: 14.05.2019} mit ähnlichen Komplikationen gefunden werden.
+Dieser Beitrag wies auf gewisse Inkompatiblitäten zwischen Naive Bayes Algorithmen und LSA auf.
+Diese Aussagen konnten jedoch weder bestätigt noch dementiert werden.
 Somit werden beide Klassifizierer für den weiteren Verlauf nicht mehr verwendet und werden aus den folgenden Auswertungsgrafiken entfernt.
 \begin{figure}[H]
 	\setlength{\fboxsep}{0.3pt} 
@@ -619,7 +622,7 @@ Somit wird für TF-IDF ebenfalls die Angabe der Klassenverteilung für die näch
 \subsection{Anwendung von N-Gramme}
 \subsubsection{Methoden}
 Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
-Aufgrund von verschiedenen Visualisierungen der Textdaten, welche im Anhang gefunden werden können, wurde erkannt, dass es Sinn macht, die Verwendung von Bi- und Trigrammen zu prüfen.
+Aufgrund der Annahme der Autoren, dass verschiedene Menünamen oder Gerichtbezeichnungen in Form von Bi- oder Trigrammen auftreten (Cordon-Bleu, Prosciutto e Funghi), macht die Überprüfung von Bi- und Trigrammen Sinn.\\
 Die Scikit-Learn Feature-Extraction Methoden bieten einfache Schnittstellen für die Extrahierung von N-Grammen.
 Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die Algorithmen mit den neuen Features trainiert und wieder validiert.
 \subsubsection{Resultate}

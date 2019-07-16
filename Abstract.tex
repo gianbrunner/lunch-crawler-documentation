@@ -1,16 +1,14 @@
 \addchap{Abstract}
 \addsec{Abstract Deutsch}
-Die Idee dieser Arbeit ist das Erstellen einer Suchmaschine, über welche sich Restaurant-übergreifend Menüs und Speisen suchen lassen.
-Die Grundlage einer solchen Suchmaschine sind die Websites von Restaurants in Kombination mit Informationen wie z.B. dem Standort.
-Um einen Datensatz solcher Websites zu erstellen, ist ein Webcrawler implementiert worden.
-Im wissenschaftlichen Teil dieser Arbeit wurde anhand dieses Datensatzes ein Gold Standard erstellt.
-Dieser dient dazu, die eigentliche Forschungsfrage beantworten zu können, die folgendermassen lautet:\\
-\emph{Können Webpages von Restaurant-Websites mit hoher Erfolgschance klassifiziert werden, ob sie Menüinformationen beinhalten?}\\
-Vorausgesetzt wird ein F1-Score von 0.8 oder höher, um diese Frage mit \glqq Ja\grqq{} beantworten zu können.
-Dabei werden zwei verschiedene Ansätze zur Klassifikation angewandt, namentlich das regelbasierte Klassifizieren sowie das Klassifizieren mittels Machine-Learning.
-Um diese Ansätze prüfen zu können, werden mehrere Experimente durchgeführt.
-Zum Schluss wird die erkannt, dass der gewünschte F1-Score mit beiden Ansätzen knapp verfehlt wurde.
-Im praktischen Teil wird neben dem Webcrawler eine Webapplikation erarbeitet, welche als Suchmaschine dient und die klassifizierten Daten dem Benutzer darstellt.
+
+Ziel dieser Arbeit ist das Erstellen einer Suchmaschine, über welche sich Menüs und Speisen suchen lassen.
+Die Grundlage einer solchen Suchmaschine sind Websites von Restaurants, welche relevante Speiseinformationen beinhalten.
+Im Kontext dieser Bachelorarbeit wurde manuell ein Gold-Standard aus Restaurantseiten zusammengestellt.
+Für die Erstellung des Gold-Standards wurde eigens ein Webcrawler implementiert, welcher eine Vielzahl von Restaurant-Links besucht und den Webseiteninhalt abspeichert.
+Der erstellte Gold-Standard dient dazu, eine Klassifikation der Restaurantseiten anhand zwei verschiedener Ansätze durchzuführen und zu messen.
+Die zwei Ansätze sind regelbasiertes Klassifizieren sowie das Klassifizieren mittels Machine-Learning.
+Um die einzelnen Klassifikationen prüfen zu können, wurden in beiden Bereichen mehrere Experimente durchgeführt.
+Im praktischen Teil der Arbeit wurde neben dem Webcrawler eine Webapplikation erarbeitet, welche die Suchmaschine den Benutzern zugänglich macht.
 \addsec{Abstract English}
 The idea of this work is to create a search engine that can be used to search menus and meals restaurant independently.
 The basis of such a search engine are the websites of restaurants in combination with information such as, for example, the location.

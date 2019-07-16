@@ -18,21 +18,7 @@ Diese analysieren einen Datensatz, bei dem die Proben bereits eine Zuteilung zur
 \section{No-Free-Lunch Theorem}\label{sec:nofreelunch}
 Ein Theorem vom bekannten Informatiker David H. Wolpert, welches sinngemäss die Aussage trifft, dass kein Klassifizierer existiert, welcher für eine Vielzahl von Klassifikationsproblemen geeignet wäre\cite[p.]{Wolpert1996TheLO}.
 
-\section{Klassifikationsalgorithmen}	% stand der forschung evt. classification von web pages?
-\begin{itemize}
-	\item Naive Bayes Modelle
-	\begin{itemize}
-		\item Bernoulli-Naive-Bayes
-		\item Complement-Naive-Bayes
-		\item Multinomial-Naive-Bayes
-		\item Gaussian-Naive-Bayes
-	\end{itemize}
-	\item Nearest Neighbor Modelle
-	\begin{itemize}
-		\item KNeighborClassifier
-		\item Nearest Centroid
-	\end{itemize}
-\end{itemize}
+\section{Klassifikationsalgorithmen}
 \subsection{Lineare Modell}
 Lineare Modelle sind in der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariablen und Ausgangsvariablen besteht.
 Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdeckt.
@@ -54,10 +40,10 @@ Bei diesem Verfahren kommt der mathematische Gradient zum Einsatz.
 Der Gradient zeigt bei Anpassungen der Parameter, immer in die Richtung mit der grössten Änderung des Outputs.
 Der Output wäre in diesem Falle die Aufzeichnung des Loss-Funktion.\\
 Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Optimierung jeweils nur ein Parameter zufällig ausgesucht und angepasst wird und seine Auswirkung anschliessend ermittelt wird.
-Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können.\\
+Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können\cite{lecun2012efficient}.\\
 In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
 \begin{figure}[H]	
-	\includegraphics[width=1\columnwidth,keepaspectratio]{img/sgd.png}
+	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/sgd.png}
 	\caption{Visualisierung des Gradienten und der Loss-Funktion (J(w) = Loss; w = Parameteränderung)}
 	\source{\url{http://rasbt.github.io/mlxtend/user_guide/general_concepts/gradient-optimization/}}
 	\label{fig:sgd}
@@ -67,6 +53,33 @@ Der Perceptron-Algorithmus basiert auf dem SGDClassifier\footnote{\url{https://s
 Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spezieller Konfiguration.\\
 Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate.
 \subsection{Naive Bayes}
+Naive Bayes Algorithmen sind ein Set von Supervised Learning Algorithmen, welche auf dem Theorem von Bayes basieren.\\
+Das Bayes Theorem zeigt die Berechnung von bedingten Wahrscheinlichkeiten auf:
+$$ P(A \mid B) = \frac{P(B \mid A) \, P(A)}{P(B)} $$
+$$ Mit P(A) = Wahrscheinlichkeit\ von\ Ereignis\ A$$
+$$ Mit P(B) = Wahrscheinlichkeit\ von\ Ereignis\ B$$
+$$ Mit P(A \mid B) = Wahrscheinlichkeit\ von\ Ereignis\ A\ nach\ eintreffen\ von\ Ereignis\ B$$
+$$ Mit P(B \mid A) = Wahrscheinlichkeit\ von\ Ereignis\ B\ nach\ eintreffen\ von\ Ereignis\ A$$
+Das Bayes Theorem kann zur Hilfe genommen werden, um bedingte Ereignisse zu berechnen\footnote{\url{https://www.crashkurs-statistik.de/der-satz-von-bayes/} abgerufen am: 16.07.2019}.
+Der naive Vorsatz deutet auf die Annahme des Theorems, dass eine starke Unabhängigkeit zwischen allen Features herrscht.
+Diese Annahme ist in der realen Welt sehr naiv, trotzdem können Naive Bayes Algorithmen gute Scores erreichen und werden oft als Referenz verwendet\cite{rennie2003tackling}. 
+\subsubsection{Multinomial Naive Bayes}
+Der Multinomial Naive Bayes Algorithmus verwendet die Annahme, dass die unabhängigen Features einer Multinomialverteilung folgen.
+Für jede Klasse werden Multinomial-Parameter bestimmt.
+Diese Parameter sind Vektoren, welche die Wortwahrscheinlichkeiten, dass die Wörter in den entsprechenden Klassen vertreten sind, aufzeigen.
+Die Wahrscheinlichkeit, dass ein Dokument zu einer Klasse gehört, wird mit dem Produkt aller Wortwahrscheinlichkeiten aus den Vektoren bestimmt, welche sich im Dokument befinden\cite{rennie2003tackling}.
+\subsubsection{Gaussian Naive Bayes}
+Der Gaussian Naive Bayes Algorithmus verwendet die Annahme, dass die unabhängigen Features einer Normalverteilung folgen\footnote{\url{https://scikit-learn.org/stable/modules/naive_bayes.html} abgerufen am: 16.07.2019}\cite{scikit-learn}.
+\subsubsection{Bernoulli Naive Bayes}
+Der Bernoulli Naive Bayes Algorithmus verwendet die Annahme, dass die unabhängigen Features einer Bernoulliverteilung folgen.
+Die Features werden als binäre Vektoren dargestellt.
+Somit wird nur das Vorhandensein und nicht die Häufigkeit der Features appliziert.
+Ebenfalls werden alle Relationen zwischen den unterschiedlichen Features mit der strikten Einhaltung der binären Bernoulliverteilung entfernt\cite{mccallum1998comparison}.
+\subsubsection{Complement Naive Bayes}
+Der Complement Naive Bayes Algorithmus (CNB) ist eine Abwandlung des Multinomial Naive Bayes Algorithmus.
+CNB eignet sich für stark ungleiche Datensets.
+CNB verwendet für das Setzen der internen Gewichte die Komplemente der einzelnen Klassen.
+Das heisst, um die Gewichte für die Klasse A zu setzen, werden alle Klassen ausser A für die Berechnung der Gewichte verwendet\cite{rennie2003tackling}.
 \subsection{DecisionTree}\label{sec:trees}
 Der DecisionTree-Algorithmus baut schrittweise eine Baumstruktur von Entscheidungszweige auf, um eine Klassifizierungsaufgabe zu meistern.
 DecisionTrees versuchen eine komplexe Aufgabe in Teilprobleme zu zerlegen und diese mit einfachen Entscheidungen zu bewältigen.
@@ -106,13 +119,13 @@ K kann frei gewählt werden und dient hervorragend als Parameter für eine Hyper
 Der Nearest Centroid Algorithmus basiert auf dem Prinzip des NN Algorithmus.
 Zuerst werden die Schwerpunkte aller Klassen berechnet, indem alle zur Klasse zugewiesenen Datenpunkte miteinbezogen werden.
 Danach wird der zu klassifizierende Datenpunkt der Klasse zugewiesen, mit der kleinsten Differenz von Datenpunkt zu Schwerpunkt der Klasse.
-Somit wird für den Nearest Centroid Algorithmus nicht der Mehrheitsentscheid der nächsten Nachbarn zur Klassifikation verwendet, sondern die Distanzen zu den Klassenschwerpunkten.
+Somit wird für den Nearest Centroid Algorithmus nicht der Mehrheitsentscheid der nächsten Nachbarn zur Klassifikation verwendet, sondern die Distanzen zu den Klassenschwerpunkten\footnote{\url{https://scikit-learn.org/stable/modules/neighbors.html} abgerufen am: 14.05.2019}\cite{scikit-learn}.
 Dieses Verhalten ist in \cref{fig:centroid} ersichtlich.
-Wobei s1 die Distanz vom Schwerpunkt der Klasse \glqq Investing Picks\grq{} zum Datenpunkt und s2, beziehungsweise s3, zu den Schwerpunkten ihrer dazugehörigen Klassen.
+Die schwarzen Datenpunkte markieren jeweils den Schwerpunkt der entsprechenden Klasse und die Abgrenzung der einzelnen Klassen ist mit gestrichenen, schwarzen Linien dargestellt.
 \begin{figure}[H]	
 	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/centroid.png}
 	\caption{Darstellung einer simplen Nearest Centroid Prozedur.}
-	\source{\url{https://www.slideshare.net/mgrcar/text-and-text-stream-mining-tutorial-15137759}}
+	\source{\url{https://www.researchgate.net/figure/Abbildung-410-Illustration-des-Nearest-Centroid-Verfahrens-mit-den-Gruppen-soft_fig4_267488030}}
 	\label{fig:centroid}
 \end{figure}
 \subsection{Support Vector Machine Modelle}
