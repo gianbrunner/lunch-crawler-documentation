@@ -159,6 +159,13 @@ Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen
 Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.
 Somit ist aus mehreren Quellen eine einheitliche Datenstruktur erstellt worden.
 \subsection{Search Engine}
+Als Search Engine wird die Software \glqq Elasticsearch\grqq{} eingesetzt\footnote{\url{https://www.elastic.co/de/products/elasticsearch}}.
+Da StormCrawler SDK entsprechende Komponenten zur Anbindung anbietet\footnote{\url{http://stormcrawler.net/getting-started/}} und dies in Betracht gezogen wurde, wird diese Software eingesetzt.
+Elasticsearch wird in einem Docker-Container betrieben\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html}}.
+Daten können im JSON-Format mittels HTTP-Request (POST) darin abgelegt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html}}.
+Ebenfalls mittels HTTP-Request (GET) können Suchabfragen auf die darin enthaltenen Daten getätigt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html}}.
 \subsection{Backend}
+Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/}}\grqq{} verwendet.
+
 \subsection{Frontend}
 \subsection{Benutzung der Webapplikation}
