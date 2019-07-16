@@ -75,9 +75,10 @@ Wenn eines dieser Wörter im Text vorkommt, wird es entfernt.
 Die Experimente sind auf dem Trainings-Datensatzes des Gold Standards durchgeführt worden.
 Die schlussendlichen Resultate wurden anhand des Test-Datensatzes dessen durchgeführt.
 \section{Regelbasierte Experimente}
+Die folgenden Experimente beschreiben die Methoden und Resultate der regelbasierten Experimente, zudem folgt am Ende  die Interpretation und Diskussion.
 \subsection{Regelsatz: Menü im Titel}
 \subsubsection{Methode}
-Dieser simple Algorithmus kontrolliert, ob das Wort \glqq menu\grqq{} im Metatag \glqq Title\grqq{} vorkommt.
+Dieser simple Algorithmus überprüft, ob das Wort \glqq menu\grqq{} im Metatag \glqq Title\grqq{} vorkommt.
 Falls ja, wird das Dokument als Menüseite klassiert.
 \subsubsection{Resultate}
 Für dieses Regelset sind keine Parameter verfügbar, daher ist nur eine Konfiguration durchgeführt worden.
@@ -453,8 +454,8 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 \end{table}
 \subsection{Diskussion der Resultate der regelbasierten Experimente}
 Die verschiedenen Regelsätze ergeben, abgesehen von der Methode \glqq Menü im Titel\grqq{}, ähnliche Ergebnisse.
-Diese hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür einen Precision-Wert von 1, es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
-Dafür sind auch nur 16\% der Menüseiten erkannt worden.
+Dieser hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür einen Precision-Wert von 1, es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
+Dafür wurden nur 16\% der Menüseiten erkannt.
 
 Die Suche nach Preisen innerhalb des Textes hat ein besseres Ergebnis geliefert, 50\% der Menüseiten wurden als solche erkannt und zwei Webpages wurden fälschlicherweise als Menüseiten klassifiziert. 
 Eine Kombination dieser beiden Methoden ergibt eine fast identische Klassifikation.
@@ -465,7 +466,7 @@ Durch das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menü
 Die Klassifikation mit der Methode \glqq Bag of Words\grqq{} führt zu den besten Ergebnissen der regelbasierten Klassifikation.
 31 von 50 Menüseiten wurden erkannt, zudem wurden 3 Webpages fälschlicherweise als Menüseiten klassifiziert.\\
 
-Alle Methoden erreichten auf dem Testdatensatz eine genügend hohe Precision, jedoch ist der Recall jeweils so tief, dass der F1-Score nicht die vorausgesetzte Marke von 0.8 überschreitet.
+Alle Methoden erreichten auf dem Testdatensatz eine hohe Precision, jedoch ist der Recall jeweils so tief, dass der F1-Score nicht die vorausgesetzte Marke von 0.8 überschreitet.
 Alle Methoden der regelbasierten Klassifikation mit Ausnahme der Methode \glqq Bag of Words\grqq{} funktionieren unabhängig vom Trainingsdatensatz.
 Beim Evaluieren der besten Konfigurationsparameter wurden diese auf dem Trainingsdatensatz getestet.
 Im Vergleich zu den Ergebnissen des Testsets ist bei allen Regeln zu erkennen, dass die Werte deutlich tiefer sind.
@@ -836,5 +837,6 @@ Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und 
 Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
 Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
 \section{Diskussion}
+Der Vergleich z
 \section{Beantwortung der Forschungsfrage}
 \section{Verwendete Technologien}
