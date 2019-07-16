@@ -836,7 +836,54 @@ Dennoch dürfen nicht nur eine Hand voll von Menüseiten gefunden werden, damit 
 Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und Recall und wird deshalb für die Suchmaschine verwendet.
 Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
 Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
-\section{Diskussion}
-Der Vergleich z
+\section{Gesamtdiskussion}
+Die Resultate der Experimente der zwei verschiedenen Ansätze anhand der Testdaten zeigen, dass mit regelbasierten Methoden ein fast gleich guter Score erreichbar ist wie mit Machine-Learning.
+Beide Ansätze erzielen eine hohe Precision.
+Es ist jedoch zu berücksichtigen, dass die Resultate der regelbasierten Methode bei steigender Anzahl Daten schlechter werden.
+
 \section{Beantwortung der Forschungsfrage}
+Unter Verwendung der Daten des Gold Standards und dem selbst vorgegebenen Ziel eines F1-Scores von mindestens 0.8 lautet die Antwort auf die Forschungsfrage:\\
+\emph{Nein, Restaurant-Webseiten können nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}
 \section{Verwendete Technologien}
+\subsection{Luigi}
+Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist\footnote{\url{https://github.com/spotify/luigi} abgerufen am 25.03.2019}.
+Pipelining dient dazu, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
+Pipelining wird meist im Kontext von Big Data oder Machine-Learning angewendet, wo sich viele einzelne Tasks mit grossen Datenmenge beschäftigen.
+Luigi wird selbst von Spotify in der produktiven Umgebung verwendet und bietet unter anderem folgende Features:
+\begin{itemize}
+	\item Einzelne Tasks idempotent ausführen
+	\item Teilschritte oder gesamte Pipeline kann über Konsolenausgabe oder Webinterface überwacht werden
+	\item Fehlerfälle können protokolliert werden und dementsprechend reagiert werden
+	\item Abhängigkeiten von Tasks werden selbstständig von Luigi gelöst
+	\item Luigi ist komplett in Python aufgebaut und kann auch mit Python konfiguriert werden
+\end{itemize}
+Die einzelnen Tasks werden mit Python-Klassen realisiert.
+Luigi ist so aufgebaut, dass jeder Task ein Input-File liest, von dem die Ausgabe des vorherigen Tasks eingelesen wird und ein Output-File schreibt, welches als Input-File des anschliessenden Tasks benutzt wird.
+Dadurch kann Luigi die Zustände der einzelnen Tasks überwachen und bei einem Fehlerfall die Pipeline dort wieder starten, wo sie sich aufgehängt hat.
+Damit Luigi die Abhängigkeiten und das Überwachen bewerkstelligen kann, benötigt jede Klasse in der Pipeline folgende drei Funktionen:
+\begin{itemize}
+	\item Funktion requires(), Angabe auf welche Tasks Abhängigkeiten bestehen
+	\item Funktion run(), Bereich, wo die eigentliche Logik des Tasks ist
+	\item Funktion output(), wohin die Ausgabe geschrieben wird
+\end{itemize}
+In dieser Arbeit wurde Luigi verwendet, um die Klassifizierung zu verknüpfen.
+
+Es wurden zwei verschiedene Arten von Pipelines erstellt.
+Die Entwicklungspipeline diente zur Entwicklung der Regeln/Machine-Learning-Modelle für die Klassifizierung.
+Die Klassifizierung beinhaltet das Lesen der gecrawlten Daten, das Preprocessing, das Klassifizieren und das Evaluieren der Klassifizierung.
+Die daraus folgende Pipeline beinhaltet folgende Tasks:
+\begin{itemize}
+	\item Importer, import die gecrawlten Websites und speichert sie in einer CSV-Datei
+	\item Preprocessor, wendet übliche Preprocessing-Schritte an den Daten an
+	\item RuleBasedClassifier, regelbasierte Klassifizierung der Daten 
+	\item MLClassifier, Klassifizierung der Daten mittels Machine-Learning
+	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
+\end{itemize}
+\subsection{Scikit Learn}
+Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man effizient Projekte für Data-Mining, Datenvisualisierung und Machine-Learning erarbeiten kann.
+Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
+Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
+Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
+Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}
+Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
+
