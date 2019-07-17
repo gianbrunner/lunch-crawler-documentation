@@ -18,7 +18,7 @@ Diese analysieren einen Datensatz, bei dem die Proben bereits eine Zuteilung zur
 \section{No-Free-Lunch Theorem}\label{sec:nofreelunch}
 Ein Theorem vom bekannten Informatiker David H. Wolpert, welches sinngemäss die Aussage trifft, dass kein Klassifizierer existiert, welcher für eine Vielzahl von Klassifikationsproblemen geeignet wäre\cite[p.]{Wolpert1996TheLO}.
 
-\section{Klassifikationsalgorithmen}
+\section{Klassifikationsalgorithmen}\label{sec:algos}
 \subsection{Lineare Modell}
 Lineare Modelle sind in der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariablen und Ausgangsvariablen besteht.
 Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdeckt.
@@ -41,7 +41,7 @@ Der Gradient zeigt bei Anpassungen der Parameter, immer in die Richtung mit der 
 Der Output wäre in diesem Falle die Aufzeichnung des Loss-Funktion.\\
 Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Optimierung jeweils nur ein Parameter zufällig ausgesucht und angepasst wird und seine Auswirkung anschliessend ermittelt wird.
 Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können\cite{lecun2012efficient}.\\
-In der Abbildung \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
+In der \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
 \begin{figure}[H]	
 	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/sgd.png}
 	\caption{Visualisierung des Gradienten und der Loss-Funktion (J(w) = Loss; w = Parameteränderung)}

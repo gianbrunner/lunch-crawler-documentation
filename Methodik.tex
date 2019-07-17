@@ -4,7 +4,7 @@ Aus dem Stand der Forschung ist die folgende Forschungsfrage entstanden:\\
 
 \emph{Können Restaurant-Webseiten mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten?}\\
 
-Als hohe Erfolgschance wird ein F1-Score von mindestens 0.8 definiert.
+Als hohe Erfolgschance wird aus Sicht der Autoren ein F1-Score von mindestens 0.8 definiert.
 Es handelt sich um eine binäre Klassifikation, also eine Einteilung in zwei Kategorien, nämlich \glqq Menüseite\grqq{} oder \glqq Keine Menüseite\grqq.
 Zudem sind die unter \cref{chap:scope} definierten Einschränkungen zu berücksichtigen.
 \section{Methodik}
@@ -13,7 +13,7 @@ Dies findet in mehreren Experimenten statt.
 Um die Ergebnisse dieser Experimente messen und miteinander vergleichen zu können, wird ein Gold Standard erstellt.
 \subsection{Gold Standard}
 Als Startpunkt zur Erstellung des Gold Standards dient der Output des in \cref{chap:engineering} erstellten Webcrawlers.
-Diese Daten werden von Hand kategorisiert, sodass ein representativer Datensatz zur Messung der Klassifikation entsteht.
+Diese Daten werden von Hand kategorisiert, sodass ein repräsentativer Datensatz zur Messung der Klassifikation entsteht.
 Um diese Daten kategorisieren zu können, müssen die Kategorien definiert und ein Entscheidungsraster erstellt werden.
 Die zu klassifizierenden Daten werden zufällig ausgewählt, sodass eine natürliche Verteilung der jeweiligen Kategorien entsteht.
 Die Daten werden zum Schluss in einen Trainings- und Testdatensatz unterteilt.
@@ -24,6 +24,6 @@ Beim regelbasierten Klassifizieren werden fünf Methoden entwickelt, anhand welc
 Bei der Klassifikation mittels Machine Learning werden verschiedene Algorithmen verwendet.
 Um einen möglichst hohen F1-Score zu erreichen, wird in beiden Fällen mit verschiedenen Konfigurationen gearbeitet.\\
 Die Experimente werden bei jeglichen Klassifikationsmethoden anhand des Trainingsdatensatzes durchgeführt.
-Um die schlussendlich gültigen Resultate zu erheben, wird bis dahin unberührte Testdatensatz verwendet.
+Um die schlussendlich gültigen Resultate zu erheben, wird der bis dahin unberührte Testdatensatz verwendet.
 Die Ergebnisse werden anhand des F1-Scores gemessen.
-Wenn zwei verschiedene Konfigurationen denselben F1-Score erreichen, wird diejenige Konfiguration bevorzugt, welche die höhere Precision erreicht.
+Wenn zwei verschiedene Konfigurationen minimal unterschiedliche F1-Scores erreichen, wird diejenige Konfiguration bevorzugt, welche die höhere Precision erreicht.

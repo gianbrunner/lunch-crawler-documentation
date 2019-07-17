@@ -13,6 +13,49 @@ Bevor die Daten mit den entsprechenden Methoden klassifiziert werden, werden sie
 Dann findet die eigentliche Klassifizierung statt.
 Um eine möglichst präzise und erfolgreiche Variante des Klassifizierens zu finden, werden in diesem Teil der Arbeit mehrere Experimente durchgeführt.
 Zum Schluss folgt eine Komponente, welche für das Auswerten der Klassifizierung und Ausgeben der Ergebnisse verantwortlich ist.
+\section{Verwendete Technologien}
+Folgend werden Technologien aufgelistet, welche einen hohen Stellenwert bei der Durchführung der Experimente eingenommen haben.
+\subsection{Luigi}
+Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist\footnote{\url{https://github.com/spotify/luigi} abgerufen am 25.03.2019}.
+Pipelining dient dazu, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
+Pipelining wird meist im Kontext von Big Data oder Machine-Learning angewendet, wo sich viele einzelne Tasks mit grossen Datenmenge beschäftigen.
+Luigi wird selbst von Spotify in der produktiven Umgebung verwendet und bietet unter anderem folgende Features:
+\begin{itemize}
+	\item Einzelne Tasks idempotent ausführen
+	\item Teilschritte oder gesamte Pipeline kann über Konsolenausgabe oder Webinterface überwacht werden
+	\item Fehlerfälle können protokolliert werden und dementsprechend reagiert werden
+	\item Abhängigkeiten von Tasks werden selbstständig von Luigi gelöst
+	\item Luigi ist komplett in Python aufgebaut und kann auch mit Python konfiguriert werden
+\end{itemize}
+Die einzelnen Tasks werden mit Python-Klassen realisiert.
+Luigi ist so aufgebaut, dass jeder Task ein Input-File liest, von dem die Ausgabe des vorherigen Tasks eingelesen wird und ein Output-File schreibt, welches als Input-File des anschliessenden Tasks benutzt wird.
+Dadurch kann Luigi die Zustände der einzelnen Tasks überwachen und bei einem Fehlerfall die Pipeline dort wieder starten, wo sie sich aufgehängt hat.
+Damit Luigi die Abhängigkeiten und das Überwachen bewerkstelligen kann, benötigt jede Klasse in der Pipeline folgende drei Funktionen:
+\begin{itemize}
+	\item Funktion requires(), Angabe auf welche Tasks Abhängigkeiten bestehen
+	\item Funktion run(), Bereich, wo die eigentliche Logik des Tasks ist
+	\item Funktion output(), wohin die Ausgabe geschrieben wird
+\end{itemize}
+In dieser Arbeit wurde Luigi verwendet, um die Klassifizierung zu verknüpfen.
+
+Es wurden zwei verschiedene Arten von Pipelines erstellt.
+Die Entwicklungspipeline diente zur Entwicklung der Regeln/Machine-Learning-Modelle für die Klassifizierung.
+Die Klassifizierung beinhaltet das Lesen der gecrawlten Daten, das Preprocessing, das Klassifizieren und das Evaluieren der Klassifizierung.
+Die daraus folgende Pipeline beinhaltet folgende Tasks:
+\begin{itemize}
+	\item Importer, import die gecrawlten Websites und speichert sie in einer CSV-Datei
+	\item Preprocessor, wendet übliche Preprocessing-Schritte an den Daten an
+	\item RuleBasedClassifier, regelbasierte Klassifizierung der Daten 
+	\item MLClassifier, Klassifizierung der Daten mittels Machine-Learning
+	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
+\end{itemize}
+\subsection{Scikit Learn}
+Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man effizient Projekte für Data-Mining, Datenvisualisierung und Machine-Learning erarbeiten kann.
+Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
+Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
+Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
+Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}
+Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
 \section{Preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
@@ -479,9 +522,8 @@ Dadurch werden im Anwendungsfall viele Webpages angezeigt, welche keine Menüsei
 \section{Experimente mittels Machine-Learning}
 \subsection{Einleitung}
 % grafik pipeline mit allen drei feature-Extraction methode
-% stand der forschung mit allen algorithmen
 \subsubsection{Durchführung der Experimente}
-Alle Experimente werden mit der Pipeline, welche im Kapitel \cref{sec:classification} beschrieben wird, durchgeführt.
+Alle Experimente werden mit der Pipeline, welche im \cref{sec:classification} beschrieben wird, durchgeführt.
 Um eine möglichst grosse Abdeckung von Experimenten zu erzielen, werden bei jedem Experiment drei parallele Pipelines verwendet, die jeweils eine andere Feature-Extraction Methode verwenden.
 Die drei verwendeten Feature-Extraction Methoden sind \glqq Bag of Words\grqq{}, \glqq binäres Bag of Words\grqq{} und \glqq TF-IDF\grqq{}, welche in \cref{sub:bow} und \cref{sub:tfidf} erläutert werden.\\
 Für jede Pipeline wurde vor dem Training der Algorithmen, welche im \cref{sub:clf} ersichtlich sind, aus den Trainingsdaten eine kleine Teilmenge als Validierungsset entnommen.
@@ -527,6 +569,7 @@ TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet da
 \subsubsection{Übersicht der verwendeten Machine-Learning Algorithmen}\label{sub:clf}
 Wegen des \glqq No free lunch\grqq{}-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
 Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
+Zusätzlich können die Algorithmen im \cref{sec:algos} nachgeschlagen werden.
 \begin{itemize}
 	\item Lineare Modelle
 	\begin{itemize}
@@ -579,7 +622,7 @@ Danach wurden die Algorithmen mit den Features trainiert und validiert.
 Die aus beiden Aushebungen ermittelten Werte wurde dann miteinander verglichen.
 \subsubsection{Resultate}
 Die Verwendung der Dimensionsreduktion mittels LSA erzielt bei allen drei Feature-Extraction Methoden erkennbare Verbesserungen.
-Der Grossteil der Algorithmen kann mit Hilfe von LSA den F1-Score verbessern, was in der Abbildung \cref{abb:dimred} durch die grüne Markierung der Zellen ersichtlich ist.
+Der Grossteil der Algorithmen kann mit Hilfe von LSA den F1-Score verbessern, was in der \cref{abb:dimred} durch die grüne Markierung der Zellen ersichtlich ist.
 Lediglich bei der \glqq Bag of Words\grqq{} Methode ist die Summe über alle Score-Verbesserungen negativ, dies jedoch nur, weil der Multinomial-Bayes Klassifizierer mit LSA einen sehr hohen Einfluss mit seinem stetigen F1-Score von null ausübt.\\
 Der Bernoulli Bayes Klassifizierer, abgesehen vom Multinomial Bayes, ist der einzige Algorithmus, welcher über alle drei Feature-Extraction Methoden signifikante Verschlechterungen mit LSA erzielt hat. Die F1-Scores sind mit Dimensionsreduktion unter 0.1 gelangt, was diesen Algorithmus nach der Meinung der Autoren für weitere Experimente unbrauchbar macht. Die Annahme der Autoren lautet, dass ein F1-Score unter 0.1 trotz weiteren Massnahmen keinen zufriedenstellenden F1-Score erreichen wird.\\
 Die Dimensionsreduktion wird für alle drei Varianten weiter verwendet, da die positiven Auswirkungen sich deutlich in den F1-Scores widerspiegelt.
@@ -604,7 +647,7 @@ Einerseits wurden die Algorithmen ohne Klassengewichtung trainiert und validiert
 Zu erwähnen ist, dass die Gewichtung nicht allen Algorithmen zugewiesen werden konnte, da manche Algorithmen während dem Training solche Informationen nicht verwerten können.
 \subsubsection{Resultate}
 Die Angabe der Klassenverteilung konnte nicht bei allen Algorithmen als Parameter angegeben werden.
-Somit werden alle Bayes-Algorithmen, KNearestNeighbor und Nearest-Centroid in der Abbildung \cref{abb:classweight} nicht beachtet, da es dort zu keiner Veränderung der Scores kommt.\\
+Somit werden alle Bayes-Algorithmen, KNearestNeighbor und Nearest-Centroid in der \cref{abb:classweight} nicht beachtet, da es dort zu keiner Veränderung der Scores kommt.\\
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Angabe der Klassenverteilung eine durchschnittliche Verbesserung der F1-Scores.
 Einzelne Algorithmen reagieren negativ auf die Angabe, aber die positiven Auswirkungen übertreffen die negativen Auswirkungen.
 Somit wird bei beiden \glqq Bag of Words\grqq{} Methoden die Angabe der Klassenverteilung miteinbezogen.\\
@@ -627,7 +670,7 @@ Aufgrund der Annahme der Autoren, dass verschiedene Menünamen oder Gerichtbezei
 Die Scikit-Learn Feature-Extraction Methoden bieten einfache Schnittstellen für die Extrahierung von N-Grammen.
 Die Validierung von Uni-, Bi- und Trigrammen wurde für alle drei Feature-Extraction Methoden durchgeführt, die Algorithmen mit den neuen Features trainiert und wieder validiert.
 \subsubsection{Resultate}
-Die Ergebnisse sind in der Abbildung \cref{abb:ngram} ersichtlich.
+Die Ergebnisse sind in der \cref{abb:ngram} ersichtlich.
 Bei beiden \glqq Bag of Words\grqq{} Methoden erzielt die Verwendung von Unigrammen die besten Ergebnisse.
 Bi- und Trigramme können bei einzelnen Algorithmen ebenfalls eine Verbesserunge verzeichnen, aber im Vergleich zu Unigrammen fallen diese flächendeckend kleiner aus.
 Somit werden bei beiden \glqq Bag of Words\grqq{} Varianten nur Unigramme verwendet.
@@ -684,7 +727,7 @@ Für alle drei Feature-Extraction Methoden wurde ein Liniendiagramm für F1-Scor
 Aus diesen Grafiken kann entnommen werden, bei welcher Feature-Anzahl welcher Algorithmus den besten Score erzielt.
 Für die weitere Auswertung ist die Grafik für F1-Score massgebend und wird weiter analysiert.
 \paragraph{Bag of Words}
-In der Abbildung \cref{abb:bow-f1} ist ersichtlich, dass mit \glqq Bag of Words\grqq{} der Algorithmus AdaBoost bei 100 Features mit Abstand den besten F1-Score erzielt und fast die 0.8 Marke erreicht.
+In der \cref{abb:bow-f1} ist ersichtlich, dass mit \glqq Bag of Words\grqq{} der Algorithmus AdaBoost bei 100 Features mit Abstand den besten F1-Score erzielt und fast die 0.8 Marke erreicht.
 Ebenfalls kann der LinearSVC Algorithmus einen guten F1-Score erzielen und teilt sich mit AdaBoost die besten Werte.
 Ersichtlich ist ebenfalls, dass die meisten Algorithmen sich zwischen 0.6 und 0.7 bewegen und das vereinzelte Klassifizierer mit ihren Werten auf und ab springen.\\
 Die springenden Algorithmen Perceptron, SGDClassifier und PassiveAgressiveClassifier sind alle von der Familie \glqq Linear\_Model\grqq{}. Ein Grund für das auffällige Verhalten wurde nicht gefunden.
@@ -697,7 +740,7 @@ Die springenden Algorithmen Perceptron, SGDClassifier und PassiveAgressiveClassi
 \end{figure}
 \paragraph{Binäres Bag of Words}
 Bei der Methode \glqq binäres Bag of Words\grqq{} können mehrere Algorithmen einen F1-Score nahe der 0.8 Grenze verbuchen.
-In der Abbildung \cref{abb:bow-bin-f1} ist klar erkennbar, dass die meisten Algorithmen einen F1-Score zwischen 0.6 und 0.8 erzielen.
+In der \cref{abb:bow-bin-f1} ist klar erkennbar, dass die meisten Algorithmen einen F1-Score zwischen 0.6 und 0.8 erzielen.
 Der beste Algorithmus ist Perceptron, welcher mit 325 Features einen F1-Score von 0.8 verzeichnet.\\
 Der SGDClassifier erreicht ebenfalls einen F1-Score von 0.8, jedoch mit einer höheren Anzahl von Features.
 Dies bedeutet das SGDClasifier potenziell länger für die Feature-Extraction benötigt und somit ist Perceptron der favorisierende Algorithmus bei dieser Variante.\\
@@ -711,7 +754,7 @@ Die Sprünge der linearen Modelle, welche bereits bei der oberen \glqq Bag of Wo
 \end{figure}
 \paragraph{TF-IDF}
 Bei der Verwendung von TF-IDF sind mehrere Algorithmen mit ihren F1-Scores im Bereich 0.7 bis 0.8.
-In der Abbildung \cref{abb:tfidf-f1} ist erkennbar, dass der SGDClassifier Algorithmus als einziger die Grenze von 0.8 durchbrechen kann.
+In der \cref{abb:tfidf-f1} ist erkennbar, dass der SGDClassifier Algorithmus als einziger die Grenze von 0.8 durchbrechen kann.
 Dies erreicht er mit einer Anzahl Features von 150 und ist somit der Algorithmus mit dem besten F1-Score.\\
 Auch bei der TF-IDF Methode sind wieder Sprünge bei den linearen Modellen in der F1-Score-Grafik \cref{abb:tfidf-f1} deutlich erkennbar.
 \begin{figure}[H]	
@@ -773,10 +816,10 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 \end{table}
-In der Tabelle \cref{tab:ada} ist auffällig, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.\\
+In der \cref{tab:ada} ist auffällig, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.\\
 AdaBoost kann seinen Recall verbessern und gleichzeitig verschlechtert sich seine Precision.
 Da die Recallsteigerung grösser als der Precisionabfall ist, wird der F1-Score nach oben korrigiert.\\
-Die anderen beiden Modelle Perceptron in Tabelle \cref{tab:per} und SGDClassifier in der Tabelle \cref{tab:sgd} erzielen mit den neuen Parametern schlechtere Werte.
+Die anderen beiden Modelle Perceptron in \cref{tab:per} und SGDClassifier in der \cref{tab:sgd} erzielen mit den neuen Parametern schlechtere Werte.
 Beide können den Recall verbessern, jedoch müssen sie massive Gefälle bei der Precision einbüssen.
 Da die Precision viel stärker abgenommen, als der Recall zugenommen hat, wird der F1-Score schlechter.\\
 Somit sind die Standardparameter für Perceptron und SGDClassifier für den \glqq Use-Case: Restaurant-Suchmaschine\grqq{} bereits optimal gewählt worden, da beim Hyperparametertuning eine ausführliche Liste von veränderbaren Parametern keine Verbesserung erzielen konnte.\\
@@ -846,47 +889,6 @@ Es ist jedoch zu berücksichtigen, dass die Resultate der regelbasierten Methode
 
 \section{Beantwortung der Forschungsfrage}
 Unter Verwendung der Daten des Gold Standards und dem selbst vorgegebenen Ziel eines F1-Scores von mindestens 0.8 lautet die Antwort auf die Forschungsfrage:\\
-\emph{Nein, Restaurant-Webseiten können nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}
-\section{Verwendete Technologien}
-\subsection{Luigi}
-Luigi ist ein Pipelining-Tool, welches von Spotify entwickelt und später als Open-Source Projekt veröffentlicht worden ist\footnote{\url{https://github.com/spotify/luigi} abgerufen am 25.03.2019}.
-Pipelining dient dazu, mehrere Tasks miteinander zu verknüpfen, das Ausführen zu Automatisieren und somit eine grössere Aufgabe zu verrichten.
-Pipelining wird meist im Kontext von Big Data oder Machine-Learning angewendet, wo sich viele einzelne Tasks mit grossen Datenmenge beschäftigen.
-Luigi wird selbst von Spotify in der produktiven Umgebung verwendet und bietet unter anderem folgende Features:
-\begin{itemize}
-	\item Einzelne Tasks idempotent ausführen
-	\item Teilschritte oder gesamte Pipeline kann über Konsolenausgabe oder Webinterface überwacht werden
-	\item Fehlerfälle können protokolliert werden und dementsprechend reagiert werden
-	\item Abhängigkeiten von Tasks werden selbstständig von Luigi gelöst
-	\item Luigi ist komplett in Python aufgebaut und kann auch mit Python konfiguriert werden
-\end{itemize}
-Die einzelnen Tasks werden mit Python-Klassen realisiert.
-Luigi ist so aufgebaut, dass jeder Task ein Input-File liest, von dem die Ausgabe des vorherigen Tasks eingelesen wird und ein Output-File schreibt, welches als Input-File des anschliessenden Tasks benutzt wird.
-Dadurch kann Luigi die Zustände der einzelnen Tasks überwachen und bei einem Fehlerfall die Pipeline dort wieder starten, wo sie sich aufgehängt hat.
-Damit Luigi die Abhängigkeiten und das Überwachen bewerkstelligen kann, benötigt jede Klasse in der Pipeline folgende drei Funktionen:
-\begin{itemize}
-	\item Funktion requires(), Angabe auf welche Tasks Abhängigkeiten bestehen
-	\item Funktion run(), Bereich, wo die eigentliche Logik des Tasks ist
-	\item Funktion output(), wohin die Ausgabe geschrieben wird
-\end{itemize}
-In dieser Arbeit wurde Luigi verwendet, um die Klassifizierung zu verknüpfen.
+\emph{Nein, Restaurant-Webseiten können mit den erarbeiteten Klassifizierern nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}
 
-Es wurden zwei verschiedene Arten von Pipelines erstellt.
-Die Entwicklungspipeline diente zur Entwicklung der Regeln/Machine-Learning-Modelle für die Klassifizierung.
-Die Klassifizierung beinhaltet das Lesen der gecrawlten Daten, das Preprocessing, das Klassifizieren und das Evaluieren der Klassifizierung.
-Die daraus folgende Pipeline beinhaltet folgende Tasks:
-\begin{itemize}
-	\item Importer, import die gecrawlten Websites und speichert sie in einer CSV-Datei
-	\item Preprocessor, wendet übliche Preprocessing-Schritte an den Daten an
-	\item RuleBasedClassifier, regelbasierte Klassifizierung der Daten 
-	\item MLClassifier, Klassifizierung der Daten mittels Machine-Learning
-	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
-\end{itemize}
-\subsection{Scikit Learn}
-Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man effizient Projekte für Data-Mining, Datenvisualisierung und Machine-Learning erarbeiten kann.
-Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
-Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
-Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
-Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}
-Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
 
