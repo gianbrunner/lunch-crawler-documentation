@@ -197,3 +197,34 @@ Elasticsearch wird in einem Docker-Container betrieben\footnote{\url{https://www
 Daten können im JSON-Format mittels HTTP-Request (POST) darin abgelegt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html}}.
 Ebenfalls mittels HTTP-Request (GET) können Suchabfragen auf die darin enthaltenen Daten getätigt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html}}.
 Durch diese Funktionalität nimmt Elasticsearch in diesem Fall die Funktion einer Datenbank ein.
+\subsection{Benutzung der Webapplikation}
+Die Webapplikation ist erst ein Prototyp.
+Da das Deployment der Search Engine kostenpflichtig ist, wurde von einem Deployment abgesehen.
+Um die Webapplikation trotzdem benutzen zu können, folgt nun eine Anleitung.\\
+Voraussetzungen:
+\begin{itemize}
+	\item Docker
+	\item Node.js
+	\item npm
+	\item Webbrowser (getestet mit Mozilla Firefox)
+\end{itemize}
+Ablauf der Installation:
+\begin{enumerate}
+	\item Das Github-Repository \url{https://github.com/s-santoro/lunch-crawler} herunterladen
+	\item Docker-Image von Elasticsearch herunterladen:\\
+	docker pull docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+	\item Docker-Container starten:\\
+	docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" \\ docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+	\item Das Zipfile \glqq/lunch-crawler/webapp-lunch-crawler/run\textunderscore webapp/data\textunderscore for\textunderscore elasticSearch.sh\grqq{} entpacken
+	\item Das Script \glqq/lunch-crawler/webapp-lunch-crawler/run\textunderscore webapp/add\textunderscore to\textunderscore elasticsearch.sh\grqq{} ausführen
+	\item In den Ordner \glqq/lunch-crawler/webapp-lunch-crawler\grqq{} wechseln
+	\item Den folgenden Befehl ausführen: npm init
+	\item Den folgenden Befehl ausführen: npm install
+	\item Den folgenden Befehl ausführen: npm start
+\end{enumerate}
+Benutzung der Webapplikation
+\begin{enumerate}
+	\item Gewünschtes Gericht im Suchfeld eingeben
+	\item Standortabfrage zulassen
+	\item Ergebnisse betrachten (falls kein Ergebnis angezeigt wird, muss manuell herausgezoomt werden)
+\end{enumerate}

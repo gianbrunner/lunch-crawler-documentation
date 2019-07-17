@@ -5,17 +5,18 @@ Eine Evaluation des Webcrawlers wäre von Vorteil gewesen.
 StormCrawler hat zwar die Funktion erfüllt, dieser ist jedoch dafür ausgelegt, eine enorme Masse an Websites und Webpages zu crawlen.
 Dies ist jedoch keine Hauptanforderung in dieser Arbeit gewesen.
 Dafür wäre ein Webcrawler, welcher auch dynamisch generierte Websites handhaben kann, von Vorteil gewesen.
+Die Implementierung der Spracherkennung innerhalb des Webcrawlers hat bei der ersten Implementierung für erhebliche Performanceprobleme gesorgt.
+Diese wurde zwar optimiert, jedoch ist es prüfenswert, ob eine solche während des Crawlens überhaupt nötig ist.
 Für die Klassifizierung hätte eine Preprocessing-Methode zur Erkennung des Hauptinhalts einer Webpage einen grossen Benefit bewirkt.
 Beim manuellen Labeling wurde erkannt, dass viele Webpages nicht relevante oder sogar irreführende Informationen im Kopf- und Fussteil beinhalten.
-Der Gold Standard sollte ein zweites Mal gelabelt werden, damit dieser nach dem Vier-Augen-Prinzip kontrolliert werden würde.
-Auf diesen Arbeitsschritt wurde jedoch aus zeitlichen Gründen abgesehen.
-Um die regelbasierte Klassifikation zu verbessern, wären weitere Regeln sowie das Erweitern und Anpassen der Black- und Whitelist sinnvoll.
 %Erkenntnisse Machine Learning?
 \section{Ausblick}
 Als weiterer Schritt wäre eine Automatisierung wichtig.
 Darunter versteht sich einerseits das Automatisieren des Webcrawlers, also eine kontinuierliche Erweiterung des Seeds sowie eine regelmässige Durchführung des Crawldurchlaufs.
+Zudem würde die Performance erheblich gesteigert werden, wenn bei bereits gecrawlten Restaurants nur noch die als Menüseite klassifizierte Webpage gecrawlt werden würde und nicht die ganze Website.
 Andererseits müssen die einzelnen Komponenten untereinander mittels definierter Schnittstellen verbunden und automatisiert werden, sodass gecrawlte Daten ohne manuellen Input klassifiziert und für die Webapplikation bereitgestellt werden.\\
 Im Zusammenhang mit der Automatisierung muss auch die Performance optimiert werden.
 Um beispielsweise tägliche Mittagsmenüs erfassen zu können, muss ein Crawldurchlauf innerhalb einiger Stunden durchgeführt werden.
- 
+Der Gold Standard sollte ein zweites Mal gelabelt werden, damit dieser nach dem Vier-Augen-Prinzip kontrolliert werden würde.
+Um den F1-Score der Machine-Learning-Algorithmen zu erhöhen, wäre zudem eine Erweiterung des Gold Standards denkbar.
 
