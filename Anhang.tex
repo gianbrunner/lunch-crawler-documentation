@@ -1,0 +1,66 @@
+\chapter{Anhang}
+\section{Verlinkungen}
+\subsection{Webcrawler}
+\begin{itemize}
+	\item Implementierung StormCrawler\\ \url{https://github.com/s-santoro/lunch-crawler/tree/master/storm-crawler-master}
+	\item Angepasste Kompontenten\\
+	\url{https://github.com/s-santoro/lunch-crawler/tree/master/storm-crawler-master/archetype/src/main/resources/archetype-resources/src/main/java/ntb/iks}
+	\item Docker-Compose\\
+	\url{https://github.com/s-santoro/lunch-crawler/tree/master/storm-cluster}
+	\item Script zur Analyse der gecrawlten Rohdaten\\
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/storm-crawler-master/scripts/website_histogram.py}
+\end{itemize} 
+\subsection{Gold Standard}
+\label{app:gold_standard}
+\begin{itemize}
+	\item Gold Standard\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/gold-standard/Gold_Standard.zip}
+	\item Tool zum manuellen Labeln\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/tree/master/gold-standard/labeling_tool}
+	\item Script zur Extrahierung zufälliger Daten aus den gecrawlten Rohdaten\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/gold-standard/generate_randomfiles.sh}
+\end{itemize} 
+\subsection{Klassifikationspipeline}
+\label{app:classification}
+\begin{itemize}
+	\item Datenimport\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/Importer.py}
+	\item Preprocessing\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/Preprocessor.py}
+	\item Regelbasierte Klassifikation\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/RulebasedClassifier.py}
+	\item Klassifikation mittels Machine Learning\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/MLClassifiers.py}
+	\item Evaluierung der Klassifikation\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/Evaluator.py}
+	\item Visualisierung der Klassifikation\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/DataVisualizer.py}
+	\item Konfiguration für regelbasierte Klassifikation\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/configs/ConfigurationsRB.py}
+	\item Konfiguration für Klassifikation mittels Machine Learning\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/scripts/configs/ConfigurationsML.py}
+	\item Stoppwortliste\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/stopwords_no_umlaute.txt}
+	\item Getränkeliste\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/beverage_list.txt}
+	\item Blacklist\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/blacklist.txt}
+	\item Whitelist\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/classification/whitelist.txt}
+\end{itemize} 
+\subsection{Produktive Pipeline}
+\begin{itemize}
+	\item Pipeline zur Klassifikation der Rohdaten\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/tree/master/prod-pipeline/classification}
+	\item Script zur Standardisierung von Restaurantinformationen\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/prod-pipeline/nodejs/standardize_data.js}
+	\item Script zur Analyse von Restaurantinformationen\\ 
+	\url{https://github.com/s-santoro/lunch-crawler/blob/master/prod-pipeline/nodejs/analyze_data.js}
+\end{itemize} 
+\section{Elektronischer Anhang}
+\begin{itemize}
+	\item Quelldatei OpenStreetMap für Seed (JSON-Datei)
+	\item Quelldatei Lunch Check für Seed (Excel-Datei)
+	\item Schlussendliches Seedfile (txt-Datei)
+	\item Klassifikationsdatei (Pickle-Datei)
+\end{itemize}
