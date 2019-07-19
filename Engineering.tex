@@ -50,7 +50,8 @@ In einer Topologie werden verschiedene Spouts und Bolts miteinander verknüpft, 
 \end{figure}
 Dabei hat der Spout die Aufgabe, Daten aus einer Quelle (z.B. Datei, Datenbank, Array) einzulesen und daraus ein Tupel zu bilden.
 Dieses Tupel wird an Bolts der Topologie weitergegeben und von diesen verarbeitet.
-Diese Verarbeitung muss nicht seriell stattfinden, die Topologie kann auch Gabelungen beinhalten, die dementsprechend Bolts benötigen, welche entscheiden, an welchen Folge-Bolt das Tupel weitergegeben werden soll.
+Diese Verarbeitung muss nicht seriell stattfinden.
+Die Topologie kann auch Gabelungen beinhalten, die dementsprechend Bolts benötigen, welche entscheiden, an welchen Folge-Bolt das Tupel weitergegeben werden soll.
 Zudem ist eine Webapplikation verfügbar, die eine Übersicht über die Informationen wie eine Topologieübersicht, der Status der jeweiligen Komponenten sowie Fehlermeldungen anzeigt.
 \subsubsection{StormCrawler SDK}
 StormCrawler SDK ist ein Opensource Software Development Kit, welches auf Apache Storm aufbaut und in Java entwickelt wurde.
@@ -84,7 +85,7 @@ Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, 
 \end{itemize}
 Der Dateiname dieser JSON Dateien wird aus der URL der Webpage generiert. 
 Sonderzeichen, die in Dateinamen nicht erlaubt sind, werden entfernt. Falls die URL länger ist, als die erlaubte Dateinamenslänge, wird diese abgeschnitten und mit einem zufälligen vierstelligen Suffix erweitert.
-Zudem kommt darin eine Spracherkennung \glqq Lingua\footnote{\url{https://github.com/pemistahl/lingua} abgerufen am: 07.05.2019}\grqq{} zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
+Zudem kommt in der Komponente eine Spracherkennung \glqq Lingua\footnote{\url{https://github.com/pemistahl/lingua} abgerufen am: 07.05.2019}\grqq{} zum Einsatz, welche anhand des Textes einer Webpage detektiert, ob sie mehrheitlich in deutsch geschrieben wurde.
 Als deutsch detektierte Webpages werden in einen separaten Output-Ordner gespeichert, damit diese nachfolgend von Hand gelabelt werden können.
 Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, damit im Anschluss des Crawlens eine Aussage gemacht werden kann, wie viele Einträge des Seeds effektiv gecrawlt wurden.
 \subsubsection{Docker}
@@ -130,15 +131,16 @@ Das Crawlen der Rohdaten war mit diversen Komplikationen verbunden.
 Die Performance des Webcrawlers war zu Beginn nicht zufriedenstellend, es wurden lediglich ca. 30 Webpages pro Minute gespeichert.
 Trotzdem wurde ein erster Rohdatensatz mit dieser Performance gecrawlt, auf dem das erste manuelle Labeling durchgeführt wurde.
 Bei diesem Rohdatensatz wurden nur die als deutsch detektierten Webpages gespeichert, somit konnte die Abdeckung des Seeds nicht ausgewertet werden.
-Der Crawler wurde nochmals angepasst, sodass alle Webpages gespeichert werden, dies ermöglicht eine genauere Analyse der Rohdaten.
-Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt wurden und die Sprachdetektion nicht für jede Webpage neu gestartet wurde, was eine massive Performancesteigerung zur Folge hatte.
+Der Crawler wurde nochmals angepasst, sodass alle Webpages gespeichert werden.
+Dies ermöglicht eine genauere Analyse der Rohdaten.
+Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt wurde und die Sprachdetektion nicht für jede Webpage neu gestartet wurde, was eine massive Performancesteigerung zur Folge hatte.
 Diverse weitere Crawldurchläufe wurden gemacht und die gecrawlten Daten analysiert.
 Diese Analysen haben ergeben, dass einzelne Websites aus dem Seed enorm viele Webpages beinhalten, zum Teil über 30'000.
 Diese URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
 Für die zweite Durchführung des manuellen Labelings wurden die Rohdaten mit dem angepassten Seed neu gecrawlt.
-Bei diesen Rohdaten wurde analysiert, wieviele Einträge des Seeds gecrawlt wurden.
+Bei den neuen Rohdaten wurde analysiert, wieviele Einträge des Seeds gecrawlt wurden.
 Von 5870 Seedeinträgen konnten 1362 Einträge nicht gecrawlt werden, das entspricht etwa 20\% der Einträge.
-Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist eine Stichprobe von 100 Einträgen genommen worden und genauer untersucht worden, dabei sind folgende Erkenntnisse gewonnen worden:
+Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist eine Stichprobe von 100 Einträgen vorgenommen worden und genauer untersucht worden. Dabei sind folgende Erkenntnisse gewonnen worden:
 \begin{itemize}
 	\item 34\% der Websites sind offline
 	\item 25\% der Websites verlinken zu einer neuen Website
@@ -147,14 +149,14 @@ Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist
 Somit können mindestens 67\% der Websites aus plausiblen Gründen nicht gecrawlt werden.
 Es wurde nicht erfasst, wieviele Websites über Mechanismen wie Robots.txt-File oder Metatags zur Verhinderung von Crawlern verfügen, darum könnte diese Zahl noch höher sein.
 Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwohl sie crawlbar wären, ergibt dies hochgerechnet 450 Seedeinträge oder 7\%, die nicht gecrawlt wurden.
-Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Klassifizierung verwendet.
+Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Erstellung des Gold-Standards verwendet.
 \section{Webapplikation}
 In den nachfolgenden Abschnitten wird der Aufbau der Webapplikation von der Aufbereitung der klassifizierten Daten bis zur Darstellung in einem Webbrowser genauer beschrieben.
 \subsection{Datenaufbereitung}
 Um die gesammelten Daten des Webcrawlers für die Webapplikation verwendbar zu machen, ist eine produktive Pipeline erstellt worden.
 Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
 Es ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um die Rohdaten des Webcrawlers zu klassifizieren.
-Um die als Menüseiten klassifizierten Webpages mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von OpenStreetMap bereits die Koordinaten des Restaurants beinhalteten.
+Um die als Menüseiten klassifizierten Webpages mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet. Dies aus dem Grund, da die Daten von OpenStreetMap bereits die Koordinaten des Restaurants beinhalteten.
 Die Daten von Lunch-Check waren nicht mit Geoinformationen versehen, jedoch mit den Adressinformationen.
 Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen Installation von Nominatim\footnote{\url{https://nominatim.openstreetmap.org/}abgerufen am: 02.07.2019} mit den Geoinformationen zu erweitern.
 Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.

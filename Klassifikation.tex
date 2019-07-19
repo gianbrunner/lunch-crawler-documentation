@@ -507,7 +507,7 @@ Die Suche nach Preisen innerhalb des Textes hat ein besseres Ergebnis geliefert,
 Eine Kombination dieser beiden Methoden ergibt eine fast identische Klassifikation.
 28 von 50 Menüseiten wurden erkannt, ebenfalls zwei wurden fälschlicherweise als Menüseiten klassifiziert.
 
-Durch das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 26, also ca. 52\% der erkannten Webseiten wurde 1 Webpages als Menüseiten klassifiziert, welche keine sind.
+Durch das Verwenden einer Blacklist und Whitelist wurden fast gleich viele Menüseiten korrekt erkannt. Bei 26, also ca. 52\% der erkannten Webseiten wurde 1 Webpage als Menüseite klassifiziert, welche kein ist.
 
 Die Klassifikation mit der Methode \glqq Bag of Words\grqq{} führt zu den besten Ergebnissen der regelbasierten Klassifikation.
 31 von 50 Menüseiten wurden erkannt, zudem wurden 3 Webpages fälschlicherweise als Menüseiten klassifiziert.\\
@@ -516,7 +516,7 @@ Alle Methoden erreichten auf dem Testdatensatz eine hohe Precision, jedoch ist d
 Alle Methoden der regelbasierten Klassifikation mit Ausnahme der Methode \glqq Bag of Words\grqq{} funktionieren unabhängig vom Trainingsdatensatz.
 Beim Evaluieren der besten Konfigurationsparameter wurden diese auf dem Trainingsdatensatz getestet.
 Im Vergleich zu den Ergebnissen des Testsets ist bei allen Regeln zu erkennen, dass die Werte deutlich tiefer sind.
-Dadurch kann die Schlussfolgerung gezogen werden, dass mit einer steigender Anzahl zu klassifizierenden Daten die Diversität dieser steigt, was sich negativ auf die Ergebnisse auswirkt.
+Dadurch kann die Schlussfolgerung gezogen werden, dass mit einer steigenden Anzahl zu klassifizierenden Daten die Diversität dieser steigt, was sich negativ auf die Ergebnisse auswirkt.
 Insgesamt ist zu erkennen, dass eine qualitativ und quantitativ hochwertige Klassifikation von Webpages vor allem mit steigender Datendiversität nicht möglich ist.
 In allen Fällen wurde eine erhebliche Anzahl der Menüseiten nicht gefunden.
 Wenn man dies nun auf den Anwendungsfall einer Suchmaschine überträgt, werden viele Menüseiten nicht angezeigt.
@@ -536,11 +536,10 @@ Zusätzlich wurde nach Abschluss aller Experimente die Performance des besten Kl
 Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann.
 \subsubsection{Konfigurationen zu den einzelnen Experimenten}
 Jede ausgeführte Pipeline erzeugt eine Textdatei mit den Ergebnissen und der Konfiguration der Pipeline.
-Somit kann jedes Ergebnisse der Experimente wiederholt und nachvollzogen werden.
-Alle Textdateien können im Anhang ....... des Dokuments gefunden werden.
-% Verweis auf Anhang fehlt!
+Somit kann jedes Ergebnis der Experimente wiederholt und nachvollzogen werden.
+Alle Textdateien können im Anhang \cref{app:electronic} im Zip-Ordner mit den Log- und Konfigurationsdateien gefunden werden.
 Es wird in diesem Kapitel verzichtet, jeweils die Konfigurationen aufzulisten, um den Lesefluss nicht zu stören.
-Für genauere Einblicke in die einzelnen Konfigurationen kann der Anhang miteinbezogen werden.\\
+Für genauere Einblicke in die einzelnen Konfigurationen kann der oben erwähnte Anhang miteinbezogen werden.\\
 Als Einstiegspunkt für die Experimente, wurde das erste Experiment mit Standardkonfigurationen für alle drei Feature-Extraction Methoden ausgeführt.\\
 Alle Experimente wurden sequentiell durchgeführt und die Erkenntnisse des vorherigen Experiments in die Konfigurationen des nächsten Experiments miteinbezogen.
 \subsubsection{Bag of Words und binäres Bag of Words}\label{sub:bow}
@@ -716,7 +715,7 @@ Es können vereinzelte Algorithmen ihre Scores verbessern, aber es findet nie fl
 Bei der Konfiguration \glqq config5\grqq{} erzielt AdaBoost den höchsten Wert über alle Konfigurationen gesehen, aber die anderen Algorithmen werden nur leicht beeinflusst.
 Um bei der weiteren Ermittlung von Optimierungen nicht nur auf ein Algorithmus zu setzen, wird bei TF-IDF kein fortschrittliches Preprocessing angewendet.
 \\\\
-Die Auswertung für das fortschrittliche Preprocessing kann im Anhang unter \cref{Anhang:experimente} gefunden werden.
+Die Auswertung für das fortschrittliche Preprocessing kann im Anhang \cref{app:electronic} im Zip-Ordner mit den Log- und Konfigurationsdateien gefunden werden.
 \subsection{Anzahl extrahierter Features}
 \subsubsection{Methoden}
 Jeder Algorithmus verhaltet sich mit der Änderung der Anzahl Features unterschiedlich.
