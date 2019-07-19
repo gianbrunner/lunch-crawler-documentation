@@ -1,7 +1,7 @@
 \chapter{Teil 1: Gold Standard}
 Als Rohdaten zur Erhebung dieses Gold Standards dient der Output des Webcrawlers.
 Die Erarbeitung dieser Rohdaten kann im \cref{chap:engineering} nachgelesen werden.
-Der Link zum Gold Standard ist im \cref{app:gold_standard} zu finden.
+Der Link zum Gold Standard ist im Anhang (\cref{app:gold_standard}) zu finden.
 \section{Seed}
 Das Seed wurde als Datenquelle des Webcrawlers verwendet und bildet somit die Grundlage dieses Gold Standards.
 Es wurde aus den folgenden zwei Quellen zusammengestellt:
@@ -9,6 +9,7 @@ Es wurde aus den folgenden zwei Quellen zusammengestellt:
 	\item OpenStreetMap - 3557 URLs
 	\item Lunch-Check - 3803 URLs
 \end{itemize}
+Die entsprechenden Dateien sind im Anhang(\cref{app:electronic}) zu finden.\\
 Diese Quellen wurden verwendet, da sie diese Daten für diese Arbeit kostenlos zur Verfügung stellen.
 Die URLs wurden zusammengeführt und Duplikate entfernt.
 Daraus ist ein Seed entstanden, welches 5870 Einträge von Restaurant-URLs enthält.
@@ -47,13 +48,14 @@ In einer ersten Durchführung des manuellen Labelings wurden ca. 1500 Dateien kl
 Die mit dieser Heuristik gefilterten Daten entsprechen jedoch nicht einer repräsentativen Teilmenge der gesamten Rohdaten.
 Darum wurde in einer zweiten Durchführung zufällig Proben aus den Rohdaten ausgewählt und manuell gelabelt.
 Dadurch konnte sichergestellt werden, dass das Verhältnis von Menüseiten zu den restlichen Webpages gleich bleibt.
-Der Link zum Tool ist im \cref{app:gold_standard} zu finden.
+
 \subsection{Hilfsmittel: Labeling-Tool}
-Um das manuelle Labeling effizienter zu gestalten, ist ein Tool\footnote{\url{https://github.com/s-santoro/testdata_tool} abgerufen am: 11.03.2019} erstellt worden, welches das Labeling vereinfacht.
+Um das manuelle Labeling effizienter zu gestalten, ist ein Tool erstellt worden, welches das Labeling vereinfacht.
 Dieses Tool ruft eine Webpage der zufällig extrahierten Webpages aus den Rohdaten auf und zeigt sowohl den Text, als auch den HTML-Inhalt.
 Der Anwender des Tools muss anhand dieser Informationen entscheiden, ob es sich um eine Webpage mit Menüinformationen handelt und ob diese zeitlich begrenzt sind.
 Mittels Shortkeys findet die Klassifizierung statt.
 Das Tool verschiebt die Datei in den entsprechenden Ordner und zeigt die Informationen der nächsten Webpage an.
+Der Link zum Tool ist im Anhang (\cref{app:gold_standard}) zu finden.
 \FloatBarrier
 \section{Beschreibung des Gold Standards}
 Der erarbeitete Gold Standard besteht insgesamt aus 6963 Dateien des Formats JSON, welche jeweils eine Webpage einer Restaurant-Website repräsentieren.
