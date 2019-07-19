@@ -32,7 +32,7 @@ Die Architektur von Apache Storm basiert auf den folgenden Komponenten:
 	\item Tupel - Datensatz, welcher zwischen den Komponenten weitergegeben wird
 	\item Topologie - Ein Netz bestehend aus Spouts und Bolts
 \end{itemize}
-Jede Komponente ist als eigene Java-Klasse definiert und beinhaltet zwingend die folgenden Methoden \footnote{\url{https://dev.to/usamaashraf/playing-with-apache-storm-on-docker---like-a-boss-4bgb}}:
+Jede Komponente ist als eigene Java-Klasse definiert und beinhaltet zwingend die folgenden Methoden \footnote{\url{https://dev.to/usamaashraf/playing-with-apache-storm-on-docker---like-a-boss-4bgb} abgerufen am: 08.01.2019}:
 \begin{itemize}
 	\item declareOutputFields() - Definition des Ausgabeschemas des Tupels
 \end{itemize}
@@ -45,7 +45,7 @@ In einer Topologie werden verschiedene Spouts und Bolts miteinander verknüpft, 
 	\centering	
 	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/storm-topology.png}
 	\caption{Beispieltopologie}
-	\source{https://dzone.com/articles/apache-storm-architecture}
+	\source{\url{https://dzone.com/articles/apache-storm-architecture}}
 	\label{fig:topology}
 \end{figure}
 Dabei hat der Spout die Aufgabe, Daten aus einer Quelle (z.B. Datei, Datenbank, Array) einzulesen und daraus ein Tupel zu bilden.
@@ -55,13 +55,13 @@ Zudem ist eine Webapplikation verfügbar, die eine Übersicht über die Informat
 \subsubsection{StormCrawler SDK}
 StormCrawler SDK ist ein Opensource Software Development Kit, welches auf Apache Storm aufbaut und in Java entwickelt wurde.
 Er dient somit als Baukasten, um einen Webcrawler aufzubauen.
-Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden\footnote{\url{https://github.com/DigitalPebble/storm-crawler/wiki}}.
+Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden\footnote{\url{https://github.com/DigitalPebble/storm-crawler/wiki} abgerufen am: 08.01.2019}.
 Zudem berücksichtigt er die Regeln des Webcrawlings, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
-Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden\footnote{\url{http://stormcrawler.net/faq/}}.
+Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden\footnote{\url{http://stormcrawler.net/faq/} abgerufen am: 09.01.2019}.
 StromCrawler SDK ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsection{Konfiguration des StormCrawlers}
-Die Grundlage der Konfiguration ist die Standardtopologie des Stromcrawlers auf Github.
-\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}
+Die Grundlage der Konfiguration ist die Standardtopologie des Stromcrawlers auf Github
+\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}.
 Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
 \begin{enumerate}
 	\item MemorySpout - Einlesen einer URL aus einem Array
@@ -72,7 +72,7 @@ Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
 	\item JSoupParserBolt - Extrahiert Informationen wie Metatags oder den Text aus der Webpage
 	\item SdtOutIndexer - Gibt die Informationen einer Webpage über die Konsole aus
 \end{enumerate}
-Ein selbst erstellter Bolt, welcher für das Schreiben des Outputs zuständig ist hat in dieser Konfiguration den StdOutIndexer ersetzt.
+Ein selbst erstellter Bolt, welcher für das Schreiben des Outputs zuständig ist, hat in dieser Konfiguration den StdOutIndexer ersetzt.
 Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, eine JSON Datei mit den folgenden Informationen:
 \begin{itemize}
 	\item \glqq date\grqq{} - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
@@ -89,7 +89,7 @@ Als deutsch detektierte Webpages werden in einen separaten Output-Ordner gespeic
 Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, damit im Anschluss des Crawlens eine Aussage gemacht werden kann, wie viele Einträge des Seeds effektiv gecrawlt wurden.
 \subsubsection{Docker}
 In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
-Diese Container können einfach kopiert, ersetzt oder auf einem anderen System verwendet werden \footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker} abgerufen am: 12.01.2019}.\\
+Diese Container können einfach kopiert, ersetzt oder auf einem anderen System verwendet werden\footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker} abgerufen am: 12.01.2019}.\\
 Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
 Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
 Dieses Konfigurationsfile, das sogenannte Dockerfile, definiert alle Notwendigkeiten, um den Docker Container zu realisieren.
@@ -117,7 +117,7 @@ Zudem ist die Installation hinfällig, da auf Docker Hub\footnote{\url{https://h
 Zu Beginn war das Ziel, die Standardtopologie zu verstehen.
 Sobald die Standardtopologie funktionierte, fanden Anpassungen statt, welche zur Erstellung der Rohdaten für den Gold Standard dienten.
 Explizit ist die Erstellung des Bolts zu erwähnen, welcher für das Schreiben der Output-Dateien zuständig ist.
-Dieser wurde zudem mit einer Sprachdetektion erweitert, welche erkennt, ob die Webpage in deutsch verfasst worden ist.\\
+Dieser wurde zudem mit einer Sprachdetektion erweitert, welche erkennt, ob die Webpage in deutsch verfasst worden ist.
 \subsubsection{Erarbeitung des Seeds}
 Als Quelle für das Abrufen von Websites dient das Seed.
 Das Ziel war es, dieses mit möglichst vielen URLs von Schweizer Restaurant-Websites zu füllen.
@@ -149,11 +149,12 @@ Es wurde nicht erfasst, wieviele Websites über Mechanismen wie Robots.txt-File 
 Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwohl sie crawlbar wären, ergibt dies hochgerechnet 450 Seedeinträge oder 7\%, die nicht gecrawlt wurden.
 Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Klassifizierung verwendet.
 \section{Webapplikation}
+In den nachfolgenden Abschnitten wird der Aufbau der Webapplikation von der Aufbereitung der klassifizierten Daten bis zur Darstellung in einem Webbrowser genauer beschrieben.
 \subsection{Datenaufbereitung}
 Um die gesammelten Daten des Webcrawlers für die Webapplikation verwendbar zu machen, ist eine produktive Pipeline erstellt worden.
 Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
 Es ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um die Rohdaten des Webcrawlers zu klassifizieren.
-Um die Menüseiten mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von OpenStreetMap bereits die Koordinaten des Restaurants beinhalteten.
+Um die als Menüseiten klassifizierten Webpages mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet, dies aus dem Grund, da die Daten von OpenStreetMap bereits die Koordinaten des Restaurants beinhalteten.
 Die Daten von Lunch-Check waren nicht mit Geoinformationen versehen, jedoch mit den Adressinformationen.
 Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen Installation von Nominatim\footnote{\url{https://nominatim.openstreetmap.org/}abgerufen am: 02.07.2019} mit den Geoinformationen zu erweitern.
 Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.
@@ -164,6 +165,7 @@ Diese Struktur wird in \cref{fig:json_struktur} verdeutlicht:
 	\caption{JSON-Struktur anhand eines Beispiels}
 	\label{fig:json_struktur}
 \end{figure}
+Der Link zum Code dieser Standardisierung der Daten ist im Anhang unter \cref{app:prodpipeline} zu finden.
 \subsection{Idee}
 Ziel der Webapplikation ist es, dass ein Benutzer einfach und überschaubar nach Menüs suchen kann.
 Um dies zu erreichen, wurde ein Mockup mit dem Layout der Benutzeroberfläche erstellt, welches in \cref{fig:webapp_mockup} dargestellt wird.
@@ -179,23 +181,23 @@ Durch die Eingabe einer Speise im Suchbalken werden alle Restaurants angezeigt, 
 \subsection{Frontend}
 Das Frontend ist nach dem Prinzip einer Single-Page-Applikation aufgebaut.
 Eine HTML-Datei dient als Grundgerüst und wird durch die entsprechenden JavaScript-Dateien angepasst.
-Um ein ansprechendes Layout und Responsive Design zu gewährleisten, wird die Bibliothek \glqq Bootstrap\footnote{\url{https://getbootstrap.com/}}\grqq{} verwendet.
-Durch die Geolocation API\footnote{\url{https://www.w3schools.com/html/html5_geolocation.asp}} wird der Standort des Benutzers abgefragt.
+Um ein ansprechendes Layout und Responsive Design zu gewährleisten, wird die Bibliothek \glqq Bootstrap\footnote{\url{https://getbootstrap.com/} abgerufen am: 17.07.2019}\grqq{} verwendet.
+Durch die Geolocation API\footnote{\url{https://www.w3schools.com/html/html5_geolocation.asp} abgerufen am: 17.07.2019} wird der Standort des Benutzers abgefragt.
 Das Verwenden des Suchbalkens löst eine Fetch-Anfrage auf das Backend aus.
-Die Ergebnisse dieser Anfrage werden dann mit der Bibliothek \glqq Leaflet\footnote{\url{https://leafletjs.com/}}\grqq{} angezeigt.
+Die Ergebnisse dieser Anfrage werden dann mit der Bibliothek \glqq Leaflet\footnote{\url{https://leafletjs.com/} abgerufen am: 17.07.2019}\grqq{} angezeigt.
 Für jedes Restaurant wird ein Marker mit einem Popup-Fenster erstellt, welches einen Link zur Homepage sowie der Menüseite beinhaltet.
 \subsection{Backend}
-Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/}}\grqq{} verwendet, da bereits Erfahrung mit dieser Technologie gemacht wurde und sie geeignet ist für Anwendungen dieser Grösse.
-Ein Aufruf der Basis-URL stellt die HTML-Datei sowie die entsprechenden JavaScript-Dateien des Frontends zur Verfügung\footnote{\url{https://github.com/s-santoro/lunch-crawler/blob/master/webapp-lunch-crawler/routes/index.js}}.
+Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/} abgerufen am: 17.07.2019}\grqq{} verwendet, da bereits Erfahrung mit dieser Technologie gemacht wurde und sie geeignet ist für Anwendungen dieser Grösse.
+Ein Aufruf der Basis-URL stellt die HTML-Datei sowie die entsprechenden JavaScript-Dateien des Frontends zur Verfügung.
 Das Verwenden des Suchbalkens gibt die Informationen über den Standort sowie das Such-Query an das Backend weiter.
 Dieses löst eine Fetch-Anfrage auf Elasticsearch aus, welche die entsprechenden Resultate als JSON zurückliefert.
 Diese JSON-Dateien werden dann an das Frontend weitergeleitet.
 \subsection{Search Engine}
-Als Search Engine wird die Software \glqq Elasticsearch\grqq{} eingesetzt\footnote{\url{https://www.elastic.co/de/products/elasticsearch}}.
-Da StormCrawler SDK entsprechende Komponenten zur Anbindung anbietet\footnote{\url{http://stormcrawler.net/getting-started/}} und dies in Betracht gezogen wurde, wird diese Software eingesetzt.
-Elasticsearch wird in einem Docker-Container betrieben\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html}}.
-Daten können im JSON-Format mittels HTTP-Request (POST) darin abgelegt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html}}.
-Ebenfalls mittels HTTP-Request (GET) können Suchabfragen auf die darin enthaltenen Daten getätigt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html}}.
+Als Search Engine wird die Software \glqq Elasticsearch\grqq{} eingesetzt\footnote{\url{https://www.elastic.co/de/products/elasticsearch} abgerufen am: 07.05.2019}.
+Da StormCrawler SDK entsprechende Komponenten zur Anbindung anbietet\footnote{\url{http://stormcrawler.net/getting-started/} abgerufen am: 07.05.2019} und dies in Betracht gezogen wurde, wird diese Software eingesetzt.
+Elasticsearch wird in einem Docker-Container betrieben\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html} abgerufen am: 07.05.2019}.
+Daten können im JSON-Format mittels HTTP-Request (POST) darin abgelegt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html} abgerufen am: 07.05.2019}.
+Ebenfalls mittels HTTP-Request (GET) können Suchabfragen auf die darin enthaltenen Daten getätigt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html} abgerufen am: 07.05.2019}.
 Durch diese Funktionalität nimmt Elasticsearch in diesem Fall die Funktion einer Datenbank ein.
 \subsection{Benutzung der Webapplikation}
 Die Webapplikation ist erst ein Prototyp.
