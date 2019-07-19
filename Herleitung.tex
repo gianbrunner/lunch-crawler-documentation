@@ -1,7 +1,7 @@
 \chapter{Herleitung}
 Damit verschiedene Begriffe im Bezug auf diese Arbeit richtig verstanden werden, werden sie nun genauer erläutert.
 \section{Website / Webpage}
-Unter einer Website versteht sich eine Sammlung von Webpages (deutsch: Webseite) \footnote{\url{http://openbook.rheinwerk-verlag.de/windows_server_2012r2/17_001.html} abgerufen am: 10.07.2019}.\\
+Unter einer Website versteht sich eine Sammlung von Webpages (deutsch: Webseite)\footnote{\url{http://openbook.rheinwerk-verlag.de/windows_server_2012r2/17_001.html} abgerufen am: 10.07.2019}.\\
 Die aufgeführte Beispielstruktur bildet als Ganzes eine Website ab:\\
 
 \begin{forest}
@@ -51,10 +51,10 @@ In dieser Arbeit findet eine binäre Klassifikation zwischen den Kategorien \glq
 Dabei werden zwei verschiedene Ansätze verfolgt:
 \subsection{Regelbasierte Klassifizierung}
 Bei der regelbasierten Klassifizierung wird anhand von definierten Regeln entschieden, in welche Kategorie eine Webpage eingeordnet wird.
-Diese werden typischerweise mit \glqq Wenn-Dann\grqq-Bedingungen aufgebaut.
+Diese werden typischerweise mit \glqq Wenn-Dann\grqq-Bedingungen aufgebaut\cite[p.125ff]{jackson2007natural}.
 Ein Beispiel: Wenn das Wort \glqq menu\grqq{} im Titel einer Webpage vorkommt, ist es eine Menüseite, ansonsten nicht.
 \subsection{Klassifizierung mittels Machine-Learning}
-Die Klassifizierung mittels Machine-Learning findet nach dem Ansatz des \glqq Supervised Learning\grqq{}, also dem überwachten Lernen, statt.
+Die Klassifizierung mittels Machine-Learning findet in dieser Arbeit nach dem Ansatz des \glqq Supervised Learning\grqq{}, also dem überwachten Lernen, statt.
 Dabei wird einem Machine-Learning-Algorithmus ein von Hand kategorisierter Datensatz (in diesem Fall ein Teil des Gold Standards) übergeben.
 Anhand dieser Daten entscheidet der Algorithmus für zukünftige Daten, wie er sie klassifizieren soll\footnote{\url{https://towardsdatascience.com/supervised-machine-learning-classification-5e685fe18a6d} abgerufen am: 10.07.2019}.
 \section{Evaluierung}
@@ -74,5 +74,6 @@ Die Precision definiert das Verhältnis der korrekt positiv klassifizierten Men�
 Der Recall definiert das Verhältnis der korrekt positiv klassifizierten Proben zu allen tatsächlichen Menüseiten.\\
 \[F_{1}=2*\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
 Anhand des F1-Scores wird die Genauigkeit der Klassifizierung gemessen.
+Dabei stehen Precision und Recall im selben Verhältnis.
 Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.
 
