@@ -36,7 +36,7 @@ Damit Luigi die Abhängigkeiten und das Überwachen bewerkstelligen kann, benöt
 	\item Funktion run(), Bereich, wo die eigentliche Logik des Tasks ist
 	\item Funktion output(), wohin die Ausgabe geschrieben wird
 \end{itemize}
-In dieser Arbeit wurde Luigi verwendet, um die Klassifizierung zu verknüpfen.
+In dieser Arbeit wurde Luigi verwendet, um die einzelnen Tasks der Klassifizierung zu verknüpfen.
 
 Es wurden zwei verschiedene Arten von Pipelines erstellt.
 Die Entwicklungspipeline diente zur Entwicklung der Regeln/Machine-Learning-Modelle für die Klassifizierung.
@@ -49,12 +49,13 @@ Die daraus folgende Pipeline beinhaltet folgende Tasks:
 	\item MLClassifier, Klassifizierung der Daten mittels Machine-Learning
 	\item Evaluator, Auswertung der Klassifizierung von Daten (Nur im Entwicklunsmodus)
 \end{itemize}
+Die Produktionspipeline diente zur schlussendlichen Klassifizierung der Rohdaten anhand eines in der Entwicklungspipeline evaluierten Algorithmus.
 \subsection{Scikit Learn}
 Scikit Learn ist eine freie Programmierbibliothek für Python, mit welcher man effizient Projekte für Data-Mining, Datenvisualisierung und Machine-Learning erarbeiten kann.
 Scikit Learn ist unter BSD lizenziert und für den kommerziellen Nutzen frei verfügbar.
 Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
 Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
-Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab.\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}
+Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion und Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}.
 Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
 \section{Preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments auf eine standardisierte Form zu bringen.
@@ -83,8 +84,8 @@ Alle Sonderzeichen, die nicht in der folgenden Auflistung vorkommen, werden durc
 Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen Leerschlag angrenzen, werden entfernt.
 \subsubsection{Multiple Leerschläge entfernen}
 Da durch die vorhergehenden Schritte oft multiple Leerschläge anfallen, werden diese auf einen Leerschlag reduziert.
-\subsection{Erweiterte Preprocessing}\label{sec:advancedpre}
-Die nachfolgenden Methoden stellen das erweiterte Preprocessing dar.
+\subsection{Fortgeschrittenes Preprocessing}\label{sec:advancedpre}
+Die nachfolgenden Methoden stellen das fortgeschrittene Preprocessing dar.
 Im Gegensatz zum Basis Preprocessing ersetzen, löschen oder verändern sie ganze Wörter im Text.
 \subsubsection{Preisdetektor}
 Da Menüs häufig in Verbindung mit Preisen vorkommen und in weiteren Preprocessing-Schritten Zahlen und Sonderzeichen entfernt werden, ist es von Vorteil, diese Informationen nicht zu verlieren.
@@ -114,13 +115,13 @@ Wenn im Text ein Getränk dieser Liste vorhanden ist, wird es durch das Schlüss
 Damit soll erreicht werden, dass ein einheitliches Merkmal geschaffen wird.
 \subsubsection{Stoppwörter entfernen}
 Bei Stoppwörter handelt es sich um Wörter, welche keine Relevanz für den Inhalt eines Texts haben, aber oft vorkommen.
-Eine Stoppwortliste führt 1720 solcher Wörter in deutsch auf. Sie ist aus mehreren Quellen zusammengesetzt worden.
+Eine Stoppwortliste führt 1720 solcher Wörter in Deutsch auf. Sie ist aus mehreren Quellen zusammengesetzt worden.
 Wenn eines dieser Wörter im Text vorkommt, wird es entfernt.
 Die Experimente sind auf dem Trainings-Datensatzes des Gold Standards durchgeführt worden.
 Die schlussendlichen Resultate wurden anhand des Test-Datensatzes dessen durchgeführt.
 \section{Regelbasierte Experimente}
 Die folgenden Experimente beschreiben die Methoden und Resultate der regelbasierten Experimente, zudem folgt am Ende  die Interpretation und Diskussion.
-Der Link zum entsprechenden Code ist im \cref{app:classification} zu finden.
+Der Link zum entsprechenden Code ist im Anhang (\cref{app:classification}) zu finden.
 \subsection{Regelsatz: Menü im Titel}
 \subsubsection{Methode}
 Dieser simple Algorithmus überprüft, ob das Wort \glqq menu\grqq{} im Metatag \glqq Title\grqq{} vorkommt.
@@ -141,7 +142,7 @@ Diese hat anhand der Trainingsdaten folgende Metriken ergeben:\\
 \end{table}
 Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 \begin{table}[H]
-	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\caption{Score des Regelsatzes: Menü im Titel anhand der Testdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -194,7 +195,7 @@ Daraus wurde geschlussfolgert, dass für dieses Regelset das Maximum bereits err
 \\
 Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 \begin{table}[H]
-	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten} 
+	\caption{Score des Regelsatzes: Menü im Titel anhand der Testdaten} 
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -245,7 +246,7 @@ Auch bei diesem Regelset hat die Konfiguration mit einem Schwellwert von zwei da
 \\
 Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 \begin{table}[H]
-	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\caption{Score des Regelsatzes: Menü im Titel anhand der Testdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -342,7 +343,7 @@ Da diese Werte nicht im Bereich einer zufriedenstellenden Klassifikation sind, w
 \\
 Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 \begin{table}[H]
-	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\caption{Score des Regelsatzes: Menü im Titel anhand der Testdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -470,7 +471,7 @@ Es muss zudem berücksichtigt werden, dass der Split zufällig gewählt wird und
 
 Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 \begin{table}[H]
-	\caption{Beste Scores des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\caption{Score des Regelsatzes: Menü im Titel anhand der Testdaten}
 	\centering
 	\begin{tabular}{|l|l|l|l|}
 		\hline
@@ -530,13 +531,14 @@ Die drei verwendeten Feature-Extraction Methoden sind \glqq Bag of Words\grqq{},
 Für jede Pipeline wurde vor dem Training der Algorithmen, welche im \cref{sub:clf} ersichtlich sind, aus den Trainingsdaten eine kleine Teilmenge als Validierungsset entnommen.
 Die einzelnen Pipelines wurden danach mit dem Rest des Trainingssets trainiert und mit dem entnommenen Validierungsset validiert.
 Dies wurde konsequent für alle Experimente durchgeführt, um eine unverzerrte Einschätzung der Performance der Algorithmen während der Experimente zu erhalten.
-Würde man die Validierung auf den Trainingsdaten durchführen, hätte man eine verzerrte Einschätzung der Performance.\footnote{\url{https://machinelearningmastery.com/difference-test-validation-datasets/} abgerufen am: 10.07.2019}\\
+Würde man die Validierung auf den Trainingsdaten durchführen, hätte man eine verzerrte Einschätzung der Performance\footnote{\url{https://machinelearningmastery.com/difference-test-validation-datasets/} abgerufen am: 10.07.2019}.\\
 Zusätzlich wurde nach Abschluss aller Experimente die Performance des besten Klassifizierers auf einem ungesehenen Testdatenset überprüft.
 Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann.
 \subsubsection{Konfigurationen zu den einzelnen Experimenten}
 Jede ausgeführte Pipeline erzeugt eine Textdatei mit den Ergebnissen und der Konfiguration der Pipeline.
 Somit kann jedes Ergebnisse der Experimente wiederholt und nachvollzogen werden.
 Alle Textdateien können im Anhang ....... des Dokuments gefunden werden.
+% Verweis auf Anhang fehlt!
 Es wird in diesem Kapitel verzichtet, jeweils die Konfigurationen aufzulisten, um den Lesefluss nicht zu stören.
 Für genauere Einblicke in die einzelnen Konfigurationen kann der Anhang miteinbezogen werden.\\
 Als Einstiegspunkt für die Experimente, wurde das erste Experiment mit Standardkonfigurationen für alle drei Feature-Extraction Methoden ausgeführt.\\
@@ -566,7 +568,7 @@ TF-IDF wird aus den zwei folgenden Metriken zusammengesetzt.
 		\item TF-IDF ist nun die Multiplikation von TF und IDF.
 	\end{itemize}
 \end{itemize}
-TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang.\footnote{\url{http://www.tfidf.com/} abgerufen am: 07.05.2019}
+TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet dank der Gewichtung von Wörtern im Machine-Learning Bereich hohen Anklang\footnote{\url{http://www.tfidf.com/} abgerufen am: 07.05.2019}.
 \subsubsection{Übersicht der verwendeten Machine-Learning Algorithmen}\label{sub:clf}
 Wegen des \glqq No free lunch\grqq{}-Theorems wurden 14 Algorithmen stetig trainiert und validiert.
 Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
@@ -609,7 +611,7 @@ Zusätzlich können die Algorithmen im \cref{sec:algos} nachgeschlagen werden.
 \subsubsection{Beschreibung der Komponente}
 Für die Dimensionsreduktion der Features, welche von den drei Feature-Extraction Methoden  \glqq Bag of Words\grqq{}, \glqq binäres Bag of Words\grqq{} und \glqq TF-IDF\grqq{} erzeugt werden, wird die Methode \glqq Latent Semantic Analysis\grqq{} (LSA) verwendet.\\
 LSA basiert auf der Scikit-Implementation\footnote{\url{https://scikit-learn.org/stable/modules/decomposition.html} abgerufen am: 14.05.2019} von \glqq Single Value Decomposition SVD\grqq{}oder auf deutsch \glqq Singulärwertzerlegung\grqq{}.
-SVD zerlegt die Termdokumentmatrizen, welche von den Scikit-Learn Bag of Words oder TF-IDF Algorithmen erstellt werden, in ihre K wichtigsten Werte. Wobei K frei gewählt werden kann, jedoch kleiner als die maximale Anzahl von Features aus Bag of Words oder TF-IDF sein muss.
+SVD zerlegt die Termdokumentmatrizen, welche von den Scikit-Learn Bag of Words oder TF-IDF Algorithmen erstellt werden, in ihre K wichtigsten Werte, wobei K frei gewählt werden kann, jedoch kleiner als die maximale Anzahl von Features aus Bag of Words oder TF-IDF sein muss.
 Wenn SVD explizit auf Termdokumentmatrizen angewendet wird, wird der Vorgang \glqq Latent Semantic Analysis\grqq{} oder auch \glqq Latent Semantic Indexing\grqq{} genannt.
 Dies hat der Grund, da die Matrizen in semantische Matrizen kleinerer Dimension umgewandelt werden.\\
 Ein Vorteil von LSA ist, es kann Synonyme, mehrere Wörter mit gleicher Bedeutung, erkennen und somit die Termdokumentmatrizen dementsprechend reduzieren, jedoch ohne grosse Verluste in der Aussagekraft zu erleiden.
@@ -627,7 +629,7 @@ Der Grossteil der Algorithmen kann mit Hilfe von LSA den F1-Score verbessern, wa
 Lediglich bei der \glqq Bag of Words\grqq{} Methode ist die Summe über alle Score-Verbesserungen negativ, dies jedoch nur, weil der Multinomial-Bayes Klassifizierer mit LSA einen sehr hohen Einfluss mit seinem stetigen F1-Score von null ausübt.\\
 Der Bernoulli Bayes Klassifizierer, abgesehen vom Multinomial Bayes, ist der einzige Algorithmus, welcher über alle drei Feature-Extraction Methoden signifikante Verschlechterungen mit LSA erzielt hat. Die F1-Scores sind mit Dimensionsreduktion unter 0.1 gelangt, was diesen Algorithmus nach der Meinung der Autoren für weitere Experimente unbrauchbar macht. Die Annahme der Autoren lautet, dass ein F1-Score unter 0.1 trotz weiteren Massnahmen keinen zufriedenstellenden F1-Score erreichen wird.\\
 Die Dimensionsreduktion wird für alle drei Varianten weiter verwendet, da die positiven Auswirkungen sich deutlich in den F1-Scores widerspiegelt.
-Einzige Wehrmutstropfen der Dimensionsreduktion sind, dass der Multinomial-Bayes Klassifizierer keine wirkliche Klassifizierung mehr durchführen kann und der Bernoulli Bayes Klassifizierer unbrauchbare Scores liefert.
+Einzige Wermutstropfen der Dimensionsreduktion sind, dass der Multinomial-Bayes Klassifizierer keine wirkliche Klassifizierung mehr durchführen kann und der Bernoulli Bayes Klassifizierer unbrauchbare Scores liefert.
 Nach gewisser Recherche des Problems konnte nur ein Stackoverflow-Beitrag\footnote{\url{https://stackoverflow.com/questions/24169238/dealing-with-negative-values-in-sklearn-multinomialnb} abgerufen am: 14.05.2019} mit ähnlichen Komplikationen gefunden werden.
 Dieser Beitrag wies auf gewisse Inkompatiblitäten zwischen Naive Bayes Algorithmen und LSA auf.
 Diese Aussagen konnten jedoch weder bestätigt noch dementiert werden.
@@ -641,7 +643,7 @@ Somit werden beide Klassifizierer für den weiteren Verlauf nicht mehr verwendet
 \end{figure}
 \subsection{Angabe von Klassenverteilung}
 \subsubsection{Methoden}
-Da die Daten aus dem Goldstandard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
+Da die Daten aus dem Gold Standard eine sehr ungleiche Verteilung von positiven und negativen Samples aufweist, wurde die Klassengewichtung anhand dieser Verteilung berechnet.
 Die Gewichtung, auf ein positives Sample folgen 10.32 negative Samples, wurde den Algorithmen fürs Trainieren mitgegeben.
 Mittels der Klassenverteilung können die Algorithmen die unterrepräsentierten Klassen, in unserem Falle die positive Klasse, stärker gewichten und den Fokus darauf setzen.
 Einerseits wurden die Algorithmen ohne Klassengewichtung trainiert und validiert und andererseits mit der Angabe der Klassengewichtung.
@@ -664,7 +666,7 @@ Somit wird für TF-IDF ebenfalls die Angabe der Klassenverteilung für die näch
 	\caption{Grafik der Auswertung für die Klassenverteilung}
 	\label{abb:classweight}
 \end{figure}
-\subsection{Anwendung von N-Gramme}
+\subsection{Anwendung von N-Grammen}
 \subsubsection{Methoden}
 Die verwendeten Feature-Extraction Methoden bieten die Möglichkeit N-Gramme als Features zu extrahieren.
 Aufgrund der Annahme der Autoren, dass verschiedene Menünamen oder Gerichtbezeichnungen in Form von Bi- oder Trigrammen auftreten (Cordon-Bleu, Prosciutto e Funghi), macht die Überprüfung von Bi- und Trigrammen Sinn.\\
@@ -685,7 +687,7 @@ Da die Entscheidung bei der TF-IDF Methode nicht eindeutig gefällt werden konnt
 	\setlength{\fboxsep}{0.3pt} 
 	\setlength{\fboxrule}{0.3pt} 
 	\fbox{\includegraphics[width=1\columnwidth,keepaspectratio]{img/ngram.png}} 
-	\caption{Grafik der N-Gramme Auswertung}
+	\caption{Auswertung der N-Gramme }
 	\label{abb:ngram}
 \end{figure}
 \subsection{Anwendung von fortgeschrittenen Preprocessingschritten}
@@ -817,8 +819,8 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 \end{table}
-In der \cref{tab:ada} ist auffällig, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparemtertuning finden konnte.\\
-AdaBoost kann seinen Recall verbessern und gleichzeitig verschlechtert sich seine Precision.
+In der \cref{tab:ada} ist auffällig, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparametertuning finden konnte.\\
+AdaBoost kann seinen Recall verbessern, gleichzeitig verschlechtert sich aber seine Precision.
 Da die Recallsteigerung grösser als der Precisionabfall ist, wird der F1-Score nach oben korrigiert.\\
 Die anderen beiden Modelle Perceptron in \cref{tab:per} und SGDClassifier in der \cref{tab:sgd} erzielen mit den neuen Parametern schlechtere Werte.
 Beide können den Recall verbessern, jedoch müssen sie massive Gefälle bei der Precision einbüssen.
@@ -870,7 +872,7 @@ Aufgrund dessen wurden die Standardparameter weiter verwendet.
 In der \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zur \cref{tab:per} der F1-Score leicht abgenommen hat.
 Dies hat den Grund, dass der Recall spürbar an Wert verloren hat.
 Die Precision jedoch stieg und wirkte der Reduzierung des F1-Scores entgegen.\\
-In der Konfusionsmatrix \cref{tab:conf} ist deutlich die hohe Precision zu erkennen.
+In der Konfusionsmatrix (\cref{tab:conf}) ist deutlich die hohe Precision zu erkennen.
 Der Algorithmus klassifizierte 34 Webpages korrekt als Menüseiten.
 Ebenfalls wurden nur drei Webpages als Menüseiten klassifiziert, welche aber keine gewesen sind.
 Die schlussendliche Performance des Klassifizierers ist für den genannten \glqq Use-Case\grqq{} zufriedenstellend und somit wird der Algorithmus Perceptron in einer produktiven Pipeline weiterverwendet.
