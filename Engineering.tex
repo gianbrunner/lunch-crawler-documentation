@@ -152,8 +152,16 @@ Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwoh
 Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Erstellung des Gold-Standards verwendet.
 \section{Webapplikation}
 In den nachfolgenden Abschnitten wird der Aufbau der Webapplikation von der Aufbereitung der klassifizierten Daten bis zur Darstellung in einem Webbrowser genauer beschrieben.
-\subsection{Datenaufbereitung}
+\subsection{Produktive Pipeline}
+\FloatBarrier
 Um die gesammelten Daten des Webcrawlers für die Webapplikation verwendbar zu machen, ist eine produktive Pipeline erstellt worden.
+Diese ist in der \cref{fig:prod_pipeline} ersichtlich.
+\begin{figure}[H]
+	\centering	
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/Ablauf_prod_pipeline.png}
+	\caption{Produktive Pipeline mit Datenaufbereitung}
+	\label{fig:prod_pipeline}
+\end{figure}
 Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
 Es ist der trainierte Machine-Learning-Algorithmus \glqq Perceptron mit binärem Bag of Words\grqq{} eingesetzt worden, um die Rohdaten des Webcrawlers zu klassifizieren.
 Um die als Menüseiten klassifizierten Webpages mit Geoinformationen zu versehen, wurden die ursprünglichen Daten von Openstreetmap und Lunch Check verwendet. Dies aus dem Grund, da die Daten von OpenStreetMap bereits die Koordinaten des Restaurants beinhalteten.
@@ -161,13 +169,14 @@ Die Daten von Lunch-Check waren nicht mit Geoinformationen versehen, jedoch mit 
 Diese wurden genutzt, um  die Daten mittels Geocoding, genauer mit einer lokalen Installation von Nominatim\footnote{\url{https://nominatim.openstreetmap.org/}abgerufen am: 02.07.2019} mit den Geoinformationen zu erweitern.
 Über den Host-Anteil der URL wurden die Menüseiten den Restaurants zugeordnet.
 Somit ist aus mehreren Quellen eine einheitliche Datenstruktur im JSON-Format erstellt worden.
-Diese Struktur wird in \cref{fig:json_struktur} verdeutlicht:
-\begin{figure}[H]	
+Diese Struktur wird in \cref{fig:json_struktur} verdeutlicht.
+\begin{figure}[H]
 	\includegraphics[width=1\columnwidth,keepaspectratio]{img/json_struktur.png}
-	\caption{JSON-Struktur anhand eines Beispiels}
+	\caption{JSON-Struktur anhand eines Beispiels(Anmerkung: Der Text wurde manuell gekürzt)}
 	\label{fig:json_struktur}
 \end{figure}
 Der Link zum Code dieser Standardisierung der Daten ist im Anhang unter \cref{app:prodpipeline} zu finden.
+\FloatBarrier
 \subsection{Idee}
 Ziel der Webapplikation ist es, dass ein Benutzer einfach und überschaubar nach Menüs suchen kann.
 Um dies zu erreichen, wurde ein Mockup mit dem Layout der Benutzeroberfläche erstellt, welches in \cref{fig:webapp_mockup} dargestellt wird.
@@ -195,12 +204,13 @@ Das Verwenden des Suchbalkens gibt die Informationen über den Standort sowie da
 Dieses löst eine Fetch-Anfrage auf Elasticsearch aus, welche die entsprechenden Resultate als JSON zurückliefert.
 Diese JSON-Dateien werden dann an das Frontend weitergeleitet.
 \subsection{Search Engine}
+Das Search Engine dient in diesem Fall dazu, die Daten der produktiven Pipeline zu verwalten und diese der Webapplikation zur Verfügung zu stellen.
+Somit übernimmt sie die Funktionalität einer Datenbank, mit dem Vorteil, dass die Daten schneller suchbar sind.
 Als Search Engine wird die Software \glqq Elasticsearch\grqq{} eingesetzt\footnote{\url{https://www.elastic.co/de/products/elasticsearch} abgerufen am: 07.05.2019}.
 Da StormCrawler SDK entsprechende Komponenten zur Anbindung anbietet\footnote{\url{http://stormcrawler.net/getting-started/} abgerufen am: 07.05.2019} und dies in Betracht gezogen wurde, wird diese Software eingesetzt.
 Elasticsearch wird in einem Docker-Container betrieben\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html} abgerufen am: 07.05.2019}.
 Daten können im JSON-Format mittels HTTP-Request (POST) darin abgelegt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html} abgerufen am: 07.05.2019}.
 Ebenfalls mittels HTTP-Request (GET) können Suchabfragen auf die darin enthaltenen Daten getätigt werden\footnote{\url{https://www.elastic.co/guide/en/elasticsearch/reference/6.4/search-search.html} abgerufen am: 07.05.2019}.
-Durch diese Funktionalität nimmt Elasticsearch in diesem Fall die Funktion einer Datenbank ein.
 \subsection{Benutzung der Webapplikation}
 Die Webapplikation ist erst ein Prototyp.
 Da das Deployment der Search Engine kostenpflichtig ist, wurde von einem Deployment abgesehen.
