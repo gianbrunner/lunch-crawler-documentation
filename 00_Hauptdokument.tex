@@ -84,7 +84,9 @@
 %=========== Abbildungen fangen mit 1 an ===========%
 \renewcommand*{\thefigure}{\arabic{figure}}
 
-
+\addto{\captionsngerman}{%
+	\renewcommand*{\source}{Quelle: }
+}
 % ============= Dokumentbeginn =============
 \begin{document}
 \setcounter{secnumdepth}{5}	%Bis zu welcher Ebene wird nummeriert?
@@ -97,8 +99,8 @@
 
 \include{Abstract}
 
-\include{Danksagung}
-\newpage
+%\include{Danksagung}
+%\newpage
 
 %Inhaltsverzeichnis
 \tableofcontents

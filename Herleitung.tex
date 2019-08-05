@@ -1,7 +1,8 @@
 \chapter{Herleitung}
-Damit verschiedene Begriffe im Bezug auf diese Arbeit richtig verstanden werden, werden sie nun genauer erläutert.
+Damit verschiedene Begriffe im Bezug auf diese Arbeit richtig verstanden werden, folgt nun eine genauere Erläuterung.
 \section{Website / Webpage}
-Unter einer Website versteht sich eine Sammlung von Webpages (deutsch: Webseite)\footnote{\url{http://openbook.rheinwerk-verlag.de/windows_server_2012r2/17_001.html} abgerufen am: 10.07.2019}.\\
+Unter einer Website wird eine Sammlung von Webpages (deutsch: Webseite)\footnote{\url{http://openbook.rheinwerk-verlag.de/windows_server_2012r2/17_001.html} abgerufen am: 10.07.2019} verstanden.
+Die Begriffe Webseite und Webpage werden in dieser Arbeit als Synonym verwendet.
 Die aufgeführte Beispielstruktur bildet als Ganzes eine Website ab:\\
 
 \begin{forest}
@@ -31,18 +32,18 @@ Die aufgeführte Beispielstruktur bildet als Ganzes eine Website ab:\\
 	]
 \end{forest}
 \section{Webcrawler}
-Ein Webcrawler ist ein Programm, das automatisch das World Wide Web durchsucht und Webseiten analysiert\cite[p.311]{liu2007web}.
+Ein Webcrawler ist ein Programm, das automatisch das World Wide Web durchsucht und Webseiten analysiert \cite[p. 311]{liu2007web}.
 Eine mögliche Funktionsweise ist die folgende:
-Um starten zu können, muss dieser ein Seed besitzen, welches URLs von Websites beinhaltet.
+Um starten zu können, wird dem Webcrawler ein Seed (eine initiale Sammlung von URLs zu Websites) mitgegeben.
 Der Webcrawler ruft diese URL mittels HTTP-Request auf und speichert sie.
 Die gespeicherte Webpage wird auf Verlinkungen (HTML-Anchortags) geprüft, falls solche vorhanden sind, werden sie ebenfalls zum Seed hinzugefügt und durchlaufen denselben Prozess.
 \section{Gold Standard}
-Als Gold Standard wird in dieser Arbeit einen Datensatz bezeichnet, der aus den vom Webcrawler gespeicherten Webpages erstellt wurde.
+Als Gold Standard wird in dieser Arbeit ein Datensatz bezeichnet, der aus den gespeicherten Webseiten des Webcrawlers erstellt wurde.
 Er besteht aus einer zufälligen Teilmenge dieser Rohdaten, welche von Hand in die Kategorien \glqq Keine Menüseite\grqq{}, \glqq Menüseite\grqq{} und \glqq Zeitlich ändernde Menüseite\grqq{} aufgeteilt wurden.
 Dieser Datensatz wird sowohl zum Training bestimmter Machine-Learning-Algorithmen als auch als Referenz zur Messung von Klassifikationsalgorithmen verwendet.
 \section{Preprocessing}
 Als Preprocessing wird die Vorverarbeitung von zu klassifizierenden Daten verstanden.
-Das Ziel dieses Vorgangs ist, diese Daten zu bereinigen und in eine einheitliche Form zu bringen \cite[p.155]{liu2007web}.
+Das Ziel dieses Vorgangs ist, diese Daten zu bereinigen und in eine einheitliche Form zu bringen.  \cite[p. 155]{liu2007web}
 In dieser Arbeit bezieht sich das Preprocessing auf die Vorverarbeitung von Texten.
 \section{Klassifikation bzw. Klassifizierung}
 Unter einer Klassifikation bzw. Klassifizierung versteht sich das Einordnen in definierte Kategorien\footnote{\url{https://www.duden.de/rechtschreibung/Klassifikation} abgerufen am: 10.07.2019}.
@@ -51,20 +52,20 @@ In dieser Arbeit findet eine binäre Klassifikation zwischen den Kategorien \glq
 Dabei werden zwei verschiedene Ansätze verfolgt:
 \subsection{Regelbasierte Klassifizierung}
 Bei der regelbasierten Klassifizierung wird anhand von definierten Regeln entschieden, in welche Kategorie eine Webpage eingeordnet wird.
-Diese werden typischerweise mit \glqq Wenn-Dann\grqq-Bedingungen aufgebaut\cite[p.125ff]{jackson2007natural}.
+Diese werden typischerweise mit \glqq Wenn-Dann\grqq-Bedingungen aufgebaut. \cite[p. 125 ff]{jackson2007natural}
 Ein Beispiel: Wenn das Wort \glqq menu\grqq{} im Titel einer Webpage vorkommt, ist es eine Menüseite, ansonsten nicht.
 \subsection{Klassifizierung mittels Machine-Learning}
 Die Klassifizierung mittels Machine-Learning findet in dieser Arbeit nach dem Ansatz des \glqq Supervised Learning\grqq{}, also dem überwachten Lernen, statt.
 Dabei wird einem Machine-Learning-Algorithmus ein von Hand kategorisierter Datensatz (in diesem Fall ein Teil des Gold Standards) übergeben.
-Anhand dieser Daten entscheidet der Algorithmus für zukünftige Daten, wie er sie klassifizieren soll\footnote{\url{https://towardsdatascience.com/supervised-machine-learning-classification-5e685fe18a6d} abgerufen am: 10.07.2019}.
+Anhand dieser Daten lernt der Algorithmus für zukünftige Daten, wie er sie klassifizieren soll\footnote{\url{https://towardsdatascience.com/supervised-machine-learning-classification-5e685fe18a6d} abgerufen am: 10.07.2019}.
 \section{Evaluierung}
-Um eine binäre Klassifizierung, also das Einordnen von Daten in zwei verschiedene Kategorieren messen zu können, werden Metriken wie F1-Score, Precision und Recall verwendet.
+Um eine binäre Klassifizierung, also das Einordnen von Daten in zwei verschiedene Kategorieren messen zu können, werden Metriken wie Precision, Recall und F1-Score verwendet.
 Dazu müssen zuerst die folgenden Klassifizierungskategorien erläutert werden:
 \begin{itemize}
-	\item Richtig Positiv: Die Webpage wurde als Menüseite klassifiziert und ist eine Menüseite
-	\item Falsch Positiv: Die Webpage wurde als Menüseite klassifiziert, ist aber keine Menüseite
-	\item Falsch Negativ: Die Webpage wurde nicht als Menüseite klassifiziert, ist aber eine Menüseite
-	\item Richtig Negativ: Die Webpage wurde nicht als Menüseite klassifiziert und ist keine Menüseite
+	\item Richtig Positiv - Die Webpage wurde als Menüseite klassifiziert und ist eine Menüseite
+	\item Falsch Positiv - Die Webpage wurde als Menüseite klassifiziert, ist aber keine Menüseite
+	\item Falsch Negativ - Die Webpage wurde nicht als Menüseite klassifiziert, ist aber eine Menüseite
+	\item Richtig Negativ - Die Webpage wurde nicht als Menüseite klassifiziert und ist keine Menüseite
 \end{itemize}
 Jede klassifizierte Webpage lässt sich in eine dieser Kategorie einordnen.
 Anhand dieser Kategorien lassen sich die oben genannten Metriken wie folgt berechnen:\\

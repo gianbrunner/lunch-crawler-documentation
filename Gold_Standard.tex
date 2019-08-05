@@ -1,16 +1,16 @@
 \chapter{Teil 1: Gold Standard}
-Als Rohdaten zur Erhebung dieses Gold Standards dient der Output des Webcrawlers.
-Die Erarbeitung dieser Rohdaten kann im \cref{chap:engineering} nachgelesen werden.
+Als Rohdaten zur Erhebung des Gold Standards dient der Output des Webcrawlers.
+Die Erarbeitung dieser Rohdaten wird in \cref{chap:engineering} geschildert.
 Der Link zum Gold Standard ist im Anhang (\cref{app:gold_standard}) zu finden.
 \section{Seed}
 Das Seed wurde als Datenquelle des Webcrawlers verwendet und bildet somit die Grundlage dieses Gold Standards.
 Es wurde aus den folgenden zwei Quellen zusammengestellt:
 \begin{itemize}
-	\item OpenStreetMap - 3557 URLs
-	\item Lunch-Check - 3803 URLs
+	\item OpenStreetMap - 3557 URLs zu Websites
+	\item Lunch-Check - 3803 URLs zu Websites
 \end{itemize}
-Die entsprechenden Dateien sind im Anhang(\cref{app:electronic}) zu finden.\\
-Diese Quellen wurden verwendet, da sie diese Daten für diese Arbeit kostenlos zur Verfügung stellen.
+Die entsprechenden Dateien sind im Anhang (\cref{app:electronic}) zu finden.\\
+Diese Quellen wurden verwendet, da sie die Daten für diese Arbeit kostenlos zur Verfügung stellen.
 Die URLs wurden zusammengeführt und Duplikate entfernt.
 Daraus ist ein Seed entstanden, welches 5870 Einträge von Restaurant-URLs enthält.
 Dabei wurden aus den nun aufgeführten Gründen mehrere Einträge entfernt:
@@ -27,20 +27,20 @@ Für dieses wurden die folgenden Entscheidungen getroffen:
 	\item Die Webpage muss auf Deutsch verfasst sein
 	\item Der Anbieter muss entweder ein Restaurant, Take-Away oder Lieferdienst sein
 	\item Der Text muss statisch im HTML vorhanden sein
-	\item Es muss ein Menü, also eine Kombination aus mehreren Speisen oder eine einzelne Speise vorhanden sein
+	\item Es muss ein Menü, also eine Kombination aus mehreren Speisen oder eine einzelne Speise, vorhanden sein
 	\item Eine genauere Beschreibung oder der Preis muss vorhanden sein
 	\item Getränkekarten werden explizit als negativ gelabelt
 \end{itemize}
 Bei der Klassifizierung wird zudem unterschieden, ob es sich um ein zeitlich begrenztes Angebot handelt, da diese Angebote zu einem späteren Zeitpunkt eventuell zusätzlich erkannt werden möchten.
 Bei der Sprache ist anzumerken, dass gewisse Begriffe, vor allem für Speisebezeichnungen, auch fremdsprachig sein dürfen, da Speisebezeichnungen je nach Küche international ausgelegt sind.
 Der Inhalt muss statisch im HTML verfügbar sein, da der Webcrawler nicht mit dynamisch gerenderten Websites umgehen kann.
-Zudem wurden reine Getränkekarten explizit negativ klassifiziert.
-\FloatBarrier
 Der Gold Standard wurde anhand des Entscheidungsrasters erstellt, welches in der \cref{fig:classificationtree} dargestellt wird.
+\FloatBarrier
 \begin{figure}
 	\centering
 	\includegraphics[width=0.65\columnwidth,keepaspectratio]{img/man-classification-tree.png}
 	\caption{Entscheidungsraster}
+	\source{Eigene Darstellung}
 	\label{fig:classificationtree}
 \end{figure}
 \section{Manuelles Labeling der Daten}

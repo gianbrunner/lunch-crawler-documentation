@@ -3,18 +3,18 @@
 \section{Webcrawler}
 Dieser Abschnitt beschreibt sowohl die Technologie des Webcrawlers als auch die Erarbeitung dessen.
 \subsection{Stand der Forschung}
-Ein Webcrawler ist ein Programm, das automatisch das World Wide Web durchsucht und Webseiten analysiert\cite[p.311]{liu2007web}.
-Ein Webcrawler braucht verwendet als Startpunkt ein Seed, welches URLs enthält.
+Ein Webcrawler ist ein Programm, das automatisch das World Wide Web durchsucht und Webseiten analysiert \cite[p. 311]{liu2007web}.
+Ein Webcrawler verwendet als Startpunkt ein Seed, welches URLs enthält.
 Der Ablauf, welcher in \cref{fig:flowchart_webcrawler} gezeigt wird, ist wie folgt zu verstehen:
 Die URLs aus dem Seed werden in eine Queue, genannt Frontier, geladen.
 Von da aus werden diese Webpages aufgerufen und nach weiteren URLs durchsucht.
 Die gefundenen URLs werden ebenfalls zum Frontier hinzugefügt, die Webpage selbst wird gespeichert.
-Dieser Ablauf findet solange statt bis ein gewisses Ziel erreicht ist\cite[p.313]{liu2007web}.
+Dieser Ablauf findet solange statt bis ein gewisses Ziel erreicht ist. \cite[p. 313]{liu2007web}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.5\columnwidth,keepaspectratio]{img/flowchart_webcrawler.png}
+	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/flowchart_webcrawler.png}
 	\caption{Ablauf eines Webcrawlers}
-	\source{\cite[p.313]{liu2007web}}
+	\source{\cite[p. 313]{liu2007web}}
 	\label{fig:flowchart_webcrawler}
 \end{figure}
 \subsection{Evaluation}
@@ -55,14 +55,12 @@ Die Topologie kann auch Gabelungen beinhalten, die dementsprechend Bolts benöti
 Zudem ist eine Webapplikation verfügbar, die eine Übersicht über die Informationen wie eine Topologieübersicht, der Status der jeweiligen Komponenten sowie Fehlermeldungen anzeigt.
 \subsubsection{StormCrawler SDK}
 StormCrawler SDK ist ein Opensource Software Development Kit, welches auf Apache Storm aufbaut und in Java entwickelt wurde.
-Er dient somit als Baukasten, um einen Webcrawler aufzubauen.
-Er beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden\footnote{\url{https://github.com/DigitalPebble/storm-crawler/wiki} abgerufen am: 08.01.2019}.
+Es dient somit als Baukasten, um einen Webcrawler aufzubauen und beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden\footnote{\url{https://github.com/DigitalPebble/storm-crawler/wiki} abgerufen am: 08.01.2019}.
 Zudem berücksichtigt er die Regeln des Webcrawlings, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
-Weiter ist er so eingerichtet, dass Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden\footnote{\url{http://stormcrawler.net/faq/} abgerufen am: 09.01.2019}.
+Weiter ist das Kit so eingerichtet, dass es Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden\footnote{\url{http://stormcrawler.net/faq/} abgerufen am: 09.01.2019}.
 StromCrawler SDK ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsection{Konfiguration des StormCrawlers}
-Die Grundlage der Konfiguration ist die Standardtopologie des Stromcrawlers auf Github
-\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}.
+Die Grundlage der Konfiguration ist die Standardtopologie des StromCrawlers auf Github\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}.
 Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
 \begin{enumerate}
 	\item MemorySpout - Einlesen einer URL aus einem Array
@@ -74,7 +72,7 @@ Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
 	\item SdtOutIndexer - Gibt die Informationen einer Webpage über die Konsole aus
 \end{enumerate}
 Ein selbst erstellter Bolt, welcher für das Schreiben des Outputs zuständig ist, hat in dieser Konfiguration den StdOutIndexer ersetzt.
-Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, eine JSON Datei mit den folgenden Informationen:
+Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, eine JSON Datei mit den folgenden Schlüsselwörtern:
 \begin{itemize}
 	\item \glqq date\grqq{} - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
 	\item \glqq text\grqq{} - Vom Webcrawler extrahierter Text, welcher die Webpage beinhaltet
@@ -97,9 +95,9 @@ Dieses Konfigurationsfile, das sogenannte Dockerfile, definiert alle Notwendigke
 Im Dockerfile werden Instruktionen für das Erstellen des Images definiert.
 Da Dockerfiles einfache Textdateien sind, können sie, wie jeder andere Sourcecode, mit Git, SVN oder anderen Versionsverwaltungen verwaltet werden.
 Durch Dockerfiles können Docker Images erstellt werden, welche wiederum den dadurch definierten Container erstellen und starten.
-Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden und der Docker Container wäre eine Instanz der entsprechenden Klasse. 
+Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden, wobei der Docker Container eine Instanz der entsprechenden Klasse wäre. 
 \subsubsection{Docker-Compose}
-Mit Docker Containern können auch Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
+Mit Docker Containern können sehr einfach Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
 Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software \glqq Docker-Compose\grqq{} diese Aufgabe.
 Mithilfe von Docker-Compose können mehrere Docker Container verknüpft und gleichzeitig gestartet werden.
 Die Abhängigkeiten zwischen den Containern wird ebenfalls mit einem Konfigurationsfile, dem Composefile, definiert.
@@ -125,22 +123,23 @@ Das Ziel war es, dieses mit möglichst vielen URLs von Schweizer Restaurant-Webs
 Dafür wurden zwei Ansätze verfolgt.
 Ein Verein Schweizer Restaurants, namentlich Lunch-Check\footnote{\url{https://www.lunch-check.ch/} abgerufen am: 07.01.2019} wurde angefragt, ob sie eine Liste ihrer Mitglieder zur Verfügung stellen.
 Zudem wurde der OpenStreetMap-API\footnote{\url{https://www.openstreetmap.ch/} abgerufen am: 07.01.2019} genutzt, um die darin enthaltenen Restaurant-URLs abzufragen.
-Die Daten aus beiden Quellen wurden zusammengeführt und dienen nun als Seed für die Abfragen des Webcrawlers.
+Die Daten aus beiden Quellen wurden zusammengeführt und dienen als Seed für die Abfragen des Webcrawlers.
 \subsubsection{Crawlen der Rohdaten}
 Das Crawlen der Rohdaten war mit diversen Komplikationen verbunden.
-Die Performance des Webcrawlers war zu Beginn nicht zufriedenstellend, es wurden lediglich ca. 30 Webpages pro Minute gespeichert.
+Die Performance des Webcrawlers war zu Beginn nicht zufriedenstellend, da lediglich ca. 30 Webpages pro Minute gespeichert wurden.
 Trotzdem wurde ein erster Rohdatensatz mit dieser Performance gecrawlt, auf dem das erste manuelle Labeling durchgeführt wurde.
 Bei diesem Rohdatensatz wurden nur die als deutsch detektierten Webpages gespeichert, somit konnte die Abdeckung des Seeds nicht ausgewertet werden.
 Der Crawler wurde nochmals angepasst, sodass alle Webpages gespeichert werden.
 Dies ermöglicht eine genauere Analyse der Rohdaten.
-Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt wurde und die Sprachdetektion nicht für jede Webpage neu gestartet wurde, was eine massive Performancesteigerung zur Folge hatte.
+Die Spracherkennung wurde zudem so angepasst, dass die Anzahl zu erkennender Sprachen eingeschränkt und die Sprachdetektion nicht für jede Webpage neu gestartet wurde.
+Nach dieser Anpassung wurden ca. 400 Webpages pro Minute gespeichert.
 Diverse weitere Crawldurchläufe wurden gemacht und die gecrawlten Daten analysiert.
 Diese Analysen haben ergeben, dass einzelne Websites aus dem Seed enorm viele Webpages beinhalten, zum Teil über 30'000.
-Diese URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
+Die URLs dieser Websites wurden aus dem Seed entfernt, da sie keine typischen Restaurant-Webseiten repräsentieren.
 Für die zweite Durchführung des manuellen Labelings wurden die Rohdaten mit dem angepassten Seed neu gecrawlt.
 Bei den neuen Rohdaten wurde analysiert, wieviele Einträge des Seeds gecrawlt wurden.
 Von 5870 Seedeinträgen konnten 1362 Einträge nicht gecrawlt werden, das entspricht etwa 20\% der Einträge.
-Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist eine Stichprobe von 100 Einträgen vorgenommen worden und genauer untersucht worden. Dabei sind folgende Erkenntnisse gewonnen worden:
+Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist eine Stichprobe von 100 Einträgen vorgenommen worden und genauer untersucht worden. Dabei sind folgende Erkenntnisse gewonnen:
 \begin{itemize}
 	\item 34\% der Websites sind offline
 	\item 25\% der Websites verlinken zu einer neuen Website
@@ -149,7 +148,7 @@ Um eine Aussage bezüglich der nicht gecrawlten Einträge machen zu können, ist
 Somit können mindestens 67\% der Websites aus plausiblen Gründen nicht gecrawlt werden.
 Es wurde nicht erfasst, wieviele Websites über Mechanismen wie Robots.txt-File oder Metatags zur Verhinderung von Crawlern verfügen, darum könnte diese Zahl noch höher sein.
 Wenn davon ausgegangen wird, dass 33\% der Websites nicht gecrawlt wurden, obwohl sie crawlbar wären, ergibt dies hochgerechnet 450 Seedeinträge oder 7\%, die nicht gecrawlt wurden.
-Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Erstellung des Gold-Standards verwendet.
+Dieses Ergebnis war zufriedenstellend, daher wurde dieser Rohdatensatz für die Erstellung des Gold Standards verwendet.
 \section{Webapplikation}
 In den nachfolgenden Abschnitten wird der Aufbau der Webapplikation von der Aufbereitung der klassifizierten Daten bis zur Darstellung in einem Webbrowser genauer beschrieben.
 \subsection{Produktive Pipeline}
@@ -160,6 +159,7 @@ Diese ist in der \cref{fig:prod_pipeline} ersichtlich.
 	\centering	
 	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/Ablauf_prod_pipeline.png}
 	\caption{Produktive Pipeline mit Datenaufbereitung}
+	\source{Eigene Darstellung}
 	\label{fig:prod_pipeline}
 \end{figure}
 Diese hat das Ziel, die Rohdaten zu klassifizieren und die als Menüseiten klassifizierten Webpages mit Informationen bezüglich des Standorts zu versehen.
@@ -173,6 +173,7 @@ Diese Struktur wird in \cref{fig:json_struktur} verdeutlicht.
 \begin{figure}[H]
 	\includegraphics[width=1\columnwidth,keepaspectratio]{img/json_struktur.png}
 	\caption{JSON-Struktur anhand eines Beispiels(Anmerkung: Der Text wurde manuell gekürzt)}
+	\source{Eingene Darstellung}
 	\label{fig:json_struktur}
 \end{figure}
 Der Link zum Code dieser Standardisierung der Daten ist im Anhang unter \cref{app:prodpipeline} zu finden.
@@ -184,11 +185,12 @@ Um dies zu erreichen, wurde ein Mockup mit dem Layout der Benutzeroberfläche er
 	\centering
 	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/webapp_mockup.png}
 	\caption{Mockup der Webapplikation}
+	\source{Eigene Darstellung}
 	\label{fig:webapp_mockup}
 \end{figure}
 Dieses enthält lediglich eine Kartenansicht und einen Suchbalken.
 Der Standort des Benutzers soll beim Aufruf der Webapplikation abgefragt werden, damit der Kartenfokus auf diesen gesetzt werden kann.
-Durch die Eingabe einer Speise im Suchbalken werden alle Restaurants angezeigt, welche diese Speise in ihrer Menükarte führen.
+Durch die Eingabe einer Speise im Suchbalken werden alle Restaurants angezeigt, welche diese Speise in ihrer Menükarte aufführen.
 \subsection{Frontend}
 Das Frontend ist nach dem Prinzip einer Single-Page-Applikation aufgebaut.
 Eine HTML-Datei dient als Grundgerüst und wird durch die entsprechenden JavaScript-Dateien angepasst.
@@ -198,12 +200,13 @@ Das Verwenden des Suchbalkens löst eine Fetch-Anfrage auf das Backend aus.
 Die Ergebnisse dieser Anfrage werden dann mit der Bibliothek \glqq Leaflet\footnote{\url{https://leafletjs.com/} abgerufen am: 17.07.2019}\grqq{} angezeigt.
 Für jedes Restaurant wird ein Marker mit einem Popup-Fenster erstellt, welches einen Link zur Homepage sowie der Menüseite beinhaltet.
 \subsection{Backend}
-Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/} abgerufen am: 17.07.2019}\grqq{} verwendet, da bereits Erfahrung mit dieser Technologie gemacht wurde und sie geeignet ist für Anwendungen dieser Grösse.
+Als serverseitige Plattform wird \glqq Node.js\footnote{\url{https://nodejs.org/} abgerufen am: 17.07.2019}\grqq{} verwendet, da bereits Erfahrung mit dieser Technologie gemacht wurde und sie für Fast Prototyping geeignet ist.
 Ein Aufruf der Basis-URL stellt die HTML-Datei sowie die entsprechenden JavaScript-Dateien des Frontends zur Verfügung.
 Das Verwenden des Suchbalkens gibt die Informationen über den Standort sowie das Such-Query an das Backend weiter.
-Dieses löst eine Fetch-Anfrage auf Elasticsearch aus, welche die entsprechenden Resultate als JSON zurückliefert.
+Dieses löst eine Fetch-Anfrage auf das Search Engine aus, welche die entsprechenden Resultate als JSON zurückliefert.
 Diese JSON-Dateien werden dann an das Frontend weitergeleitet.
 \subsection{Search Engine}
+
 Das Search Engine dient in diesem Fall dazu, die Daten der produktiven Pipeline zu verwalten und diese der Webapplikation zur Verfügung zu stellen.
 Somit übernimmt sie die Funktionalität einer Datenbank, mit dem Vorteil, dass die Daten schneller suchbar sind.
 Als Search Engine wird die Software \glqq Elasticsearch\grqq{} eingesetzt\footnote{\url{https://www.elastic.co/de/products/elasticsearch} abgerufen am: 07.05.2019}.
