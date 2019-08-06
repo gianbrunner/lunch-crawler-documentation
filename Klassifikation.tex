@@ -60,7 +60,8 @@ Scikit Learn ist unter BSD lizenziert und für die kommerzielle Nutzung frei ver
 Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
 Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
 Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion sowie Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}.
-Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
+Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.\\
+Scikit-Learn wurde sowohl in der regelbasierten Klassifikation, als auch in der Klasssifikation mittels Machine-Learning verwendet.
 \section{Preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments in eine standardisierte Form zu bringen.
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
@@ -505,6 +506,9 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 	\caption{Konfusionsmatrix des Regelsets: Bag of Words anhand der Testdaten}
 \end{table}
 \section{Experimente mittels Machine-Learning}
+Die folgenden Experimente beschreiben die Methoden und Resultate der Experimente mittels Machine-Learning.
+Anschliessend folgt die Interpretation und Diskussion.
+Der Link zum entsprechenden Code ist im Anhang (\cref{app:classification}) zu finden.
 \subsection{Einleitung}
 \subsubsection{Durchführung der Experimente}
 Alle Experimente werden mit der Pipeline, welche im \cref{sec:classification} beschrieben wird, durchgeführt.
@@ -512,10 +516,11 @@ Um eine möglichst grosse Abdeckung von Experimenten zu erzielen, werden bei jed
 Die drei verwendeten Feature-Extraction Methoden sind \glqq Bag of Words\grqq{}, \glqq binäres Bag of Words\grqq{} und \glqq TF-IDF\grqq{}, welche in \cref{sub:bow} und \cref{sub:tfidf} erläutert werden.\\
 Für jede Pipeline wurde vor dem Training der Algorithmen, welche im \cref{sub:clf} ersichtlich sind, aus den Trainingsdaten eine kleine Teilmenge als Validierungsset entnommen.
 Die einzelnen Pipelines wurden danach mit dem Rest des Trainingssets trainiert und mit dem entnommenen Validierungsset validiert.
+Somit basieren alle Resultate der Experimente auf dem Validierungsset.
 Dies wurde konsequent für alle Experimente durchgeführt, um eine unverzerrte Einschätzung der Performance der Algorithmen während der Experimente zu erhalten.
 Würde man die Validierung auf den Trainingsdaten durchführen, hätte man eine verzerrte Einschätzung der Performance\footnote{\url{https://machinelearningmastery.com/difference-test-validation-datasets/} abgerufen am: 10.07.2019}.\\
 Zusätzlich wurde nach Abschluss aller Experimente die Performance des besten Klassifizierers auf einem ungesehenen Testdatenset überprüft.
-Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann.
+Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann und wird in der Diskussion thematisiert.
 \subsubsection{Konfigurationen zu den einzelnen Experimenten}
 Jede ausgeführte Pipeline erzeugt eine Textdatei mit den Ergebnissen und der Konfiguration der Pipeline.
 Somit kann jedes Ergebnis der Experimente wiederholt und nachvollzogen werden.
@@ -551,6 +556,8 @@ TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet da
 \subsubsection{Übersicht der verwendeten Machine-Learning Algorithmen}\label{sub:clf}
 Aufgrund des \glqq No free lunch\grqq{}-Theorems wurden 14 Algorithmen trainiert und validiert.
 Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
+Die Algorithmen wurden aus zwei unterschiedlichen Online-Artikeln \footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538} abgerufen am: 06.08.2019}
+\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html} abgerufen am: 06.08.2019} zusammengetragen, welche beide die Klassifizierung von Textinhalten thematisieren.
 Zusätzlich können die Algorithmen im \cref{sec:algos} nachgeschlagen werden.
 \begin{itemize}
 	\item Lineare Modelle
@@ -895,7 +902,7 @@ Aufgrund dessen wurden die Standardparameter weiter verwendet.
 	\end{tabular}
 	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
 \end{table}
-In der \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zur \cref{tab:per} der F1-Score leicht abgenommen hat.
+Im \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zum \cref{tab:per} der F1-Score leicht abgenommen hat.
 Dies hat den Grund, dass der Recall spürbar an Wert verloren hat.
 Die Precision jedoch stieg und wirkte der Reduzierung des F1-Scores entgegen.\\
 In der Konfusionsmatrix (\cref{tab:conf}) ist deutlich die hohe Precision zu erkennen.

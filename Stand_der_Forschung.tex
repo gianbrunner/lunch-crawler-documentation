@@ -24,7 +24,7 @@ Lineare Modelle basieren auf der Annahme, dass ein linearer Zusammenhang zwische
 Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdecken.
 Das optimale Abdecken wird mit einer Loss-Funktion ermittelt.
 Die Loss-Funktion berechnet den Unterschied zwischen vorhergesagtem Wert zu tatsächlichem Wert des Trainingsdatenpunktes.
-Lineare Modelle verwenden Optimierungsverfahren, welche iterativ Parameter verändern, um die Werte der Loss-Funktion zu minimieren und somit die bestmögliche Parameterzusammensetzung zu ermitteln.
+Lineare Modelle verwenden Optimierungsverfahren, welche iterativ Parameter verändern, um die Werte der Loss-Funktion zu minimieren und somit die bestmögliche Parameterzusammensetzung zu ermitteln.\cite{Frick-Wuersch}
 \subsubsection{Ridge Classifier}
 Der Ridge Classifier ist ein linearer Klassifizierer, welcher als Loss-Funktion die \glqq Least Square\grqq{} Funktion (eine Minimierung der quadrierten Abweichungen) und als Regularisierung die L2-Norm verwendet. Die L2-Norm wird pythagoreisch aus den Vektorwerten berechnet\footnote{\url{https://machinelearningmastery.com/vector-norms-machine-learning/} abgerufen am: 13.07.2019}.
 Die Kombination aus oben erwähnter Loss-Funktion und der L2-Norm wird auch \glqq Ridge Regression\grqq{} genannt, von welcher der Klassifizierer auch seine Bezeichnung erhielt\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html} abgerufen am: 13.07.2019} \cite{scikit-learn}.
@@ -38,7 +38,7 @@ Der SGDClassifier gehört zur Familie der linearen Modelle\footnote{\url{https:/
 Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierungsvefahren das \glqq Stochastic Gradient Descent\grqq{} Verfahren\footnote{\url{https://scikit-learn.org/stable/modules/sgd.html} abgerufen am: 14.05.2019}.
 Bei diesem kommt der mathematische Gradient zum Einsatz.
 Der Gradient zeigt bei der Optimierung der Parameter immer in die Richtung, in welcher der Fehler (gemessen an der Loss-Funktion) am stärksten minimiert werden kann.\\
-Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Optimierung jeweils nur ein Parameter zufällig ausgesucht und angepasst wird und seine Auswirkung anschliessend ermittelt wird.
+Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Berechnung des Gradienten jeweils nur ein Subset des ganzen Trainingsdatensatzes verwendet wird.
 Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können\cite{lecun2012efficient}.\\
 In der \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
 \begin{figure}[H]
@@ -49,9 +49,19 @@ In der \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der 
 	\label{fig:sgd}
 \end{figure}
 \subsubsection{Perceptron}
-Der Perceptron-Algorithmus basiert auf dem SGDClassifier\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Perceptron.html} abgerufen am: 14.05.2019}.
-Hinter der Perceptron-Implementierung steckt lediglich ein SGDClassifier mit spezieller Konfiguration.\\
-Die Perceptron-Implementierung benutzt in der Konfiguration die Loss-Funktion \glqq perceptron\grqq{}, keine Strafe bei falscher Klassifizierung und eine konstante Lernrate. \cite{scikit-learn}
+In der \cref{fig:perceptron-grafik} ist die Darstellung eines Perceptrons ersichtlich.
+Ein Perceptron ist ein Knoten, welcher allen Input-Variablen \glqq x1-x3\grqq{} eine Gewichtung(Ein Mass für die Wichtigkeit) \glqq w1-w3\grqq{} zuweist.
+Die gewichteten Inputs werden dann aufsummiert.
+Wenn die Summe einen bestimmten Schwellwert überschreitet, schaltet der Ausgang \glqq y\grqq{} seinen Zustand um.\\
+Ein einzelnes Perceptron kann als binärer Klassifizierer verwendet werden.
+Im Deep-Learning Umfeld werden mehrere Perceptronen miteinander verbunden, um ein neuronales Netzwerk zu erstellen\footnote{\url{https://towardsdatascience.com/perceptron-the-artificial-neuron-4d8c70d5cc8d} abgerufen am: 05.08.2019}.
+\begin{figure}[H]
+	\centering	
+	\includegraphics[width=0.6\columnwidth,keepaspectratio]{img/perceptron.png}
+	\caption{Visualisierung eines Perceptrons}
+	\source{\url{https://towardsdatascience.com/perceptron-the-artificial-neuron-4d8c70d5cc8d?}}
+	\label{fig:perceptron-grafik}
+\end{figure}
 \subsection{Naive Bayes}
 Naive Bayes Algorithmen sind ein Set von Supervised Learning Algorithmen, welche auf dem Theorem von Bayes basieren.\\
 Das Bayes Theorem zeigt die Berechnung von bedingten Wahrscheinlichkeiten auf:
