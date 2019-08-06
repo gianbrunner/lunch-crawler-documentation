@@ -1,28 +1,37 @@
-\chapter{Schlusswort}
+\chapter{Erkenntnisse und weitere Massnahmen}
 \label{chap:fazit}
-\section{Erkenntnisse}
-Während der Durchführung dieser Arbeit wurden wichtige Erkenntnisse gewonnen.\\
+Während der Durchführung dieser Arbeit wurden wichtige Erkenntnisse gewonnen, welche nun für die drei Hauptkapitel genauer aufgeführt werden.
+\section{Gold Standard}
+Beim manuellen Labeling der Daten des Gold Standards wurden dynamisch generierte Webseiten als negativ klassifiziert, da sie keinen statischen HTML-Inhalt besitzen, der als Menüseite erkennbar ist.
+Solche Webseiten hätten bereits im Voraus erkannt und gar nicht erst klassifiziert werden dürfen, einerseits, da die negative Klassifizierung nicht korrekt ist, andererseits um das Verhältnis von positiven und negativen Samples nicht zu verfälschen.\\
+Ein gravierender Fehler, der begangen wurde, ist die Wahl der Grösse des Testsets.
+Dieses besteht nur aus 100 Dateien, was ca 1.4\% der Grösse des Gold Standards entspricht.
+Somit ist es nur noch bedingt repräsentativ für den gesamten Gold Standard.
+Daraus entstanden auch die starken Abweichungen der Ergebnisse der regelbasierten Klassifikation.
+Zudem wurde ein 50/50-Verhältnis gewählt, was nicht der tatsächlichen Verteilung entspricht.
+Um eine genauere Aussage betreffend der Resultate der Klassifikation machen zu können, muss der Testdatensatz erweitert und die Experimente nochmals durchgeführt werden.
+\section{Klassifikation}
+Für die Klassifizierung hätte eine Preprocessing-Methode zur Erkennung des Hauptinhalts einer Webpage einen grossen Vorteil bewirkt.
+Dies weil beim manuellen Labeling erkannt wurde, dass viele Webpages nicht relevante oder sogar irreführende Informationen im Kopf- und Fussteil beinhalten.\\
+Bei der Klassifikation mittels Machine-Learning wurde erkannt, dass das \glqq No-Free-Lunch\grqq{}-Theorem nicht ohne Grund aufgestellt worden ist.
+Das Entwicklen von Machine-Learning Anwendungen folgt dem Prinzip \glqq Try-and-Error\grqq{} und bietet eine Vielzahl von Stolpersteinen.
+Um die Performance der Klassifizierer zu verbessern, wäre die Verwendung von anderen textbasierten Feature-Extraction Methoden ein möglicher Ansatz.
+Ebenfalls könnte die Anzahl der Trainingsdaten erhöht werden, um den Algorithmen die Möglichkeit zu geben, mehr relevante Zusammenhänge aus den Informationen zu entnehmen.\\
+Für die Klassifikation mittels Machine-Learning wäre das Verwenden von Deep-Learning Ansätzen ebenfalls eine Alternative.
+Deep-Learning Algorithmen können bei Klassifizierungsaufgaben sehr gute Ergebnisse erzielen, sofern genügend Trainingsdaten vorhanden sind.\\
+\section{Engineering}
 Eine Evaluation des Webcrawlers wäre von Vorteil gewesen.
 StormCrawler hat zwar die Funktion erfüllt, ist jedoch dafür ausgelegt, eine enorme Masse an Websites und Webpages zu crawlen.
 Dies ist jedoch keine Hauptanforderung in dieser Arbeit gewesen.
 Dafür wäre ein Webcrawler, welcher auch dynamisch generierte Websites handhaben kann, von Vorteil gewesen.
 Die Implementierung der Spracherkennung innerhalb des Webcrawlers hat bei der ersten Implementierung für erhebliche Performanceprobleme gesorgt.
 Diese wurde zwar optimiert, jedoch ist es prüfenswert, ob eine Spracherkennung während des Crawlens überhaupt notwendig ist.\\
-Für die Klassifizierung hätte eine Preprocessing-Methode zur Erkennung des Hauptinhalts einer Webpage einen grossen Vorteil bewirkt.
-Dies weil beim manuellen Labeling erkannt wurde, dass viele Webpages nicht relevante oder sogar irreführende Informationen im Kopf- und Fussteil beinhalten.\\
-Bei der Klassifikation mittels Machine-Learning wurde erkannt, dass das \glqq No-Free-Lunch\grqq{}-Theorem nicht ohne Grund aufgestellt worden ist.
-Das Entwicklen von Machine-Learning Anwendungen folgt dem Prinzip \glqq Try-and-Error\grqq{} und bietet eine Vielzahl von Stolpersteinen.
-Um die Performance der Klassifizierer zu verbessern, wäre die Verwendung von anderen textbasierten Feature-Extraction Methoden ein möglicher Ansatz.
-Ebenfalls könnte die Grösse der Trainingsdaten erhöht werden, um den Algorithmen die Möglichkeit zu geben, mehr relevante Zusammenhänge aus den Informationen zu entnehmen.
-\section{Ausblick}
 Als weiterer Schritt wäre eine Automatisierung wichtig.
 Darunter versteht sich einerseits das Automatisieren des Webcrawlers, also eine kontinuierliche Erweiterung des Seeds sowie eine regelmässige Durchführung des Crawldurchlaufs.
 Zudem würde die Performance erheblich gesteigert werden, wenn bei bereits gecrawlten Restaurants nur noch die als Menüseite klassifizierte Webpage gecrawlt werden würde und nicht die ganze Website.
 Andererseits müssen die einzelnen Komponenten untereinander mittels definierter Schnittstellen verbunden und automatisiert werden, sodass gecrawlte Daten ohne manuellen Input klassifiziert und für die Webapplikation bereitgestellt werden.\\
 Im Zusammenhang mit der Automatisierung muss auch die Performance optimiert werden.
 Um beispielsweise tägliche Mittagsmenüs erfassen zu können, sollte ein Crawldurchlauf innerhalb weniger Stunden durchgeführt werden.\\
-Für die Klassifikation mittels Machine-Learning wäre das Verwenden von Deep-Learning Ansätzen ebenfalls eine Alternative.
-Deep-Learning Algorithmen können bei Klassifizierungsaufgaben sehr gute Ergebnisse erzielen, sofern genügend Trainingsdaten vorhanden sind.\\
 Zusätzlich wäre eine Erweiterung der Webapplikation mit zusätzlichen Features, wie die Angabe eines maximalen Suchradius oder die Suche an einer bestimmten Postleitzahl, möglich.
 Ebenfalls könnte die Webapplikation ansprechender und intuitiver gestaltet werden.
 
