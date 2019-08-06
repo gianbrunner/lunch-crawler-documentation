@@ -933,23 +933,26 @@ Die Precision jedoch stieg und wirkte der Reduzierung des F1-Scores entgegen.\\
 In der Konfusionsmatrix (\cref{tab:conf}) ist deutlich die hohe Precision zu erkennen.
 Der Algorithmus klassifizierte 34 Webpages korrekt als Menüseiten.
 Ebenfalls wurden nur drei Webpages als Menüseiten klassifiziert, welche aber keine gewesen sind.
+Auf der anderen Seite werden leider 16 Menüseiten als keine Menüseiten klassifiziert.
+Dies erklärt den tiefen Recall und führt dazu, dass etwa 32\% weniger Menüseiten gefunden werden, als eigentlich vorhanden sind.\\
 Die schlussendliche Performance des Klassifizierers ist für den genannten \glqq Use-Case\grqq{} zufriedenstellend und somit wird der Algorithmus Perceptron in einer produktiven Pipeline weiterverwendet.
-\\\\
-Schlussendlich ist ersichtlich, dass die Variante mit dem Perceptron-Algorithmus eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.
-Der F1-Score liegt zwar leicht unter dem selbst definierten Schwellwert von 0.8, jedoch ist die Precision mit 0.92 weit darüber.\\
-
-Für den Anwendungsfall einer Suchmaschine ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
-Dennoch dürfen nicht nur eine Hand voll Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
-Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und Recall und wird deshalb für die Suchmaschine verwendet.
-Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
-Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
 \section{Beantwortung der Forschungsfrage}
 Unter Verwendung der Daten des selbst erarbeiteten Gold Standards und dem selbst vorgegebenen Ziel eines F1-Scores von mindestens 0.8 lautet die Antwort auf die Forschungsfrage:\\
 
 \emph{Nein, Restaurant-Webseiten können mit den erarbeiteten Klassifizierern nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}\\
 
-Jedoch ist der angestrebte Wert auf den Testdaten nur knapp verfehlt worden, auf den Trainingsdaten wurde er sogar erreicht.
-Es lässt sich vermuten, dass mit Anpassungen an den Algorithmen sowie der Daten das Ziel erreichen lässt.
-Gründe für das Verfehlen des Ziels und Massnahmen, um dieses trotzdem noch zu erreichen, sind in \cref{chap:fazit} zu finden.
-
-
+Jedoch wurde das Ziel mit verschiedenen Klassifizierern nur leicht verfehlt.
+Aus den Ergebnissen ist zu entnehmen, dass für eine weitere Erarbeitung der Thematik die Ansätze mit Machine-Learning die grössten Erfolgschancen bieten.
+Die regelbasierten Ansätze bieten auf kleinen Datenmengen zwar gute Ergebnisse, die Fehlerquote der regelbasierten Ansätze steigt jedoch stetig mit der Erhöhung der Datenmenge.
+Somit sind die regelbasierten Ansätze zu unflexibel.\\
+Es lässt sich vermuten, dass mit weiteren Optimierungen an den Algorithmen sowie der Daten das Ziel sich erreichen lässt.
+Gründe für das Verfehlen des Ziels und allfällige Massnahmen, um dieses trotzdem zu erreichen, sind in \cref{chap:fazit} zu finden.
+\\\\
+Obwohl das Ziel der Forschungsfrage nicht erreicht werden konnte, ist ersichtlich, dass der beste Klassifizierer aus der Machine-Learning Variante dennoch eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.
+Der F1-Score liegt zwar leicht unter der gesetzten Marke von 0.8, jedoch ist die Precision mit 0.92 weit darüber.
+\\
+Für den Anwendungsfall einer Suchmaschine ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
+Dennoch dürfen nicht nur eine Hand voll Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
+Der beste Machine-Learning Klassifizierer bietet einen guten Kompromiss zwischen Precision und Recall und wird aufgrund dessen für die Suchmaschine verwendet.
+Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
+Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
