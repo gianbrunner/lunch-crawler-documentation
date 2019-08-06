@@ -61,7 +61,8 @@ Scikit Learn ist unter BSD lizenziert und für die kommerzielle Nutzung frei ver
 Sie ist eine der bekanntesten Standardbibliotheken für Machine-Learning, wird unter anderem von grossen Namen wie Google finanziell unterstützt und besitzt eine rege Contribution-Community auf Github\footnote{\url{https://github.com/scikit-learn/scikit-learn} abgerufen am: 07.05.2019}.\\
 Scikit Learns Stärken liegen in den Machine-Learning Bereichen \glqq Supervised Learning\grqq{} und \glqq Unsupervised Learning\grqq{}.
 Die API von Scikit Learn bietet eine Vielzahl von Algorithmen für Klassifizierung, Regression, Clustering, Dimensionsreduktion, Modelselektion sowie Preprocessing an und deckt somit die ganze Machine-Learning Pipeline ab\footnote{\url{https://scikit-learn.org/stable/} abgerufen am: 07.05.2019}.
-Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.
+Scikit Learn bietet für fast jeden Algorithmus oder Technik in der API eine Beispielimplementation an, welche für Fast-Prototyping  als Fundament übernommen werden kann.\\
+Scikit-Learn wurde sowohl in der regelbasierten Klassifikation, als auch in der Klasssifikation mittels Machine-Learning verwendet.
 \section{Preprocessing}
 Das Preprocessing wurde entwickelt, um den Inhalt des Dokuments in eine standardisierte Form zu bringen.
 Die folgenden Methoden können sowohl auf den Text eines Dokuments sowie auch auf den Titel angewendet werden.
@@ -527,6 +528,9 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 	\source{Eigene Darstellung}
 \end{table}
 \section{Experimente mittels Machine-Learning}
+Die folgenden Experimente beschreiben die Methoden und Resultate der Experimente mittels Machine-Learning.
+Anschliessend folgt die Interpretation und Diskussion.
+Der Link zum entsprechenden Code ist im Anhang (\cref{app:classification}) zu finden.
 \subsection{Einleitung}
 \subsubsection{Durchführung der Experimente}
 Alle Experimente werden mit der Pipeline, welche im \cref{sec:classification} beschrieben wird, durchgeführt.
@@ -534,10 +538,11 @@ Um eine möglichst grosse Abdeckung von Experimenten zu erzielen, werden bei jed
 Die drei verwendeten Feature-Extraction Methoden sind \glqq Bag of Words\grqq{}, \glqq binäres Bag of Words\grqq{} und \glqq TF-IDF\grqq{}, welche in \cref{sub:bow} und \cref{sub:tfidf} erläutert werden.\\
 Für jede Pipeline wurde vor dem Training der Algorithmen, welche im \cref{sub:clf} ersichtlich sind, aus den Trainingsdaten eine kleine Teilmenge als Validierungsset entnommen.
 Die einzelnen Pipelines wurden danach mit dem Rest des Trainingssets trainiert und mit dem entnommenen Validierungsset validiert.
+Somit basieren alle Resultate der Experimente auf dem Validierungsset.
 Dies wurde konsequent für alle Experimente durchgeführt, um eine unverzerrte Einschätzung der Performance der Algorithmen während der Experimente zu erhalten.
 Würde man die Validierung auf den Trainingsdaten durchführen, hätte man eine verzerrte Einschätzung der Performance\footnote{\url{https://machinelearningmastery.com/difference-test-validation-datasets/} abgerufen am: 10.07.2019}.\\
 Zusätzlich wurde nach Abschluss aller Experimente die Performance des besten Klassifizierers auf einem ungesehenen Testdatenset überprüft.
-Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann.
+Diese Überprüfung gibt einen Rückschluss darauf, wie gut der Klassifizierer auf ungesehene Daten generalisierte Einschätzungen geben kann und wird in der Diskussion thematisiert.
 \subsubsection{Konfigurationen zu den einzelnen Experimenten}
 Jede ausgeführte Pipeline erzeugt eine Textdatei mit den Ergebnissen und der Konfiguration der Pipeline.
 Somit kann jedes Ergebnis der Experimente wiederholt und nachvollzogen werden.
@@ -573,6 +578,8 @@ TF-IDF stammt aus der Disziplin \glqq Information Retrieval\grqq{} und findet da
 \subsubsection{Übersicht der verwendeten Machine-Learning Algorithmen}\label{sub:clf}
 Aufgrund des \glqq No free lunch\grqq{}-Theorems wurden 14 Algorithmen trainiert und validiert.
 Nun erfolgt eine Auflistung aller Algorithmen, die verwendet wurden.
+Die Algorithmen wurden aus zwei unterschiedlichen Online-Artikeln \footnote{\url{https://medium.com/@robert.salgado/multiclass-text-classification-from-start-to-finish-f616a8642538} abgerufen am: 06.08.2019}
+\footnote{\url{https://scikit-learn.org/stable/auto_examples/text/plot_document_classification_20newsgroups.html} abgerufen am: 06.08.2019} zusammengetragen, welche beide die Klassifizierung von Textinhalten thematisieren.
 Zusätzlich können die Algorithmen im \cref{sec:algos} nachgeschlagen werden.
 \begin{itemize}
 	\item Lineare Modelle
@@ -922,29 +929,32 @@ Aufgrund dessen wurden die Standardparameter weiter verwendet.
 	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
 	\source{Eigene Darstellung}
 \end{table}
-In der \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zur \cref{tab:per} der F1-Score leicht abgenommen hat.
+Im \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zum \cref{tab:per} der F1-Score leicht abgenommen hat.
 Dies hat den Grund, dass der Recall spürbar an Wert verloren hat.
 Die Precision jedoch stieg und wirkte der Reduzierung des F1-Scores entgegen.\\
 In der Konfusionsmatrix (\cref{tab:conf}) ist deutlich die hohe Precision zu erkennen.
 Der Algorithmus klassifizierte 34 Webpages korrekt als Menüseiten.
 Ebenfalls wurden nur drei Webpages als Menüseiten klassifiziert, welche aber keine gewesen sind.
+Auf der anderen Seite werden leider 16 Menüseiten als keine Menüseiten klassifiziert.
+Dies erklärt den tiefen Recall und führt dazu, dass etwa 32\% weniger Menüseiten gefunden werden, als eigentlich vorhanden sind.\\
 Die schlussendliche Performance des Klassifizierers ist für den genannten \glqq Use-Case\grqq{} zufriedenstellend und somit wird der Algorithmus Perceptron in einer produktiven Pipeline weiterverwendet.
-\\\\
-Schlussendlich ist ersichtlich, dass die Variante mit dem Perceptron-Algorithmus eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.
-Der F1-Score liegt zwar leicht unter dem selbst definierten Schwellwert von 0.8, jedoch ist die Precision mit 0.92 weit darüber.\\
-
-Für den Anwendungsfall einer Suchmaschine ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
-Dennoch dürfen nicht nur eine Hand voll Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
-Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und Recall und wird deshalb für die Suchmaschine verwendet.
-Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
-Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
 \section{Beantwortung der Forschungsfrage}
 Unter Verwendung der Daten des selbst erarbeiteten Gold Standards und dem selbst vorgegebenen Ziel eines F1-Scores von mindestens 0.8 lautet die Antwort auf die Forschungsfrage:\\
 
 \emph{Nein, Restaurant-Webseiten können mit den erarbeiteten Klassifizierern nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}\\
 
-Jedoch ist der angestrebte Wert auf den Testdaten nur knapp verfehlt worden, auf den Trainingsdaten wurde er sogar erreicht.
-Es lässt sich vermuten, dass mit Anpassungen an den Algorithmen sowie der Daten das Ziel erreichen lässt.
-Gründe für das Verfehlen des Ziels und Massnahmen, um dieses trotzdem noch zu erreichen, sind in \cref{chap:fazit} zu finden.
-
-
+Jedoch wurde das Ziel mit verschiedenen Klassifizierern nur leicht verfehlt.
+Aus den Ergebnissen ist zu entnehmen, dass für eine weitere Erarbeitung der Thematik die Ansätze mit Machine-Learning die grössten Erfolgschancen bieten.
+Die regelbasierten Ansätze bieten auf kleinen Datenmengen zwar gute Ergebnisse, die Fehlerquote der regelbasierten Ansätze steigt jedoch stetig mit der Erhöhung der Datenmenge.
+Somit sind die regelbasierten Ansätze zu unflexibel.\\
+Es lässt sich vermuten, dass mit weiteren Optimierungen an den Algorithmen sowie der Daten das Ziel sich erreichen lässt.
+Gründe für das Verfehlen des Ziels und allfällige Massnahmen, um dieses trotzdem zu erreichen, sind in \cref{chap:fazit} zu finden.
+\\\\
+Obwohl das Ziel der Forschungsfrage nicht erreicht werden konnte, ist ersichtlich, dass der beste Klassifizierer aus der Machine-Learning Variante dennoch eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.
+Der F1-Score liegt zwar leicht unter der gesetzten Marke von 0.8, jedoch ist die Precision mit 0.92 weit darüber.
+\\
+Für den Anwendungsfall einer Suchmaschine ist es besser, wenn nicht möglichst viel gefunden wird, sondern dass das Gefundene effektiv korrekt ist.
+Dennoch dürfen nicht nur eine Hand voll Menüseiten gefunden werden, damit das Angebot nicht verkümmert.\\
+Der beste Machine-Learning Klassifizierer bietet einen guten Kompromiss zwischen Precision und Recall und wird aufgrund dessen für die Suchmaschine verwendet.
+Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
+Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
