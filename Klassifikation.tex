@@ -853,7 +853,7 @@ Aufgrund dieser Annahme wird das Perceptron-Modell für eine produktive Pipeline
 Die Resultate der Experimente der zwei verschiedenen Ansätze anhand der Testdaten zeigen, dass mit regelbasierten Methoden ein fast gleich guter Score erreichbar ist wie mit Machine-Learning.
 Beide Ansätze erzielen eine hohe Precision.
 Es ist jedoch zu berücksichtigen, dass die Resultate der regelbasierten Methode bei steigender Anzahl Daten schlechter werden.
-
+Die zwei verschiedenen Ansätze werden nun genauer erläutert.
 \subsection{Diskussion der Resultate der regelbasierten Experimente}
 Der Regelsatz \glqq Menü im Titel\grqq{} hat im Bezug auf den F1-Score das schlechteste Ergebnis geliefert, dafür einen Precision-Wert von 1.
 Es ist also keine Webpage fälschlicherweise als Menüseite klassifiziert worden.
@@ -937,7 +937,12 @@ Der Perceptron-Algorithmus bietet einen guten Kompromiss zwischen Precision und 
 Mit seiner Precision von 0.92 erreicht er bei 37 Vorhersagen nur drei falsche Einschätzungen.
 Somit wäre in der Suchmaschine jeder 13. Vorschlag falsch, was nach der Meinung der Autoren vertretbar ist.
 \section{Beantwortung der Forschungsfrage}
-Unter Verwendung der Daten des Gold Standards und dem selbst vorgegebenen Ziel eines F1-Scores von mindestens 0.8 lautet die Antwort auf die Forschungsfrage:\\
-\emph{Nein, Restaurant-Webseiten können mit den erarbeiteten Klassifizierern nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}
+Unter Verwendung der Daten des selbst erarbeiteten Gold Standards und dem selbst vorgegebenen Ziel eines F1-Scores von mindestens 0.8 lautet die Antwort auf die Forschungsfrage:\\
+
+\emph{Nein, Restaurant-Webseiten können mit den erarbeiteten Klassifizierern nicht mit hoher Wahrscheinlichkeit klassifiziert werden, ob sie Menüinformationen beinhalten.}\\
+
+Jedoch ist der angestrebte Wert auf den Testdaten nur knapp verfehlt worden, auf den Trainingsdaten wurde er sogar erreicht.
+Es lässt sich vermuten, dass mit Anpassungen an den Algorithmen sowie der Daten das Ziel erreichen lässt.
+Gründe für das Verfehlen des Ziels und Massnahmen, um dieses trotzdem noch zu erreichen, sind in \cref{chap:fazit} zu finden.
 
 
