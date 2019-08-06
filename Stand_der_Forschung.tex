@@ -19,9 +19,9 @@ Diese analysieren einen Datensatz, bei dem die Proben bereits eine Zuteilung zur
 Ein Theorem des bekannten Informatikers David H. Wolpert, welches sinngemäss die Aussage trifft, dass kein Klassifizierer existiert, welcher für eine Vielzahl von Klassifikationsproblemen geeignet wäre \cite[p. 1341-1390]{Wolpert1996TheLO}.
 Wenngleich das No-Free-Lunch Theorem aus mathematischer Sicht korrekt ist, hat sich in der Praxis doch gezeigt, dass gewisse Klassifikation-Alogorithmen über mehrere Problemklassen hinweg gute Resultate erzielen \cite{fernandez-delgado2014}.
 \section{Klassifikationsalgorithmen}\label{sec:algos}
-\subsection{Lineare Modell}
+\subsection{Lineare Modelle}
 Lineare Modelle basieren auf der Annahme, dass ein linearer Zusammenhang zwischen Eingangsvariablen und Ausgangsvariablen besteht.
-Lineare Modelle versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdecken.
+Sie versuchen Parameter zu einer linearen Gleichung zu finden, welche die Trainingsdatenpunkte optimal abdecken.
 Das optimale Abdecken wird mit einer Loss-Funktion ermittelt.
 Die Loss-Funktion berechnet den Unterschied zwischen vorhergesagtem Wert zu tatsächlichem Wert des Trainingsdatenpunktes.
 Lineare Modelle verwenden Optimierungsverfahren, welche iterativ Parameter verändern, um die Werte der Loss-Funktion zu minimieren und somit die bestmögliche Parameterzusammensetzung zu ermitteln.\cite{Frick-Wuersch}
@@ -39,18 +39,18 @@ Der \glqq Stochastic-Gradient-Descent-Classifier\grqq{} verwendet als Optimierun
 Bei diesem kommt der mathematische Gradient zum Einsatz.
 Der Gradient zeigt bei der Optimierung der Parameter immer in die Richtung, in welcher der Fehler (gemessen an der Loss-Funktion) am stärksten minimiert werden kann.\\
 Der stochastische/probabilistische Anteil dieses Verfahrens bedeutet, dass bei der Berechnung des Gradienten jeweils nur ein Subset des ganzen Trainingsdatensatzes verwendet wird.
-Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können\cite{lecun2012efficient}.\\
+Dies hat den Vorteil, dass die Trainingszeit optimiert werden kann und zugleich gute Werte erzielt werden können \cite{lecun2012efficient}.\\
 In der \cref{fig:sgd} wird der Verlauf der Loss-Funktion aufgezeigt und wie der Gradient zu interpretieren ist.
 \begin{figure}[H]
 	\centering	
 	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/sgd.png}
 	\caption{Visualisierung des Gradienten und der Loss-Funktion (J(w) = Loss; w = Parameteränderung)}
-	\source{\url{http://rasbt.github.io/mlxtend/user_guide/general_concepts/gradient-optimization/}}
+	\source{Github\footnote{\url{http://rasbt.github.io/mlxtend/user_guide/general_concepts/gradient-optimization/} aufgerufen am: 05.08.2019}}
 	\label{fig:sgd}
 \end{figure}
 \subsubsection{Perceptron}
 In der \cref{fig:perceptron-grafik} ist die Darstellung eines Perceptrons ersichtlich.
-Ein Perceptron ist ein Knoten, welcher allen Input-Variablen \glqq x1-x3\grqq{} eine Gewichtung(Ein Mass für die Wichtigkeit) \glqq w1-w3\grqq{} zuweist.
+Ein Perceptron ist ein Knoten, welcher allen Input-Variablen \glqq x1-x3\grqq{} eine Gewichtung (Ein Mass für die Wichtigkeit) \glqq w1-w3\grqq{} zuweist.
 Die gewichteten Inputs werden dann aufsummiert.
 Wenn die Summe einen bestimmten Schwellwert überschreitet, schaltet der Ausgang \glqq y\grqq{} seinen Zustand um.\\
 Ein einzelnes Perceptron kann als binärer Klassifizierer verwendet werden.
@@ -59,7 +59,7 @@ Im Deep-Learning Umfeld werden mehrere Perceptronen miteinander verbunden, um ei
 	\centering	
 	\includegraphics[width=0.6\columnwidth,keepaspectratio]{img/perceptron.png}
 	\caption{Visualisierung eines Perceptrons}
-	\source{\url{https://towardsdatascience.com/perceptron-the-artificial-neuron-4d8c70d5cc8d?}}
+	\source{towardsdatascience\footnote{\url{https://towardsdatascience.com/perceptron-the-artificial-neuron-4d8c70d5cc8d?} aufgerufen am: 05.08.2019}}
 	\label{fig:perceptron-grafik}
 \end{figure}
 \subsection{Naive Bayes}
@@ -136,7 +136,7 @@ Die schwarzen Datenpunkte markieren jeweils den Schwerpunkt der entsprechenden K
 	\centering	
 	\includegraphics[width=0.7\columnwidth,keepaspectratio]{img/centroid.png}
 	\caption{Darstellung einer simplen Nearest Centroid Prozedur}
-	\source{\url{https://www.researchgate.net/figure/Abbildung-410-Illustration-des-Nearest-Centroid-Verfahrens-mit-den-Gruppen-soft_fig4_267488030}}
+	\source{Researchgate\footnote{\url{https://www.researchgate.net/figure/Abbildung-410-Illustration-des-Nearest-Centroid-Verfahrens-mit-den-Gruppen-soft_fig4_267488030} aufgerufen am: 14.05.2019}}
 	\label{fig:centroid}
 \end{figure}
 \subsection{Support Vector Machine Modelle}
