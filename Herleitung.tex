@@ -62,10 +62,10 @@ Anhand dieser Daten lernt der Algorithmus für zukünftige Daten, wie er sie kla
 Um eine binäre Klassifizierung, also das Einordnen von Daten in zwei verschiedene Kategorieren messen zu können, werden Metriken wie Precision, Recall und F1-Score verwendet.
 Dazu müssen zuerst die folgenden Klassifizierungskategorien erläutert werden:
 \begin{itemize}
-	\item Richtig Positiv - Die Webpage wurde als Menüseite klassifiziert und ist eine Menüseite
-	\item Falsch Positiv - Die Webpage wurde als Menüseite klassifiziert, ist aber keine Menüseite
-	\item Falsch Negativ - Die Webpage wurde nicht als Menüseite klassifiziert, ist aber eine Menüseite
-	\item Richtig Negativ - Die Webpage wurde nicht als Menüseite klassifiziert und ist keine Menüseite
+	\item Richtig Positiv (TP) - Die Webpage wurde als Menüseite klassifiziert und ist eine Menüseite
+	\item Falsch Positiv (FP) - Die Webpage wurde als Menüseite klassifiziert, ist aber keine Menüseite
+	\item Falsch Negativ (FN) - Die Webpage wurde nicht als Menüseite klassifiziert, ist aber eine Menüseite
+	\item Richtig Negativ (TN) - Die Webpage wurde nicht als Menüseite klassifiziert und ist keine Menüseite
 \end{itemize}
 Jede klassifizierte Webpage lässt sich in eine dieser Kategorie einordnen.
 Anhand dieser Kategorien lassen sich die oben genannten Metriken wie folgt berechnen:\\
@@ -76,5 +76,24 @@ Der Recall definiert das Verhältnis der korrekt positiv klassifizierten Proben 
 \[F_{1}=2*\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
 Anhand des F1-Scores wird die Genauigkeit der Klassifizierung gemessen.
 Dabei stehen Precision und Recall im selben Verhältnis.
-Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.
-
+Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.\\
+Um Resultate in absoluten Zahlen abzubilden, können die vier Klassifizierungskategorien in Tabellenform, genannt \emph{Konfusionsmatrix}, dargestellt werden.
+Hier ein Beispiel:
+\begin{table}[H]
+	\centering
+	\begin{tabular}{@{}cc|cc@{}}
+		\multicolumn{1}{c}{} &\multicolumn{1}{c}{} &\multicolumn{2}{c}{Predicted} \\ 
+		\multicolumn{1}{c}{} & 
+		\multicolumn{1}{c|}{} & 
+		\multicolumn{1}{c}{Positiv} & 
+		\multicolumn{1}{c}{Negativ} \\ 
+		\cline{2-4}
+		\multirow[c]{2}{*}{\rotatebox[origin=tr]{90}{Actual}}
+		& Positiv  & TP   & FN   \\[1.5ex]
+		& Negativ  & FP   & TN \\ 
+		\cline{2-4}
+	\end{tabular}
+	\caption{Konfusionsmatrix}
+	\source{Eigene Darstellung}
+\end{table}
+Dabei bilden die Spalten die vorhergesagten Zahlen ab, die Reihen die tatsächliche Anzahl.
