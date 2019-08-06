@@ -143,6 +143,7 @@ Diese hat anhand der Trainingsdaten folgende Metriken ergeben:\\
 		\hline
 	\end{tabular}
 	\caption{Score des Regelsets: Menü im Titel anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 \begin{table}[H]
@@ -156,6 +157,7 @@ Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 		\hline
 	\end{tabular}
 	\caption{Score des Regelsatzes: Menü im Titel anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
 \begin{table}[H]
@@ -173,6 +175,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\cline{2-4}
 	\end{tabular}
 	\caption{Konfusionsmatrix des Regelsets: Menü im Titel anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 \subsection{Regelsatz: Preisdetektor}
 \subsubsection{Methode}
@@ -194,6 +197,7 @@ Durch die Konfiguration kann ein Schwellwert für die Anzahl erkannter Preise an
 		\hline
 	\end{tabular}
 	\caption{Scores des Regelsets: Preisdetektor anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Das beste Ergebnis hat ein Schwellwert von zwei erzielt, danach ist der F1-Score wieder schlechter geworden.
 Daraus wurde geschlussfolgert, dass für dieses Regelset das Maximum bereits erreicht wurde.
@@ -209,6 +213,7 @@ Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 		\hline
 	\end{tabular}
 	\caption{Score des Regelsatzes: Preisdetektor anhand der Testdaten} 
+	\source{Eigene Darstellung}
 \end{table}
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
 \begin{table}[H]
@@ -227,6 +232,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\cline{2-4}
 	\end{tabular}
 	\caption{Konfusionsmatrix des Regelsets: Preisdetektor anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 \subsection{Regelsatz: Kombination aus Menü im Titel und Preisdetektor}
 \subsubsection{Methode}
@@ -247,6 +253,7 @@ Bei dieser Konfiguration kann der Schwellwert ebenfalls für die Anzahl erkannte
 		\hline
 	\end{tabular}
 	\caption{Scores des Regelsets: Kombination aus Menü im Titel und Preisdetektor anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Auch bei diesem Regelset hat die Konfiguration mit einem Schwellwert von zwei das beste Ergebnis erzielt.
 \\
@@ -261,6 +268,7 @@ Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 		\hline
 	\end{tabular}
 	\caption{Score des Regelsatzes: Kombination aus Menü im Titel und Preisdetektor anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
 \begin{table}[H]
@@ -278,6 +286,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\cline{2-4}
 	\end{tabular}
 	\caption{Konfusionsmatrix des Regelsets: Kombination aus Menü im Titel und Preisdetektor anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 \subsection{Regelsatz: Listing}
 \subsubsection{Methode}
@@ -287,7 +296,7 @@ Falls ein Wort aus der Black- oder Whitelist im Text einer Webpage vorkommt, wir
 Zum Schluss findet eine sequenzielle Klassifizierung statt, das heisst: 
 Wenn der Zähler der Blacklist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als negativ klassifiziert. 
 Wenn der Zähler der Whitelist einen konfigurierbaren Schwellwert überschreitet, wird die Webpage als Menüseite klassifiziert.
-Falls keiner der beiden Zähler den Schwellwert überschreitet, wird die Webpage ebenfalls als negativ klassifiziert. 
+Falls kein Zähler oder beide den Schwellwert überschreitet, wird die Webpage ebenfalls als negativ klassifiziert. 
 \subsubsection{Resultate}
 In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erhöht:\\
 \begin{table}[H]
@@ -304,6 +313,7 @@ In einem ersten Versuch wurden identische Schwellwerte gewählt und jeweils erh�
 		\hline
 	\end{tabular}
 	\caption{Scores der ersten Iteration des Regelsets: Listing anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Dieser Versuch hat gezeigt, dass ein maximaler F1-Score bei gleichen Werten zwischen 5 und 20 zu erreichen ist.\\
 Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden im zweiten Versuch unterschiedliche Verhältnisse getestet:\\
@@ -318,6 +328,7 @@ Da gleich gewählte Werte keine zufriedenstellende Ergebnisse erzielten, wurden 
 		\hline
 	\end{tabular}
 	\caption{Scores der zweiten Iteration des Regelsets: Listing anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Aus diesem Versuch entstand die Erkenntnis, dass ein höherer Schwellwert der Blacklist als der Whitelist erforderlich ist, um einen möglichst hohen Score zu erreichen.
 Diese Erkenntnis wurde in einem weiteren Versuch in mehreren Iterationen getestet:\\
@@ -340,6 +351,7 @@ Diese Erkenntnis wurde in einem weiteren Versuch in mehreren Iterationen geteste
 		\hline
 	\end{tabular}
 	\caption{Scores der dritten Iteration des Regelsets: Listing anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Die Schwellwerte wurden stetig erhöht.
 Dabei wurden verschiedene Schwellwerte in unterschiedlichen Verhältnissen getestet.
@@ -358,6 +370,7 @@ Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 		\hline
 	\end{tabular}
 	\caption{Score des Regelsatzes: Listing anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
 \begin{table}[H]
@@ -375,6 +388,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\cline{2-4}
 	\end{tabular}
 	\caption{Konfusionsmatrix des Regelsets: Listing anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 \subsection{Regelsatz: Bag of Words}
 \subsubsection{Methode}
@@ -405,6 +419,7 @@ In einer ersten Iteration wurde die Anzahl von 200 Features und ein Split von 0.
 		\hline
 	\end{tabular}
 	\caption{Scores der ersten Iteration des Regelsets: Bag of Words anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Dabei wurde erkannt, dass sich ein negativer Schwellwert positiv auf den F1-Score auswirkt.\\
 In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
@@ -420,6 +435,7 @@ In der zweiten Iteration wurde der Schwellwert weiter verkleinert.\\
 		\hline
 	\end{tabular}
 	\caption{Scores der zweiten Iteration des Regelsets: Bag of Words anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Da diese Werte sich fast nicht unterscheiden, wurden alle weiterverwendet, um einen maximalen Score zu evaluieren.
 In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 bis 400 sowie die drei oben genannten Verhältnisse zusammen mit den vier Schwellwerten getestet worden. Die \cref{tab:bow3} zeigt diese Tests, sortiert nach bestem F1-Score:\\
@@ -468,6 +484,7 @@ In einer dritten, ausführlicheren Iteration sind die Anzahl Features von 200 bi
 		0.5 & 300 & -2 & 0.46 & 0.62 & 0.36 \\ \hline
 	\end{tabular}
 	\caption{Scores der dritten Iteration des Regelsets: Bag of Words anhand der Trainingsdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Daraus lässt sich schliessen, dass eine hohe Anzahl Features zu einem besseren Ergebnis führt.
 Das Verhältnis zwischen Test- und Trainingsdaten ist nicht so relevant, da sowohl das Verhältnis 0.3 als auch 0.7 zu hohen Scores führt.
@@ -486,6 +503,7 @@ Das folgende Ergebnis ist anhand der Daten des Testsets entstanden:
 		\hline
 	\end{tabular}
 	\caption{Score des Regelsatzes: Bag of Words anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlicht.
 \begin{table}[H]
@@ -503,6 +521,7 @@ Die Klassifizierung in absoluten Zahlen wird mittels Konfusionsmatrix verdeutlic
 		\cline{2-4}
 	\end{tabular}
 	\caption{Konfusionsmatrix des Regelsets: Bag of Words anhand der Testdaten}
+	\source{Eigene Darstellung}
 \end{table}
 \section{Experimente mittels Machine-Learning}
 \subsection{Einleitung}
@@ -787,6 +806,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 	\caption{Auwertung Hyperparametertuning für AdaBoost mit binärem Bag of Words}
+	\source{Eigene Darstellung}
 \end{table}
 \begin{table}[H]
 	\centering
@@ -800,6 +820,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 	\caption{Auwertung Hyperparametertuning für Perceptron mit Bag of Words}
+	\source{Eigene Darstellung}
 \end{table}
 \begin{table}[H]
 	\centering
@@ -813,6 +834,7 @@ Die drei Modelle AdaBoost, SGDClassifier und Perceptron konnten die besten F1-Sc
 		\hline
 	\end{tabular}
 	\caption{Auwertung Hyperparametertuning für SGDClassifier mit TF-IDF}
+	\source{Eigene Darstellung}
 \end{table}
 In der \cref{tab:ada} ist auffällig, dass AdaBoost als einziges Modell bessere Hyperparameter mittels Hyperparametertuning finden konnte.\\
 AdaBoost kann seinen Recall verbessern, gleichzeitig verschlechtert sich aber seine Precision.
@@ -875,6 +897,7 @@ Aufgrund dessen wurden die Standardparameter weiter verwendet.
 		\hline
 	\end{tabular}
 	\caption{Bester Algorithmus der Machine-Learning Klassifikation}
+	\source{Eigene Darstellung}
 \end{table}
 
 \begin{table}[H]
@@ -894,6 +917,7 @@ Aufgrund dessen wurden die Standardparameter weiter verwendet.
 		\cline{2-4}
 	\end{tabular}
 	\caption{Konfusionsmatrix der Methode: Perceptron mit binärem Bag of Words}
+	\source{Eigene Darstellung}
 \end{table}
 In der \cref{tab:bestclf} ist ersichtlich, dass im Vergleich zur \cref{tab:per} der F1-Score leicht abgenommen hat.
 Dies hat den Grund, dass der Recall spürbar an Wert verloren hat.
