@@ -24,6 +24,7 @@ Dieser Ablauf findet solange statt bis ein gewisses Ziel erreicht ist. \cite[p. 
 Es fand keine Evaluation zur Findung eines geeigneten Webcrawlers statt.
 StormCrawler SDK wird eingesetzt, da an der Hochschule für Technik und Wirtschaft Chur ein Team bereits mit diesem arbeitet und dadurch Know-how besitzt.
 Dieses Team, speziell ein wissenschaftlicher Mitarbeiter, hat Support angeboten, weshalb die Entscheidung getroffen wurde, StormCrawler SDK zu verwenden.
+\FloatBarrier
 \subsection{Beschreibung der Technologie und Anpassungen}
 Nachfolgend werden die verschiedenen Technologien beschrieben, welche verwendet wurden, um den Webcrawler zu realisieren.
 \subsubsection{Apache Storm}
@@ -48,7 +49,7 @@ In einer Topologie werden verschiedene Spouts und Bolts miteinander verknüpft, 
 	\centering	
 	\includegraphics[width=0.8\columnwidth,keepaspectratio]{img/storm-topology.png}
 	\caption{Beispieltopologie}
-	\source{\url{https://dzone.com/articles/apache-storm-architecture}}
+	\source{\url{https://dzone.com/articles/apache-storm-architecture} aufgerufen am 08.01.2019}
 	\label{fig:topology}
 \end{figure}
 Dabei hat der Spout die Aufgabe, Daten aus einer Quelle (z.B. Datei, Datenbank, Array) einzulesen und daraus ein Tupel zu bilden.
