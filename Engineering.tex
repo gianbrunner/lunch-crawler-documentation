@@ -1,7 +1,10 @@
 \chapter{Teil 3: Engineering}
 \label{chap:engineering}
+Dieses Kapitel beinhaltet den praktischen Teil dieser Arbeit.
+Die Erarbeitung und die verwendeten Technologien des Webcrawlers sowie der Webapplikation werden genauer erläutert.
 \section{Webcrawler}
-Dieser Abschnitt beschreibt sowohl die Technologie des Webcrawlers als auch die Erarbeitung dessen.
+Der Webcrawler dient zur Erarbeitung der Rohdaten des in \cref{chap:gold_standard} beschriebenen Gold Standards.
+Zusätzlich wurden diese Rohdaten mit einem der in \cref{chap:classification} erarbeiteten Algorithmen klassifiziert und als Grundlage für die Daten der Webapplikation verwendet.
 \subsection{Stand der Forschung}
 Ein Webcrawler ist ein Programm, das automatisch das World Wide Web durchsucht und Webseiten analysiert \cite[p. 311]{liu2007web}.
 Ein Webcrawler verwendet als Startpunkt ein Seed, welches URLs enthält.
@@ -88,14 +91,14 @@ Als deutsch detektierte Webpages werden in einen separaten Output-Ordner gespeic
 Trotzdem ist es wichtig, dass alle aufgerufenen Webpages gespeichert werden, damit im Anschluss des Crawlens eine Aussage gemacht werden kann, wie viele Einträge des Seeds effektiv gecrawlt wurden.
 \subsubsection{Docker}
 In diesem Kontext wird Docker als die Software zum Erstellen von Linux-Containern verwendet.
-Diese Container können einfach kopiert, ersetzt oder auf einem anderen System verwendet werden\footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker} abgerufen am: 12.01.2019}.\\
+Diese Container können einfach kopiert, ersetzt oder auf einem anderen System verwendet werden.
 Der Vorteil von Containern ist, dass alle Abhängigkeiten mit der ausführbaren Software in den Container gepackt werden können und somit jede Umgebung, die den gleichen Container verwendet, auch den gleichen Softwarestand besitzt.
 Docker Container werden mit einem einzigen Konfigurationsfile beschrieben.
 Dieses Konfigurationsfile, das sogenannte Dockerfile, definiert alle Notwendigkeiten, um den Docker Container zu realisieren.
 Im Dockerfile werden Instruktionen für das Erstellen des Images definiert.
 Da Dockerfiles einfache Textdateien sind, können sie, wie jeder andere Sourcecode, mit Git, SVN oder anderen Versionsverwaltungen verwaltet werden.
 Durch Dockerfiles können Docker Images erstellt werden, welche wiederum den dadurch definierten Container erstellen und starten.
-Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden, wobei der Docker Container eine Instanz der entsprechenden Klasse wäre. 
+Grundsätzlich kann das Docker Image mit einer Klasse im Objekt-Orientierten-Programmieren verglichen werden, wobei der Docker Container eine Instanz der entsprechenden Klasse wäre\footnote{\url{https://www.redhat.com/de/topics/containers/what-is-docker} abgerufen am: 12.01.2019}. 
 \subsubsection{Docker-Compose}
 Mit Docker Containern können sehr einfach Micro-Services Architekturen realisiert werden, wodurch jeder Container einen eigenen Service darstellt.
 Das manuelle Starten jedes einzelnen Containers erweist sich jedoch als ineffizient, deswegen übernimmt die Software \glqq Docker-Compose\grqq{} diese Aufgabe.
@@ -104,7 +107,7 @@ Die Abhängigkeiten zwischen den Containern wird ebenfalls mit einem Konfigurati
 Wahlweise können Dateiordner vom Hostsystem in einzelne Container angehängt werden, damit die Container Daten dort abspeichern oder abrufen können.
 Dies ist insofern wichtig, da sobald die Container gestoppt werden, all ihre internen Daten verloren gehen.
 Die Containerinhalte existieren nur so lange, wie auch die Container existieren.
-Docker-Compose erstellt für alle Container in einer Gruppierung einzigartige ID-Namen, damit alle Container innerhalb der Gruppierung miteinander kommunizieren können.
+Docker-Compose erstellt für alle Container in einer Gruppierung einzigartige ID-Namen, damit alle Container innerhalb der Gruppierung miteinander kommunizieren können\footnote{\url{https://docs.docker.com/compose/gettingstarted/} abgerufen am: 12.01.2019}.
 \subsection{Vorgehen}
 \subsubsection{Erarbeitung des Webcrawlers}
 Als erstes fand eine Einarbeitung in die Thematik von Docker statt, um StormCrawler damit zu betreiben.
