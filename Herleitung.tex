@@ -68,13 +68,13 @@ Dazu müssen zuerst die folgenden Klassifizierungskategorien erläutert werden:
 	\item Falsch Negativ (FN) - Die Webpage wurde nicht als Menüseite klassifiziert, ist aber eine Menüseite
 	\item Richtig Negativ (TN) - Die Webpage wurde nicht als Menüseite klassifiziert und ist keine Menüseite
 \end{itemize}
-Jede klassifizierte Webpage lässt sich in eine dieser Kategorie einordnen.
+Jede klassifizierte Webpage lässt sich in eine dieser Kategorien einordnen.
 Anhand dieser Kategorien lassen sich die oben genannten Metriken wie folgt berechnen:\\
 \[Precision=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Positiv}}\]\\
 Die Precision definiert das Verhältnis der korrekt positiv klassifizierten Menüseiten zu allen durch den Algorithmus als positiv klassifizierten Menüseiten.\\
 \[Recall=\frac{\text{Richtig Positiv}}{\text{Richtig Positiv} + \text{Falsch Negativ}}\]\\
 Der Recall definiert das Verhältnis der korrekt positiv klassifizierten Proben zu allen tatsächlichen Menüseiten.\\
-\[F_{1}=2*\frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
+\[F_{1}=2*\frac{\text{Precision} * \text{Recall}}{\text{Precision} + \text{Recall}}\]\\
 Anhand des F1-Scores wird die Genauigkeit der Klassifizierung gemessen.
 Dabei stehen Precision und Recall im selben Verhältnis.
 Für jede Methode und jede Konfiguration der Klassifizierung werden diese Scores berechnet, um eine Aussage machen zu können, wie gut sie sind.\\

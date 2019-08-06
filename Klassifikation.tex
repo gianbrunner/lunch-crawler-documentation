@@ -52,7 +52,7 @@ Sie beinhaltet folgende Komponenten:
 	\item Preprocessor - Wendet Preprocessing-Schritte an den Daten an
 	\item RuleBasedClassifier - Regelbasierte Klassifizierung der Daten 
 	\item MLClassifier - Klassifizierung der Daten mittels Machine-Learning
-	\item Evaluator - Auswertung der Klassifizierung von Daten (nur im Entwicklunsmodus)
+	\item Evaluator - Auswertung der Klassifizierung von Daten (nur im Entwicklungsmodus)
 \end{itemize}
 Die Produktionspipeline diente zur schlussendlichen Klassifizierung der Rohdaten anhand eines in der Entwicklungspipeline evaluierten Algorithmus.
 \subsection{Scikit Learn}
@@ -70,7 +70,7 @@ Sie können mittels Konfiguration sowohl für den Text als auch Titel eines Doku
 Der Link zum entsprechenden Code ist im \cref{app:classification} zu finden.
 \subsection{Basis Preprocessing}
 Um Text besser klassifizieren zu können, muss dieser zuerst bereinigt und standardisiert werden\footnote{\url{https://machinelearningmastery.com/clean-text-machine-learning-python/} abgerufen am: 11.07.2019}.
-Die nachfolgenden Methoden des Basis Preprocessing werden in jedem Fall der Klassifikation durchgeführt.
+Die nachfolgenden Methoden des Basis Preprocessing werden in jedem Fall vor der Klassifikation durchgeführt.
 Sie verändern jeweils nur einzelne Zeichen des Textes.
 \subsubsection{Gross-/Kleinschreibung}
 Alle Buchstaben, welche grossgeschrieben sind, werden durch die entsprechenden Kleinbuchstaben ersetzt.
@@ -84,7 +84,8 @@ Umlaute werden durch ihre verwandten Selbstlaute ersetzt, genauer:
 \subsubsection{Sonderzeichen entfernen}
 Alle Sonderzeichen, die nicht in der folgenden Auflistung vorkommen, werden durch einen Leerschlag ersetzt:
 \begin{itemize}
-	\item éàèÉÀÈäöüÄÖÜa-zA-Z
+	\item a-z
+	\item A-Z
 \end{itemize} 
 \subsubsection{Einzelne Zeichen entfernen}
 Jedes einzelne Zeichen, also solche, die sowohl vorne als auch hinten an einen Leerschlag angrenzen, werden entfernt.
@@ -129,7 +130,7 @@ Die folgenden Experimente beschreiben die Methoden und Resultate der regelbasier
 Anschliessend folgt die Interpretation und Diskussion.
 Der Link zum entsprechenden Code ist im Anhang (\cref{app:classification}) zu finden.
 Die Experimente sind auf dem Trainings- und Validierungsdatensatzes des Gold Standards durchgeführt worden. 
-Die schlussendlichen Resultate wurden anhand des Testdatensatzes dessen durchgeführt.
+Die schlussendlichen Resultate wurden anhand des Testdatensatzes durchgeführt.
 \subsection{Regelsatz: Menü im Titel}
 \subsubsection{Methode}
 Dieser simple Algorithmus überprüft, ob der Begriff \glqq menu\grqq{} in einem Wort des Metatags \glqq Title\grqq{} vorkommt.
@@ -735,7 +736,7 @@ Die Auswertung für das fortschrittliche Preprocessing kann im Anhang \cref{app:
 \subsection{Anzahl Features}
 \subsubsection{Methoden}
 Jeder Algorithmus verhaltet sich mit der Änderung der Anzahl extrahierter und dimensionsreduzierter Features unterschiedlich.
-Um eine optimale Anzahl an Features zu ermitteln, wurde die Anzahl Features schrittweise erhöht , die Algorithmen mit der neuen Anzahl trainiert und schlussendlich validiert.
+Um eine optimale Anzahl an Features zu ermitteln, wurde die Anzahl Features schrittweise erhöht, die Algorithmen mit der neuen Anzahl trainiert und schlussendlich validiert.
 Dies ist ein rechenintensives Unterfangen, führt in der Regel jedoch zu spürbaren Verbesserungen der Scores bei allen Algorithmen.
 Die Messungen wurden mit einer Anzahl Features von 10 gestartet und schrittweise um 25 Features erhöht, bis schlussendlich eine maximale Anzahl von 400 Features erreicht wurde.
 Da die Rechenzeit stetig mit der Erhöhung der Features steigt, wurde die Grenze bei 400 Features gesetzt.
@@ -797,7 +798,7 @@ Als letzter Schritt der Algorithmenoptimierung wurde eine ausführliche Hyperpar
 Es wurden für die drei Feature-Extraction Methoden jeweils das Modell mit dem besten F1-Score kreuzvalidiert.
 Für jedes Modell wurde eine Liste von anpassbaren Parametern zusammengestellt, welche Scikit-Learn vorgibt.
 Für jeden Parameter wurde ein Bereich von möglichen Werten angegeben.
-Mittels der Funktion \glqq GridSearchCV\grqq{}\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}abgerufen am: 07.05.2019} von Scikit-Learn wurde die Hyperparametersuche für die Optimierung des F1-Scores durchgeführt.\\
+Mittels der Funktion \glqq GridSearchCV\footnote{\url{https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html}abgerufen am: 07.05.2019}\grqq{} von Scikit-Learn wurde die Hyperparametersuche für die Optimierung des F1-Scores durchgeführt.\\
 Je nach Algorithmus und Grösse der Parameterliste kann die Hyperparametersuche sehr lange dauern.
 Ebenfalls ist es möglich, dass die Standardparameter bereits ein Optimum darstellen und keine besseren Parameter gefunden werden.
 \subsubsection{Resultate}
@@ -947,7 +948,7 @@ Jedoch wurde das Ziel mit verschiedenen Klassifizierern nur leicht verfehlt.
 Aus den Ergebnissen ist zu entnehmen, dass für eine weitere Erarbeitung der Thematik die Ansätze mit Machine-Learning die grössten Erfolgschancen bieten.
 Die regelbasierten Ansätze bieten auf kleinen Datenmengen zwar gute Ergebnisse, die Fehlerquote der regelbasierten Ansätze steigt jedoch stetig mit der Erhöhung der Datenmenge.
 Somit sind die regelbasierten Ansätze zu unflexibel.\\
-Es lässt sich vermuten, dass mit weiteren Optimierungen an den Algorithmen sowie der Daten das Ziel sich erreichen lässt.
+Es lässt sich vermuten, dass mit weiteren Optimierungen der Algorithmen sowie der Daten das Ziel erreichbar ist.
 Gründe für das Verfehlen des Ziels und allfällige Massnahmen, um dieses trotzdem zu erreichen, sind in \cref{chap:fazit} zu finden.
 \\\\
 Obwohl das Ziel der Forschungsfrage nicht erreicht werden konnte, ist ersichtlich, dass der beste Klassifizierer aus der Machine-Learning Variante dennoch eine qualitative und quantitative Klassifizierung von Menüseiten erzielen kann.

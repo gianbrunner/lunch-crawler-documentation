@@ -62,9 +62,9 @@ StormCrawler SDK ist ein Opensource Software Development Kit, welches auf Apache
 Es dient somit als Baukasten, um einen Webcrawler aufzubauen und beinhaltet verschiedene Spouts und Bolts, die explizit zum Crawlen von Websites vorgefertigt wurden\footnote{\url{https://github.com/DigitalPebble/storm-crawler/wiki} abgerufen am: 08.01.2019}.
 Zudem berücksichtigt er die Regeln des Webcrawlings, also Meta-Tags oder Robot.txt Dateien, welche deklarieren, ob eine Website gecrawlt werden darf.
 Weiter ist das Kit so eingerichtet, dass es Webpages derselben Website mit einer Zeitverzögerung abfragt, damit diese nicht überlastet werden\footnote{\url{http://stormcrawler.net/faq/} abgerufen am: 09.01.2019}.
-StromCrawler SDK ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
+StormCrawler SDK ist standardmässig so eingerichtet, dass nur Webpages desselben Hosts gecrawlt werden.
 \subsection{Konfiguration des StormCrawlers}
-Die Grundlage der Konfiguration ist die Standardtopologie des StromCrawlers auf Github\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}.
+Die Grundlage der Konfiguration ist die Standardtopologie des StormCrawlers auf Github\footnote{\url{https://docs.docker.com/develop/develop-images/dockerfile_best-practices/} abgerufen am: 12.01.2019}.
 Diese besteht aus den folgenden Komponenten und geht wie folgt vor:
 \begin{enumerate}
 	\item MemorySpout - Einlesen einer URL aus einem Array
@@ -81,7 +81,7 @@ Dieser schreibt für jede Webpage, die erreichbar ist und gecrawlt werden darf, 
 	\item \glqq date\grqq{} - Zeitpunkt, zu welchem die Webpage aufgerufen wurde
 	\item \glqq text\grqq{} - Vom Webcrawler extrahierter Text, welcher die Webpage beinhaltet
 	\item \glqq encoding\grqq{} - Das von der Webpage verwendete Encoding
-	\item \glqq title grqq{} - Inhalt des gleichnamigen HTML-Metatags
+	\item \glqq title\grqq{} - Inhalt des gleichnamigen HTML-Metatags
 	\item \glqq url\grqq{} - URL der Webpage
 	\item \glqq content\grqq{} - Der statische HTML-Inhalt der Webpage	
 \end{itemize}
@@ -238,7 +238,7 @@ Ablauf der Installation
 	docker pull docker.elastic.co/elasticsearch/elasticsearch:7.0.1
 	\item Docker-Container starten:\\
 	docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" \\ docker.elastic.co/elasticsearch/elasticsearch:7.0.1
-	\item Das Zipfile \glqq/lunch-crawler/webapp-lunch-crawler/run\textunderscore webapp/data\textunderscore for\textunderscore elasticSearch.sh\grqq{} entpacken
+	\item Das Zipfile \glqq/lunch-crawler/webapp-lunch-crawler/run\textunderscore webapp/data\textunderscore for\textunderscore elasticSearch.zip\grqq{} entpacken
 	\item Das Script \glqq/lunch-crawler/webapp-lunch-crawler/run\textunderscore webapp/add\textunderscore to\textunderscore elasticsearch.sh\grqq{} ausführen
 	\item In den Ordner \glqq/lunch-crawler/webapp-lunch-crawler\grqq{} wechseln
 	\item Den folgenden Befehl ausführen: npm init
